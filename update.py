@@ -8,18 +8,17 @@ URLS = [
     "https://www.bis.kg/timetable/timetable.php?access=wip&t=110&view=cr"
 ]
 
-all_entries = []
-
 headers = {
-    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
-    'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8'
+    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'
 }
+
+all_entries = []
 
 for url in URLS:
     try:
         req = urllib.request.Request(url, headers=headers)
-        with urllib.request.urlopen(req, timeout=20) as response:
-            html = response.read().decode('utf-8', errors='ignore')
+        with urllib.request.urlopen(req, timeout=20) as resp:
+            html = resp.read().decode('utf-8', errors='ignore')
         
         soup = BeautifulSoup(html, 'html.parser')
         tables = soup.find_all('table')
@@ -28,39 +27,38 @@ for url in URLS:
             rows = table.find_all('tr')
             for row in rows:
                 cols = row.find_all(['td', 'th'])
-                if len(cols) >= 5:
-                    text_cols = [c.get_text(strip=True) for c in cols]
-                    if "Day" in text_cols[0] or "Time" in text_cols[1]:
-                        continue
-                    
+                text_cols = [c.get_text(strip=True) for c in cols]
+                
+                # Пропускаем строки с заголовками или пустые
+                if not text_cols or "Day" in text_cols[0] or "Time" in text_cols[0]:
+                    continue
+                
+                # Если в строке есть данные урока
+                if len(text_cols) >= 5:
                     all_entries.append({
                         "Day": text_cols[0],
                         "Time": text_cols[1],
-                        "Grade": text_cols[2],
-                        "Subject": text_cols[3] if len(text_cols) > 3 else "",
-                        "Teacher": text_cols[4] if len(text_cols) > 4 else "",
-                        "Room": text_cols[5] if len(text_cols) > 5 else "N/A"
+                        "Grade": text_cols[2] if text_cols[2] else "N/A",
+                        "Subject": text_cols[3] if len(text_cols) > 3 else "Lesson",
+                        "Teacher": text_cols[4] if len(text_cols) > 4 else "N/A",
+                        "Room": text_cols[5] if len(text_cols) > 5 and text_cols[5] else "N/A"
                     })
     except Exception as e:
-        print(f"Предупреждение при обработке {url}: {e}")
+        print(f"Ошибка при скачивании {url}: {e}")
 
-# Удаление дубликатов
+# Фильтруем дубликаты
 unique_entries = []
 seen = set()
-for item in all_entries:
-    identifier = (item.get('Day'), item.get('Time'), item.get('Grade'), item.get('Room'), item.get('Teacher'))
-    if identifier not in seen and item.get('Day'):
-        seen.add(identifier)
-        unique_entries.append(item)
 
-# Создание безопасного фоллбека, если сайты не вернули данные
-if not unique_entries:
-    print("Не удалось получить данные с внешних сайтов. Создаётся базовая структура...")
-    unique_entries = [
-        {"Day": "Mon", "Time": "08:30 - 09:15", "Grade": "Sample", "Subject": "Data Loading", "Teacher": "N/A", "Room": "101"}
-    ]
+for item in all_entries:
+    # Исключаем служебные записи
+    if item["Day"] in ["Mon", "Tue", "Wed", "Thu", "Fri", "Пн", "Вт", "Ср", "Чт", "Пт"]:
+        key = (item["Day"], item["Time"], item["Grade"], item["Room"], item["Teacher"])
+        if key not in seen:
+            seen.add(key)
+            unique_entries.append(item)
 
 with open('data.json', 'w', encoding='utf-8') as f:
     json.dump(unique_entries, f, ensure_ascii=False, indent=2)
 
-print(f"Готово! Сохранено записей: {len(unique_entries)}")
+print(f"Успешно собрано {len(unique_entries)} уроков.")
