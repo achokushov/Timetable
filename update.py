@@ -27,10 +27,10 @@ PAREN_RE = re.compile(r"\(([^()]*)\)")
 
 def fetch(view):
     last = None
-    for attempt in range(3):
+    for attempt in range(4):
         try:
             req = urllib.request.Request(BASE + view, headers=HEADERS)
-            with urllib.request.urlopen(req, timeout=30) as resp:
+            with urllib.request.urlopen(req, timeout=60) as resp:
                 html = resp.read().decode("utf-8", errors="ignore")
             if SAVE_RAW:
                 p = pathlib.Path("raw")
@@ -39,7 +39,7 @@ def fetch(view):
             return html
         except Exception as e:  # noqa: BLE001
             last = e
-            time.sleep(3 * (attempt + 1))
+            time.sleep(5 * (attempt + 1))
     raise RuntimeError(f"Не удалось скачать view={view}: {last}")
 
 
@@ -136,8 +136,16 @@ def main():
     # Страницы классов и учителей: если в уроке в скобках указан кабинет
     # (ТОЧНОЕ совпадение с названием кабинета со страницы кабинетов) — он тоже занят.
     room_set = set(rooms)
+    warnings = []
     for view in ("sy", "te"):
-        for t in parse_tables(fetch(view)):
+        try:
+            tables = parse_tables(fetch(view))
+        except Exception as e:  # noqa: BLE001
+            msg = f"view={view} пропущен: {e}"
+            print("ВНИМАНИЕ:", msg, file=sys.stderr)
+            warnings.append(msg)
+            continue
+        for t in tables:
             for day, period, text in t["lessons"]:
                 for g in PAREN_RE.findall(text):
                     g = g.strip()
@@ -152,6 +160,7 @@ def main():
         "periods": periods,
         "rooms": sorted(rooms, key=str.casefold),
         "busy": [list(x) for x in sorted(busy)],
+        "warnings": warnings,
     }
     with open("data.json", "w", encoding="utf-8") as f:
         json.dump(out, f, ensure_ascii=False, indent=1)
@@ -162,4 +171,13 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    err = pathlib.Path("raw/last_error.txt")
+    try:
+        main()
+        err.unlink(missing_ok=True)
+    except BaseException:  # noqa: BLE001
+        import traceback
+        err.parent.mkdir(exist_ok=True)
+        err.write_text(datetime.datetime.now(datetime.timezone.utc).isoformat()
+                       + "\n" + traceback.format_exc(), encoding="utf-8")
+        raise
