@@ -9,7 +9,6 @@
       --bg: #0f172a;
       --card-bg: #1e293b;
       --accent: #38bdf8;
-      --accent-hover: #0284c7;
       --text: #f8fafc;
       --text-sub: #94a3b8;
       --border: #334155;
@@ -30,32 +29,8 @@
       border-bottom: 1px solid var(--border);
     }
     header span { color: var(--accent); }
-    nav {
-      display: flex;
-      background: #111827;
-      border-bottom: 1px solid var(--border);
-      overflow-x: auto;
-    }
-    nav a {
-      color: var(--text-sub);
-      padding: 14px 20px;
-      font-size: 15px;
-      text-decoration: none;
-      white-space: nowrap;
-      border-bottom: 2px solid transparent;
-    }
-    nav a.active {
-      color: var(--accent);
-      border-bottom-color: var(--accent);
-      background: rgba(56, 189, 248, 0.05);
-    }
     .container { padding: 24px; max-width: 900px; margin: 0 auto; }
-    .controls {
-      display: flex;
-      gap: 12px;
-      margin-bottom: 20px;
-      flex-wrap: wrap;
-    }
+    .controls { display: flex; gap: 12px; margin-bottom: 20px; flex-wrap: wrap; }
     select {
       background: var(--card-bg);
       color: var(--text);
@@ -66,18 +41,13 @@
       outline: none;
     }
     select:focus { border-color: var(--accent); }
-    .status {
-      margin-bottom: 16px;
-      font-size: 14px;
-      color: var(--text-sub);
-    }
+    .status { margin-bottom: 16px; font-size: 14px; color: var(--text-sub); }
     .grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
       gap: 12px;
     }
     .card {
-      background: var(--card-bg);
       padding: 16px;
       border-radius: 8px;
       border: 1px solid rgba(34, 197, 94, 0.3);
@@ -85,8 +55,9 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
+      gap: 8px;
     }
-    .room-title { font-weight: 600; font-size: 16px; }
+    .room-title { font-weight: 600; font-size: 16px; overflow-wrap: anywhere; }
     .badge {
       background: rgba(34, 197, 94, 0.15);
       color: var(--success);
@@ -95,145 +66,100 @@
       font-size: 13px;
       font-weight: 600;
     }
+    .empty { color: var(--text-sub); }
   </style>
 </head>
 <body>
 
-<header>BIS <span>Timetable</span></header>
-
-<nav>
-  <a href="#/empty" class="active">Empty rooms</a>
-</nav>
+<header>BIS <span>Timetable</span> · Empty rooms</header>
 
 <div class="container">
   <div class="controls">
-    <select id="daySelect" onchange="renderEmptyRooms()">
-      <option value="Mon">Monday</option>
-      <option value="Tue">Tuesday</option>
-      <option value="Wed">Wednesday</option>
-      <option value="Thu">Thursday</option>
-      <option value="Fri">Friday</option>
-    </select>
-
-    <select id="timeSelect" onchange="renderEmptyRooms()"></select>
+    <select id="daySelect"></select>
+    <select id="periodSelect"></select>
   </div>
 
-  <div class="status" id="statusMsg">Loading schedule from BIS website...</div>
+  <div class="status" id="statusMsg">Загрузка…</div>
   <div class="grid" id="output"></div>
 </div>
 
 <script>
-  let masterRooms = new Set();
-  let busySlots = [];
-  let timeSlots = new Set();
+  let data = null;
+  let busy = new Set();
 
-  async function loadSchedule() {
-    const targetUrl = "https://www.bis.kg/timetable/timetable.php?access=wip&t=110&view=cr";
-    const proxyUrl = "https://api.allorigins.win/get?url=" + encodeURIComponent(targetUrl);
+  const key = (d, p, r) => d + '\u0001' + p + '\u0001' + r;
+  const daySel = document.getElementById('daySelect');
+  const perSel = document.getElementById('periodSelect');
 
-    try {
-      const response = await fetch(proxyUrl);
-      const data = await response.json();
-      
-      if (!data.contents) throw new Error("No data");
-
-      const parser = new DOMParser();
-      const doc = parser.parseFromString(data.contents, 'text/html');
-      
-      parseBISTable(doc);
-      
-      document.getElementById('statusMsg').innerText = `Loaded ${masterRooms.size} rooms directly from BIS.`;
-      populateTimes();
-      renderEmptyRooms();
-    } catch (e) {
-      document.getElementById('statusMsg').innerText = "Using default BIS time slots.";
-      fallbackSetup();
-    }
+  function fill(select, items) {
+    select.replaceChildren(...items.map(v => {
+      const o = document.createElement('option');
+      o.value = v; o.textContent = v;
+      return o;
+    }));
   }
 
-  function parseBISTable(doc) {
-    const tables = doc.querySelectorAll('table');
+  // Текущий день/период по времени Бишкека — только если совпадает с данными с сайта
+  function pickDefaults() {
+    const now = new Date();
+    const wd = new Intl.DateTimeFormat('en-US', { weekday: 'short', timeZone: 'Asia/Bishkek' }).format(now).toLowerCase();
+    const hm = new Intl.DateTimeFormat('en-GB', { hour: '2-digit', minute: '2-digit', hour12: false, timeZone: 'Asia/Bishkek' }).format(now);
+    const mins = s => { const [h, m] = s.split(':').map(Number); return h * 60 + m; };
+    const nowM = mins(hm);
 
-    tables.forEach(table => {
-      const rows = table.querySelectorAll('tr');
-      let daysHeader = [];
+    const day = data.days.find(d => d.toLowerCase().startsWith(wd));
+    if (day) daySel.value = day;
 
-      rows.forEach(row => {
-        const cells = Array.from(row.querySelectorAll('td, th')).map(c => c.textContent.trim());
-        
-        if (cells.some(c => ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Monday'].includes(c))) {
-          daysHeader = cells;
-          return;
-        }
-
-        if (cells.length >= 2 && cells[0].includes(':')) {
-          const time = cells[0];
-          timeSlots.add(time);
-
-          for (let i = 1; i < cells.length; i++) {
-            const cellText = cells[i];
-            if (cellText && cellText !== '-' && cellText.length > 1) {
-              const day = daysHeader[i] || `Day${i}`;
-              
-              // Название комнаты находится в тексте ячейки
-              const lines = cellText.split('\n').map(l => l.trim()).filter(Boolean);
-              const roomName = lines[lines.length - 1] || cellText;
-
-              if (roomName && roomName.length < 30) {
-                masterRooms.add(roomName);
-                busySlots.push({ day, time, room: roomName });
-              }
-            }
-          }
-        }
-      });
+    const per = data.periods.find(p => {
+      const m = p.match(/(\d{1,2}:\d{2})\s*-\s*(\d{1,2}:\d{2})/);
+      return m && nowM >= mins(m[1]) && nowM < mins(m[2]);
     });
+    if (per) perSel.value = per;
   }
 
-  function fallbackSetup() {
-    const defaultTimes = [
-      "08:30 - 09:15", "09:20 - 10:05", "10:25 - 11:10",
-      "11:15 - 12:00", "12:55 - 13:40", "13:45 - 14:30", "14:35 - 15:20"
-    ];
-    defaultTimes.forEach(t => timeSlots.add(t));
-    populateTimes();
-  }
-
-  function populateTimes() {
-    const timeSelect = document.getElementById('timeSelect');
-    timeSelect.innerHTML = Array.from(timeSlots)
-      .map(t => `<option value="${t}">${t}</option>`)
-      .join('');
-  }
-
-  function renderEmptyRooms() {
-    const day = document.getElementById('daySelect').value;
-    const time = document.getElementById('timeSelect').value;
-
-    const busyNow = busySlots
-      .filter(s => s.day.includes(day) && s.time === time)
-      .map(s => s.room);
-
-    const empty = Array.from(masterRooms)
-      .filter(room => !busyNow.includes(room))
-      .sort();
-
-    const output = document.getElementById('output');
-
-    if (!empty.length) {
-      output.innerHTML = '<div style="color:var(--text-sub)">No empty rooms available.</div>';
-      return;
+  function render() {
+    const day = daySel.value, period = perSel.value;
+    const free = data.rooms.filter(r => !busy.has(key(day, period, r)));
+    const out = document.getElementById('output');
+    out.replaceChildren();
+    if (!free.length) {
+      const d = document.createElement('div');
+      d.className = 'empty';
+      d.textContent = 'Свободных кабинетов нет.';
+      out.append(d);
+    } else {
+      free.forEach(room => {
+        const card = document.createElement('div');
+        card.className = 'card';
+        const t = document.createElement('div');
+        t.className = 'room-title'; t.textContent = room;
+        const b = document.createElement('div');
+        b.className = 'badge'; b.textContent = 'Free';
+        card.append(t, b);
+        out.append(card);
+      });
     }
-
-    output.innerHTML = empty.map(room => `
-      <div class="card">
-        <div class="room-title">${room}</div>
-        <div class="badge">Free</div>
-      </div>
-    `).join('');
+    const upd = new Date(data.updated).toLocaleString('ru-RU', { timeZone: 'Asia/Bishkek' });
+    document.getElementById('statusMsg').textContent =
+      `${day}, ${period}: свободно ${free.length} из ${data.rooms.length}. Данные обновлены: ${upd}`;
   }
 
-  loadSchedule();
+  async function init() {
+    try {
+      const resp = await fetch('data.json?v=' + Date.now(), { cache: 'no-store' });
+      if (!resp.ok) throw new Error(resp.status);
+      data = await resp.json();
+      busy = new Set(data.busy.map(([d, p, r]) => key(d, p, r)));
+      fill(daySel, data.days);
+      fill(perSel, data.periods);
+      pickDefaults();
+      daySel.onchange = perSel.onchange = render;
+      render();
+    } catch (e) {
+      document.getElementById('statusMsg').textContent = 'Не удалось загрузить data.json: ' + e.message;
+    }
+  }
+  init();
 </script>
 </body>
 </html>

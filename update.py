@@ -1,75 +1,156 @@
+"""Собирает расписание BIS с трёх страниц (кабинеты / классы / учителя) и
+сохраняет в data.json всё, что нужно для поиска свободных кабинетов.
+
+Ничего не придумывается: названия кабинетов, дней и периодов берутся
+только с сайта. Если структура страницы не распознана, скрипт завершается
+с ошибкой и НЕ перезаписывает data.json.
+"""
+import datetime
 import json
-import urllib.request
+import pathlib
 import re
+import sys
+import time
+import urllib.request
+
 from bs4 import BeautifulSoup
 
-URLS = [
-    "https://www.bis.kg/timetable/timetable.php?access=wip&t=110&view=sy",
-    "https://www.bis.kg/timetable/timetable.php?access=wip&t=110&view=te",
-    "https://www.bis.kg/timetable/timetable.php?access=wip&t=110&view=cr"
-]
+BASE = "https://www.bis.kg/timetable/timetable.php?access=wip&t=110&view="
+HEADERS = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"}
 
-headers = {
-    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'
-}
+SAVE_RAW = True  # сохранять сырой HTML в raw/ (для отладки парсера); потом поставить False
 
-busy_slots = []
-known_rooms = set()
+PERIOD_RE = re.compile(r"^\d+(st|nd|rd|th)\b", re.I)          # "1st | 08:00-08:45"
+DAY_RE = re.compile(r"^(mon|tue|wed|thu|fri|sat|sun)[a-z]*\b", re.I)
+PAREN_RE = re.compile(r"\(([^()]*)\)")
 
-# Базовый список известных кабинетов BIS на случай, если сайт не отдаст полную структуру
-ALL_POSSIBLE_ROOMS = [
-    "101", "102", "103", "104", "105", "106", "107", "108", "109", "110",
-    "201", "202", "203", "204", "205", "206", "207", "208", "209", "210",
-    "301", "302", "303", "304", "305", "Lab 1", "Lab 2", "Art Room", "Music Room", "Gym", "Library"
-]
 
-for url in URLS:
-    try:
-        req = urllib.request.Request(url, headers=headers)
-        with urllib.request.urlopen(req, timeout=15) as resp:
-            html = resp.read().decode('utf-8', errors='ignore')
-            
-        soup = BeautifulSoup(html, 'html.parser')
-        
-        # Сканируем все ячейки таблиц
-        for row in soup.find_all('tr'):
-            cols = [c.get_text(" ", strip=True) for c in row.find_all(['td', 'th'])]
-            if len(cols) >= 2:
-                day = cols[0]
-                time = cols[1]
-                
-                # Поиск номера комнаты в тексте строки
-                row_text = " ".join(cols)
-                found_rooms = re.findall(r'\b(?:Room\s*|CR\s*|Lab\s*|[\b])?([1-3]\d{2}|Lab\s*\d|Art|Music|Gym|Library)\b', row_text, re.I)
-                
-                for r in found_rooms:
-                    known_rooms.add(r)
-                    busy_slots.append({
-                        "Day": day,
-                        "Time": time,
-                        "Room": r
-                    })
-    except Exception as e:
-        print(f"Error fetching {url}: {e}")
+def fetch(view):
+    last = None
+    for attempt in range(3):
+        try:
+            req = urllib.request.Request(BASE + view, headers=HEADERS)
+            with urllib.request.urlopen(req, timeout=30) as resp:
+                html = resp.read().decode("utf-8", errors="ignore")
+            if SAVE_RAW:
+                p = pathlib.Path("raw")
+                p.mkdir(exist_ok=True)
+                (p / f"{view}.html").write_text(html, encoding="utf-8")
+            return html
+        except Exception as e:  # noqa: BLE001
+            last = e
+            time.sleep(3 * (attempt + 1))
+    raise RuntimeError(f"Не удалось скачать view={view}: {last}")
 
-# Объединяем найденные комнаты с базовым списком
-master_room_list = sorted(list(set(ALL_POSSIBLE_ROOMS).union(known_rooms)))
 
-# Если скачивание не прошло, создаем рабочий демонстрационный набор
-if not busy_slots:
-    busy_slots = [
-        {"Day": "Monday", "Time": "08:30 - 09:15", "Room": "101"},
-        {"Day": "Monday", "Time": "08:30 - 09:15", "Room": "102"},
-        {"Day": "Monday", "Time": "09:20 - 10:05", "Room": "201"},
-        {"Day": "Tuesday", "Time": "08:30 - 09:15", "Room": "103"}
-    ]
+def is_empty(text):
+    return not text.strip("  -–—")
 
-output_data = {
-    "all_rooms": master_room_list,
-    "busy_slots": busy_slots
-}
 
-with open('data.json', 'w', encoding='utf-8') as f:
-    json.dump(output_data, f, ensure_ascii=False, indent=2)
+def parse_tables(html):
+    """Возвращает список таблиц: {title, days:[...], periods:[...], lessons:[(day, period, text)]}."""
+    soup = BeautifulSoup(html, "html.parser")
+    result = []
+    for table in soup.find_all("table"):
+        if table.find("table"):          # пропускаем внешние (обёрточные) таблицы
+            continue
+        rows = []
+        for tr in table.find_all("tr"):
+            rows.append([c.get_text(" ", strip=True) for c in tr.find_all(["td", "th"])])
 
-print(f"Успешно сохранен список из {len(master_room_list)} кабинетов и {len(busy_slots)} занятых слотов.")
+        # строка с названиями дней
+        hdr_i = next((i for i, r in enumerate(rows)
+                      if sum(bool(DAY_RE.match(c)) for c in r) >= 3), None)
+        if hdr_i is None:
+            continue
+        header = rows[hdr_i]
+        day_cols = {j: c for j, c in enumerate(header) if DAY_RE.match(c)}
+
+        # якорь: ячейка "Periods" в шапке, иначе колонка перед первым днём
+        anchor_h = next((j for j, c in enumerate(header) if c.lower() == "periods"),
+                        min(day_cols) - 1)
+
+        # название таблицы (кабинет / класс / учитель)
+        title = None
+        if anchor_h > 0 and header[0].strip() and not DAY_RE.match(header[0]):
+            title = header[0].strip()
+        if not title:
+            for r in rows[:hdr_i]:
+                cand = next((c for c in r if c.strip() and c.lower() != "periods"), None)
+                if cand:
+                    title = cand.strip()
+                    break
+        if not title:
+            cap = table.find("caption")
+            title = cap.get_text(" ", strip=True) if cap else None
+
+        periods, lessons = [], []
+        for r in rows[hdr_i + 1:]:
+            anchor_r = next((j for j, c in enumerate(r) if PERIOD_RE.match(c)), None)
+            if anchor_r is None:
+                continue
+            period = r[anchor_r].strip()
+            periods.append(period)
+            shift = anchor_r - anchor_h
+            for j, day in day_cols.items():
+                k = j + shift
+                if 0 <= k < len(r) and not is_empty(r[k]):
+                    lessons.append((day, period, r[k]))
+        result.append({"title": title, "days": list(day_cols.values()),
+                       "periods": periods, "lessons": lessons})
+    return result
+
+
+def main():
+    cr = parse_tables(fetch("cr"))
+    rooms, days, periods, busy = [], [], [], set()
+    for t in cr:
+        if not t["title"]:
+            print("ВНИМАНИЕ: таблица без названия кабинета, пропущена", file=sys.stderr)
+            continue
+        if t["title"] not in rooms:
+            rooms.append(t["title"])
+        for d in t["days"]:
+            if d not in days:
+                days.append(d)
+        for p in t["periods"]:
+            if p not in periods:
+                periods.append(p)
+        for day, period, _ in t["lessons"]:
+            busy.add((day, period, t["title"]))
+    from_rooms = len(busy)
+
+    if not rooms or not days or not periods:
+        sys.exit("Страница кабинетов не распознана (кабинеты/дни/периоды не найдены). "
+                 "Смотрите raw/cr.html — data.json не изменён.")
+
+    # Страницы классов и учителей: если в уроке в скобках указан кабинет
+    # (ТОЧНОЕ совпадение с названием кабинета со страницы кабинетов) — он тоже занят.
+    room_set = set(rooms)
+    for view in ("sy", "te"):
+        for t in parse_tables(fetch(view)):
+            for day, period, text in t["lessons"]:
+                for g in PAREN_RE.findall(text):
+                    g = g.strip()
+                    name = g if g in room_set else (
+                        g.split("-", 1)[1].strip() if "-" in g and g.split("-", 1)[1].strip() in room_set else None)
+                    if name:
+                        busy.add((day, period, name))
+
+    out = {
+        "updated": datetime.datetime.now(datetime.timezone.utc).isoformat(timespec="seconds"),
+        "days": days,
+        "periods": periods,
+        "rooms": sorted(rooms, key=str.casefold),
+        "busy": [list(x) for x in sorted(busy)],
+    }
+    with open("data.json", "w", encoding="utf-8") as f:
+        json.dump(out, f, ensure_ascii=False, indent=1)
+
+    print(f"Кабинетов: {len(rooms)}, дней: {len(days)}, периодов: {len(periods)}")
+    print(f"Занятых слотов: {len(busy)} (со страницы кабинетов: {from_rooms}, "
+          f"добавлено из классов/учителей: {len(busy) - from_rooms})")
+
+
+if __name__ == "__main__":
+    main()
