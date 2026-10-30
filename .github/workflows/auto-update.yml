@@ -2,8 +2,15 @@ name: Auto Update BIS Timetable
 
 on:
   schedule:
-    - cron: '0 */6 * * *'
-  workflow_dispatch:
+    - cron: '0 */6 * * *'   # каждые 6 часов (время UTC)
+  workflow_dispatch:         # кнопка "Run workflow" для ручного запуска
+
+permissions:
+  contents: write            # без этого git push падает с 403
+
+concurrency:
+  group: timetable-update
+  cancel-in-progress: false
 
 jobs:
   scrape-and-update:
@@ -20,15 +27,17 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install beautifulsoup4 requests
+          pip install beautifulsoup4
 
       - name: Run scraper
         run: python update.py
 
       - name: Commit and push changes
+        if: always()          # сохраняем raw/ даже если парсер упал (для отладки)
         run: |
-          git config --global user.name "github-actions[bot]"
-          git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          git add data.json
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add data.json raw 2>/dev/null || git add data.json
           git commit -m "Автоматическое обновление расписания BIS" || exit 0
+          git pull --rebase
           git push
