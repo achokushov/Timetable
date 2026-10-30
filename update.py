@@ -52,11 +52,20 @@ def parse_tables(html):
     soup = BeautifulSoup(html, "html.parser")
     result = []
     for table in soup.find_all("table"):
-        if table.find("table"):          # пропускаем внешние (обёрточные) таблицы
-            continue
+        # На сайте часть тегов </table> не закрыта, поэтому таблицы вложены друг в друга.
+        # Берём только строки и текст, которые принадлежат именно этой таблице.
         rows = []
         for tr in table.find_all("tr"):
-            rows.append([c.get_text(" ", strip=True) for c in tr.find_all(["td", "th"])])
+            if tr.find_parent("table") is not table:
+                continue
+            cells = []
+            for c in tr.find_all(["td", "th"]):
+                if c.find_parent("tr") is not tr:
+                    continue
+                text = " ".join(x.strip() for x in c.strings
+                                if x.find_parent("table") is table and x.strip())
+                cells.append(text)
+            rows.append(cells)
 
         # строка с названиями дней
         hdr_i = next((i for i, r in enumerate(rows)
