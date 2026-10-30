@@ -82,10 +82,10 @@
 <header>BIS <span>Timetable</span></header>
 
 <nav>
-  <button class="active" onclick="switchTab('grades')">Grades</button>
-  <button onclick="switchTab('teachers')">Teachers</button>
-  <button onclick="switchTab('rooms')">Rooms</button>
-  <button onclick="switchTab('empty')">Empty rooms</button>
+  <button class="active" onclick="switchTab('grades', event)">Grades</button>
+  <button onclick="switchTab('teachers', event)">Teachers</button>
+  <button onclick="switchTab('rooms', event)">Rooms</button>
+  <button onclick="switchTab('empty', event)">Empty rooms</button>
 </nav>
 
 <div class="container">
@@ -95,23 +95,29 @@
 
 <script>
   let scheduleData = [];
-  const ALL_ROOMS = ["101", "102", "103", "201", "202", "Lab 1"];
+  let allRoomsList = [];
   let currentTab = 'grades';
 
   async function loadData() {
     try {
-      const res = await fetch('./data.json');
+      const res = await fetch('./data.json?v=' + new Date().getTime());
       scheduleData = await res.json();
+      
+      // Автоматически вытаскиваем вообще ВСЕ существующие кабинеты из расписания
+      allRoomsList = [...new Set(scheduleData.map(d => d.Room))]
+        .filter(r => r && r !== 'N/A')
+        .sort();
+
       render();
     } catch(e) {
-      document.getElementById('output').innerText = 'Ошибка загрузки данных или файл еще не создан';
+      document.getElementById('output').innerText = 'Загрузка расписания... Ожидайте обновления робота.';
     }
   }
 
-  function switchTab(tab) {
+  function switchTab(tab, evt) {
     currentTab = tab;
     document.querySelectorAll('nav button').forEach(b => b.classList.remove('active'));
-    event.target.classList.add('active');
+    if(evt) evt.target.classList.add('active');
     render();
   }
 
@@ -122,13 +128,13 @@
     output.innerHTML = '';
 
     if (!scheduleData.length) {
-      output.innerText = 'Нет данных';
+      output.innerText = 'Нет данных. Запустите робота в вкладке Actions.';
       return;
     }
 
     if (currentTab === 'grades' || currentTab === 'teachers' || currentTab === 'rooms') {
       const field = currentTab === 'grades' ? 'Grade' : currentTab === 'teachers' ? 'Teacher' : 'Room';
-      const items = [...new Set(scheduleData.map(d => d[field]))].sort();
+      const items = [...new Set(scheduleData.map(d => d[field]))].filter(Boolean).sort();
       
       controls.innerHTML = `
         <select id="filterSelect" onchange="renderList('${field}')">
@@ -138,8 +144,8 @@
       renderList(field);
     } 
     else if (currentTab === 'empty') {
-      const days = [...new Set(scheduleData.map(d => d.Day))];
-      const times = [...new Set(scheduleData.map(d => d.Time))];
+      const days = [...new Set(scheduleData.map(d => d.Day))].filter(Boolean);
+      const times = [...new Set(scheduleData.map(d => d.Time))].filter(Boolean);
 
       controls.innerHTML = `
         <select id="daySelect" onchange="renderEmptyRooms()">
@@ -162,7 +168,7 @@
       <div class="card">
         <div>
           <div class="card-title">${item.Subject} (${item.Grade})</div>
-          <div class="card-sub">${item.Day} | ${item.Time} | Преподаватель: ${item.Teacher}</div>
+          <div class="card-sub">${item.Day} | ${item.Time} | Учитель: ${item.Teacher}</div>
         </div>
         <div class="badge">Каб. ${item.Room}</div>
       </div>
@@ -173,11 +179,13 @@
     const day = document.getElementById('daySelect').value;
     const time = document.getElementById('timeSelect').value;
     
+    // Находим кабинеты, которые ЗАНЯТЫ
     const busyRooms = scheduleData
       .filter(d => d.Day === day && d.Time === time)
       .map(d => d.Room);
 
-    const empty = ALL_ROOMS.filter(r => !busyRooms.includes(r));
+    // Свободные = Все кабинеты минус Занятые
+    const empty = allRoomsList.filter(r => !busyRooms.includes(r));
     const output = document.getElementById('output');
 
     output.innerHTML = empty.length 
