@@ -1,19 +1,17 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>BIS Timetable</title>
+  <title>BIS Free Rooms</title>
   <style>
     :root {
       --bg: #0f172a;
       --card-bg: #1e293b;
-      --accent: #38bdf8;
-      --accent-hover: #0284c7;
+      --accent: #22c55e;
       --text: #f8fafc;
       --text-sub: #94a3b8;
       --border: #334155;
-      --success: #22c55e;
     }
     * { box-sizing: border-box; }
     body {
@@ -21,244 +19,132 @@
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
       background: var(--bg);
       color: var(--text);
+      padding: 20px;
     }
-    header {
-      background: var(--card-bg);
-      padding: 16px 24px;
-      font-size: 22px;
-      font-weight: 700;
-      border-bottom: 1px solid var(--border);
+    .container { max-width: 600px; margin: 0 auto; }
+    h1 { font-size: 24px; margin-bottom: 8px; color: var(--text); }
+    p.subtitle { color: var(--text-sub); margin-top: 0; margin-bottom: 24px; }
+    .select-group {
       display: flex;
-      justify-content: space-between;
-      align-items: center;
+      gap: 12px;
+      margin-bottom: 24px;
     }
-    header span { color: var(--accent); }
-    nav {
-      display: flex;
-      background: #111827;
-      border-bottom: 1px solid var(--border);
-      overflow-x: auto;
-    }
-    nav a {
-      color: var(--text-sub);
-      padding: 14px 20px;
-      font-size: 15px;
-      text-decoration: none;
-      white-space: nowrap;
-      border-bottom: 2px solid transparent;
-      transition: all 0.2s;
-    }
-    nav a.active {
-      color: var(--accent);
-      border-bottom-color: var(--accent);
-      background: rgba(56, 189, 248, 0.05);
-    }
-    .container { padding: 24px; max-width: 1000px; margin: 0 auto; }
-    .controls { margin-bottom: 24px; display: flex; gap: 12px; flex-wrap: wrap; }
-    select, input {
+    select {
+      flex: 1;
       background: var(--card-bg);
       color: var(--text);
       border: 1px solid var(--border);
-      padding: 10px 16px;
+      padding: 12px 16px;
       border-radius: 8px;
-      font-size: 15px;
+      font-size: 16px;
       outline: none;
     }
-    select:focus, input:focus { border-color: var(--accent); }
-    .grid { display: grid; gap: 12px; }
-    .card {
+    select:focus { border-color: var(--accent); }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+      gap: 12px;
+    }
+    .room-card {
       background: var(--card-bg);
-      padding: 18px;
-      border-radius: 10px;
       border: 1px solid var(--border);
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
+      padding: 16px;
+      border-radius: 10px;
+      text-align: center;
     }
-    .card-title { font-weight: 600; font-size: 17px; margin-bottom: 6px; }
-    .card-sub { font-size: 14px; color: var(--text-sub); }
-    .badge {
-      background: rgba(56, 189, 248, 0.12);
+    .room-card.free {
+      border-color: rgba(34, 197, 94, 0.4);
+      background: rgba(34, 197, 94, 0.05);
+    }
+    .room-number {
+      font-size: 20px;
+      font-weight: bold;
+      color: var(--text);
+    }
+    .status {
+      font-size: 13px;
       color: var(--accent);
-      padding: 6px 14px;
-      border-radius: 6px;
+      margin-top: 4px;
       font-weight: 600;
-      font-size: 14px;
     }
-    .badge-green {
-      background: rgba(34, 197, 94, 0.12);
-      color: var(--success);
-    }
-    .search-input { width: 100%; max-width: 400px; }
   </style>
 </head>
 <body>
 
-<header>
-  <div>BIS <span>Timetable</span></div>
-</header>
-
-<nav id="nav">
-  <a href="#/grades" id="tab-grades">Grades</a>
-  <a href="#/teachers" id="tab-teachers">Teachers</a>
-  <a href="#/rooms" id="tab-rooms">Rooms</a>
-  <a href="#/free" id="tab-free">Find a slot</a>
-  <a href="#/empty" id="tab-empty">Empty rooms</a>
-</nav>
-
 <div class="container">
-  <div class="controls" id="controls"></div>
-  <div class="grid" id="output">Loading timetable data...</div>
+  <h1>Поиск свободных кабинетов BIS</h1>
+  <p class="subtitle">Выберите день и время, чтобы увидеть доступные комнаты</p>
+
+  <div class="select-group">
+    <select id="daySelect" onchange="calculateEmptyRooms()">
+      <option value="Monday">Monday (Понедельник)</option>
+      <option value="Tuesday">Tuesday (Вторник)</option>
+      <option value="Wednesday">Wednesday (Среда)</option>
+      <option value="Thursday">Thursday (Четверг)</option>
+      <option value="Friday">Friday (Пятница)</option>
+    </select>
+
+    <select id="timeSelect" onchange="calculateEmptyRooms()">
+      <option value="08:30 - 09:15">08:30 - 09:15</option>
+      <option value="09:20 - 10:05">09:20 - 10:05</option>
+      <option value="10:25 - 11:10">10:25 - 11:10</option>
+      <option value="11:15 - 12:00">11:15 - 12:00</option>
+      <option value="12:55 - 13:40">12:55 - 13:40</option>
+      <option value="13:45 - 14:30">13:45 - 14:30</option>
+      <option value="14:35 - 15:20">14:35 - 15:20</option>
+    </select>
+  </div>
+
+  <div class="grid" id="roomsOutput">Загрузка данных...</div>
 </div>
 
 <script>
-  let scheduleData = [];
-  let allRoomsList = [];
+  let allRooms = [];
+  let busySlots = [];
 
-  async function loadData() {
+  async function init() {
     try {
       const res = await fetch('./data.json?v=' + new Date().getTime());
-      scheduleData = await res.json();
-      
-      allRoomsList = [...new Set(scheduleData.map(d => d.Room))]
-        .filter(r => r && r !== 'N/A')
-        .sort();
+      const data = await res.json();
 
-      handleRoute();
+      allRooms = data.all_rooms || [];
+      busySlots = data.busy_slots || [];
+
+      calculateEmptyRooms();
     } catch(e) {
-      document.getElementById('output').innerText = 'Error loading timetable. Please run Action workflow.';
+      document.getElementById('roomsOutput').innerHTML = 
+        '<div style="color:var(--text-sub)">Ошибка загрузки данных. Запустите Action в GitHub.</div>';
     }
   }
 
-  function handleRoute() {
-    const hash = window.location.hash || '#/grades';
-    document.querySelectorAll('nav a').forEach(a => a.classList.remove('active'));
-    
-    let activeTab = 'tab-grades';
-    if (hash.includes('teachers')) activeTab = 'tab-teachers';
-    else if (hash.includes('rooms')) activeTab = 'tab-rooms';
-    else if (hash.includes('free')) activeTab = 'tab-free';
-    else if (hash.includes('empty')) activeTab = 'tab-empty';
-    
-    const activeEl = document.getElementById(activeTab);
-    if (activeEl) activeEl.classList.add('active');
+  function calculateEmptyRooms() {
+    const selectedDay = document.getElementById('daySelect').value.toLowerCase();
+    const selectedTime = document.getElementById('timeSelect').value;
 
-    render(hash);
-  }
+    // Находим занятые комнаты в выбранное время
+    const busyRooms = busySlots
+      .filter(s => s.Day.toLowerCase().includes(selectedDay) && s.Time.includes(selectedTime))
+      .map(s => s.Room);
 
-  function render(hash) {
-    const controls = document.getElementById('controls');
-    const output = document.getElementById('output');
-    controls.innerHTML = '';
-    output.innerHTML = '';
+    // Свободные = Все кабинеты минус Занятые
+    const emptyRooms = allRooms.filter(room => !busyRooms.includes(room));
 
-    if (!scheduleData.length) {
-      output.innerText = 'No schedule data available.';
+    const output = document.getElementById('roomsOutput');
+
+    if (!emptyRooms.length) {
+      output.innerHTML = '<div style="color:var(--text-sub); grid-column: 1/-1;">Нет свободных кабинетов на это время.</div>';
       return;
     }
 
-    if (hash.includes('grades') || hash.includes('teachers') || hash.includes('rooms')) {
-      const field = hash.includes('grades') ? 'Grade' : hash.includes('teachers') ? 'Teacher' : 'Room';
-      const items = [...new Set(scheduleData.map(d => d[field]))].filter(Boolean).sort();
-
-      controls.innerHTML = `
-        <select id="filterSelect" onchange="renderList('${field}')">
-          ${items.map(item => `<option value="${item}">${item}</option>`).join('')}
-        </select>
-      `;
-      renderList(field);
-    } 
-    else if (hash.includes('free')) {
-      controls.innerHTML = `
-        <input type="text" id="searchInput" class="search-input" placeholder="Search teacher, room, or grade..." oninput="renderFreeSearch()">
-      `;
-      renderFreeSearch();
-    }
-    else if (hash.includes('empty')) {
-      const days = [...new Set(scheduleData.map(d => d.Day))].filter(Boolean);
-      const times = [...new Set(scheduleData.map(d => d.Time))].filter(Boolean);
-
-      controls.innerHTML = `
-        <select id="daySelect" onchange="renderEmptyRooms()">
-          ${days.map(d => `<option value="${d}">${d}</option>`).join('')}
-        </select>
-        <select id="timeSelect" onchange="renderEmptyRooms()">
-          ${times.map(t => `<option value="${t}">${t}</option>`).join('')}
-        </select>
-      `;
-      renderEmptyRooms();
-    }
-  }
-
-  function renderList(field) {
-    const val = document.getElementById('filterSelect').value;
-    const filtered = scheduleData.filter(d => d[field] === val);
-    const output = document.getElementById('output');
-
-    output.innerHTML = filtered.map(item => `
-      <div class="card">
-        <div>
-          <div class="card-title">${item.Subject} (${item.Grade})</div>
-          <div class="card-sub">${item.Day} | ${item.Time} | Teacher: ${item.Teacher}</div>
-        </div>
-        <div class="badge">Room ${item.Room}</div>
+    output.innerHTML = emptyRooms.map(room => `
+      <div class="room-card free">
+        <div class="room-number">Каб. ${room}</div>
+        <div class="status">Свободен</div>
       </div>
     `).join('');
   }
 
-  function renderFreeSearch() {
-    const query = (document.getElementById('searchInput')?.value || '').toLowerCase();
-    const output = document.getElementById('output');
-    
-    if (!query) {
-      output.innerHTML = '<div style="color:var(--text-sub)">Type in search box to find available slots...</div>';
-      return;
-    }
-
-    const filtered = scheduleData.filter(d => 
-      (d.Teacher && d.Teacher.toLowerCase().includes(query)) ||
-      (d.Room && d.Room.toLowerCase().includes(query)) ||
-      (d.Grade && d.Grade.toLowerCase().includes(query)) ||
-      (d.Subject && d.Subject.toLowerCase().includes(query))
-    );
-
-    output.innerHTML = filtered.length ? filtered.map(item => `
-      <div class="card">
-        <div>
-          <div class="card-title">${item.Subject} - ${item.Grade}</div>
-          <div class="card-sub">${item.Day} at ${item.Time} | Teacher: ${item.Teacher}</div>
-        </div>
-        <div class="badge">Room ${item.Room}</div>
-      </div>
-    `).join('') : '<div style="color:var(--text-sub)">No matching slots found.</div>';
-  }
-
-  function renderEmptyRooms() {
-    const day = document.getElementById('daySelect').value;
-    const time = document.getElementById('timeSelect').value;
-    
-    const busyRooms = scheduleData
-      .filter(d => d.Day === day && d.Time === time)
-      .map(d => d.Room);
-
-    const empty = allRoomsList.filter(r => !busyRooms.includes(r));
-    const output = document.getElementById('output');
-
-    output.innerHTML = empty.length 
-      ? empty.map(room => `
-          <div class="card">
-            <div>
-              <div class="card-title">Room ${room}</div>
-              <div class="card-sub">Available at ${time} (${day})</div>
-            </div>
-            <div class="badge badge-green">Free</div>
-          </div>
-        `).join('')
-      : '<div style="color:var(--text-sub)">No free rooms found for this slot.</div>';
-  }
-
-  window.addEventListener('hashchange', handleRoute);
-  loadData();
+  init();
 </script>
 </body>
 </html>
