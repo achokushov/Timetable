@@ -1,17 +1,19 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>BIS Free Rooms</title>
+  <title>BIS Timetable - Empty Rooms</title>
   <style>
     :root {
       --bg: #0f172a;
       --card-bg: #1e293b;
-      --accent: #22c55e;
+      --accent: #38bdf8;
+      --accent-hover: #0284c7;
       --text: #f8fafc;
       --text-sub: #94a3b8;
       --border: #334155;
+      --success: #22c55e;
     }
     * { box-sizing: border-box; }
     body {
@@ -19,132 +21,219 @@
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
       background: var(--bg);
       color: var(--text);
-      padding: 20px;
     }
-    .container { max-width: 600px; margin: 0 auto; }
-    h1 { font-size: 24px; margin-bottom: 8px; color: var(--text); }
-    p.subtitle { color: var(--text-sub); margin-top: 0; margin-bottom: 24px; }
-    .select-group {
+    header {
+      background: var(--card-bg);
+      padding: 16px 24px;
+      font-size: 20px;
+      font-weight: 700;
+      border-bottom: 1px solid var(--border);
+    }
+    header span { color: var(--accent); }
+    nav {
+      display: flex;
+      background: #111827;
+      border-bottom: 1px solid var(--border);
+      overflow-x: auto;
+    }
+    nav a {
+      color: var(--text-sub);
+      padding: 14px 20px;
+      font-size: 15px;
+      text-decoration: none;
+      white-space: nowrap;
+      border-bottom: 2px solid transparent;
+    }
+    nav a.active {
+      color: var(--accent);
+      border-bottom-color: var(--accent);
+      background: rgba(56, 189, 248, 0.05);
+    }
+    .container { padding: 24px; max-width: 900px; margin: 0 auto; }
+    .controls {
       display: flex;
       gap: 12px;
-      margin-bottom: 24px;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
     }
     select {
-      flex: 1;
       background: var(--card-bg);
       color: var(--text);
       border: 1px solid var(--border);
-      padding: 12px 16px;
+      padding: 10px 16px;
       border-radius: 8px;
-      font-size: 16px;
+      font-size: 15px;
       outline: none;
     }
     select:focus { border-color: var(--accent); }
+    .status {
+      margin-bottom: 16px;
+      font-size: 14px;
+      color: var(--text-sub);
+    }
     .grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
       gap: 12px;
     }
-    .room-card {
+    .card {
       background: var(--card-bg);
-      border: 1px solid var(--border);
       padding: 16px;
-      border-radius: 10px;
-      text-align: center;
-    }
-    .room-card.free {
-      border-color: rgba(34, 197, 94, 0.4);
+      border-radius: 8px;
+      border: 1px solid rgba(34, 197, 94, 0.3);
       background: rgba(34, 197, 94, 0.05);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
     }
-    .room-number {
-      font-size: 20px;
-      font-weight: bold;
-      color: var(--text);
-    }
-    .status {
+    .room-title { font-weight: 600; font-size: 16px; }
+    .badge {
+      background: rgba(34, 197, 94, 0.15);
+      color: var(--success);
+      padding: 4px 10px;
+      border-radius: 4px;
       font-size: 13px;
-      color: var(--accent);
-      margin-top: 4px;
       font-weight: 600;
     }
   </style>
 </head>
 <body>
 
+<header>BIS <span>Timetable</span></header>
+
+<nav>
+  <a href="#/empty" class="active">Empty rooms</a>
+</nav>
+
 <div class="container">
-  <h1>Поиск свободных кабинетов BIS</h1>
-  <p class="subtitle">Выберите день и время, чтобы увидеть доступные комнаты</p>
-
-  <div class="select-group">
-    <select id="daySelect" onchange="calculateEmptyRooms()">
-      <option value="Monday">Monday (Понедельник)</option>
-      <option value="Tuesday">Tuesday (Вторник)</option>
-      <option value="Wednesday">Wednesday (Среда)</option>
-      <option value="Thursday">Thursday (Четверг)</option>
-      <option value="Friday">Friday (Пятница)</option>
+  <div class="controls">
+    <select id="daySelect" onchange="renderEmptyRooms()">
+      <option value="Mon">Monday</option>
+      <option value="Tue">Tuesday</option>
+      <option value="Wed">Wednesday</option>
+      <option value="Thu">Thursday</option>
+      <option value="Fri">Friday</option>
     </select>
 
-    <select id="timeSelect" onchange="calculateEmptyRooms()">
-      <option value="08:30 - 09:15">08:30 - 09:15</option>
-      <option value="09:20 - 10:05">09:20 - 10:05</option>
-      <option value="10:25 - 11:10">10:25 - 11:10</option>
-      <option value="11:15 - 12:00">11:15 - 12:00</option>
-      <option value="12:55 - 13:40">12:55 - 13:40</option>
-      <option value="13:45 - 14:30">13:45 - 14:30</option>
-      <option value="14:35 - 15:20">14:35 - 15:20</option>
-    </select>
+    <select id="timeSelect" onchange="renderEmptyRooms()"></select>
   </div>
 
-  <div class="grid" id="roomsOutput">Загрузка данных...</div>
+  <div class="status" id="statusMsg">Loading schedule from BIS website...</div>
+  <div class="grid" id="output"></div>
 </div>
 
 <script>
-  let allRooms = [];
+  let masterRooms = new Set();
   let busySlots = [];
+  let timeSlots = new Set();
 
-  async function init() {
+  async function loadSchedule() {
+    const targetUrl = "https://www.bis.kg/timetable/timetable.php?access=wip&t=110&view=cr";
+    const proxyUrl = "https://api.allorigins.win/get?url=" + encodeURIComponent(targetUrl);
+
     try {
-      const res = await fetch('./data.json?v=' + new Date().getTime());
-      const data = await res.json();
+      const response = await fetch(proxyUrl);
+      const data = await response.json();
+      
+      if (!data.contents) throw new Error("No data");
 
-      allRooms = data.all_rooms || [];
-      busySlots = data.busy_slots || [];
-
-      calculateEmptyRooms();
-    } catch(e) {
-      document.getElementById('roomsOutput').innerHTML = 
-        '<div style="color:var(--text-sub)">Ошибка загрузки данных. Запустите Action в GitHub.</div>';
+      const parser = new DOMParser();
+      const doc = parser.parseFromString(data.contents, 'text/html');
+      
+      parseBISTable(doc);
+      
+      document.getElementById('statusMsg').innerText = `Loaded ${masterRooms.size} rooms directly from BIS.`;
+      populateTimes();
+      renderEmptyRooms();
+    } catch (e) {
+      document.getElementById('statusMsg').innerText = "Using default BIS time slots.";
+      fallbackSetup();
     }
   }
 
-  function calculateEmptyRooms() {
-    const selectedDay = document.getElementById('daySelect').value.toLowerCase();
-    const selectedTime = document.getElementById('timeSelect').value;
+  function parseBISTable(doc) {
+    const tables = doc.querySelectorAll('table');
 
-    // Находим занятые комнаты в выбранное время
-    const busyRooms = busySlots
-      .filter(s => s.Day.toLowerCase().includes(selectedDay) && s.Time.includes(selectedTime))
-      .map(s => s.Room);
+    tables.forEach(table => {
+      const rows = table.querySelectorAll('tr');
+      let daysHeader = [];
 
-    // Свободные = Все кабинеты минус Занятые
-    const emptyRooms = allRooms.filter(room => !busyRooms.includes(room));
+      rows.forEach(row => {
+        const cells = Array.from(row.querySelectorAll('td, th')).map(c => c.textContent.trim());
+        
+        if (cells.some(c => ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Monday'].includes(c))) {
+          daysHeader = cells;
+          return;
+        }
 
-    const output = document.getElementById('roomsOutput');
+        if (cells.length >= 2 && cells[0].includes(':')) {
+          const time = cells[0];
+          timeSlots.add(time);
 
-    if (!emptyRooms.length) {
-      output.innerHTML = '<div style="color:var(--text-sub); grid-column: 1/-1;">Нет свободных кабинетов на это время.</div>';
+          for (let i = 1; i < cells.length; i++) {
+            const cellText = cells[i];
+            if (cellText && cellText !== '-' && cellText.length > 1) {
+              const day = daysHeader[i] || `Day${i}`;
+              
+              // Название комнаты находится в тексте ячейки
+              const lines = cellText.split('\n').map(l => l.trim()).filter(Boolean);
+              const roomName = lines[lines.length - 1] || cellText;
+
+              if (roomName && roomName.length < 30) {
+                masterRooms.add(roomName);
+                busySlots.push({ day, time, room: roomName });
+              }
+            }
+          }
+        }
+      });
+    });
+  }
+
+  function fallbackSetup() {
+    const defaultTimes = [
+      "08:30 - 09:15", "09:20 - 10:05", "10:25 - 11:10",
+      "11:15 - 12:00", "12:55 - 13:40", "13:45 - 14:30", "14:35 - 15:20"
+    ];
+    defaultTimes.forEach(t => timeSlots.add(t));
+    populateTimes();
+  }
+
+  function populateTimes() {
+    const timeSelect = document.getElementById('timeSelect');
+    timeSelect.innerHTML = Array.from(timeSlots)
+      .map(t => `<option value="${t}">${t}</option>`)
+      .join('');
+  }
+
+  function renderEmptyRooms() {
+    const day = document.getElementById('daySelect').value;
+    const time = document.getElementById('timeSelect').value;
+
+    const busyNow = busySlots
+      .filter(s => s.day.includes(day) && s.time === time)
+      .map(s => s.room);
+
+    const empty = Array.from(masterRooms)
+      .filter(room => !busyNow.includes(room))
+      .sort();
+
+    const output = document.getElementById('output');
+
+    if (!empty.length) {
+      output.innerHTML = '<div style="color:var(--text-sub)">No empty rooms available.</div>';
       return;
     }
 
-    output.innerHTML = emptyRooms.map(room => `
-      <div class="room-card free">
-        <div class="room-number">Каб. ${room}</div>
-        <div class="status">Свободен</div>
+    output.innerHTML = empty.map(room => `
+      <div class="card">
+        <div class="room-title">${room}</div>
+        <div class="badge">Free</div>
       </div>
     `).join('');
   }
 
-  init();
+  loadSchedule();
 </script>
 </body>
 </html>
