@@ -1,5 +1,5 @@
 {
- "updated": "2026-10-30T10:19:26+00:00",
+ "updated": "2026-10-30T11:06:00+00:00",
  "days": [
   "Monday",
   "Tuesday",
@@ -21,13 +21,265 @@
   "11th | 16:30-17:30"
  ],
  "rooms": [
+  "A2",
+  "A3",
+  "A4 Music Room",
+  "Big Hall",
+  "Breakout Space 1 Prim Libr",
+  "Breakout Space 2 Secon Libr",
+  "Breakout Space 3 G3 Rooms",
+  "Breakout Space 4 G4 Rooms",
+  "CAC1",
+  "CAC2",
+  "CAC5",
+  "CAC6",
+  "DP Art Studio",
+  "DP Study Room",
+  "E-Centre 1",
+  "E-Centre 10",
+  "E-Centre 2",
+  "E-Centre 3",
+  "E-Centre 4",
+  "E-Centre 5",
+  "E-Centre 6",
+  "E-Centre 7",
+  "E-Centre 8 Music Room",
+  "E-Centre Terrace 1",
+  "E-Centre Terrace 2",
+  "Grade 0B Room",
+  "Grade 0Y Room",
+  "Grade 1B Room",
+  "Grade 1Y Room",
+  "Grade 2B Room",
+  "Grade 2Y Room",
+  "Grade 3B Room",
+  "Grade 3Y Room",
+  "Grade 4B Room",
+  "Grade 4Y Room",
+  "Grade 5B Room",
+  "Grade 5Y Room",
+  "ICT Room",
+  "Lab 1",
+  "Lab 2",
+  "Lab 3",
+  "LDIC",
+  "Makerspace",
+  "Meeting Room",
+  "Preschool Gym",
+  "Primary Art Room",
+  "Primary Gym",
+  "Primary Library",
+  "PS1 Room",
+  "PS2 Room",
+  "PS3 Room",
+  "S1",
+  "S2",
+  "Secondary Library",
+  "Small Hall",
+  "Staffroom 1",
+  "Staffroom 5",
+  "T1",
+  "T2",
+  "T3",
+  "T4",
+  "T5",
   "T6"
  ],
  "busy": [
   [
    "Friday",
    "10th (ECA) | 15:30-16:30",
+   "Grade 4B Room"
+  ],
+  [
+   "Friday",
+   "10th (ECA) | 15:30-16:30",
+   "Grade 4Y Room"
+  ],
+  [
+   "Friday",
+   "10th (ECA) | 15:30-16:30",
    "T6"
+  ],
+  [
+   "Friday",
+   "1st | 08:00-08:45",
+   "A3"
+  ],
+  [
+   "Friday",
+   "1st | 08:00-08:45",
+   "Big Hall"
+  ],
+  [
+   "Friday",
+   "1st | 08:00-08:45",
+   "Breakout Space 3 G3 Rooms"
+  ],
+  [
+   "Friday",
+   "1st | 08:00-08:45",
+   "Breakout Space 4 G4 Rooms"
+  ],
+  [
+   "Friday",
+   "1st | 08:00-08:45",
+   "CAC2"
+  ],
+  [
+   "Friday",
+   "1st | 08:00-08:45",
+   "CAC5"
+  ],
+  [
+   "Friday",
+   "1st | 08:00-08:45",
+   "CAC6"
+  ],
+  [
+   "Friday",
+   "1st | 08:00-08:45",
+   "E-Centre 1"
+  ],
+  [
+   "Friday",
+   "1st | 08:00-08:45",
+   "E-Centre 2"
+  ],
+  [
+   "Friday",
+   "1st | 08:00-08:45",
+   "E-Centre 4"
+  ],
+  [
+   "Friday",
+   "1st | 08:00-08:45",
+   "E-Centre 5"
+  ],
+  [
+   "Friday",
+   "1st | 08:00-08:45",
+   "E-Centre 7"
+  ],
+  [
+   "Friday",
+   "1st | 08:00-08:45",
+   "E-Centre Terrace 1"
+  ],
+  [
+   "Friday",
+   "1st | 08:00-08:45",
+   "E-Centre Terrace 2"
+  ],
+  [
+   "Friday",
+   "1st | 08:00-08:45",
+   "Grade 0B Room"
+  ],
+  [
+   "Friday",
+   "1st | 08:00-08:45",
+   "Grade 0Y Room"
+  ],
+  [
+   "Friday",
+   "1st | 08:00-08:45",
+   "Grade 1B Room"
+  ],
+  [
+   "Friday",
+   "1st | 08:00-08:45",
+   "Grade 1Y Room"
+  ],
+  [
+   "Friday",
+   "1st | 08:00-08:45",
+   "Grade 2B Room"
+  ],
+  [
+   "Friday",
+   "1st | 08:00-08:45",
+   "Grade 2Y Room"
+  ],
+  [
+   "Friday",
+   "1st | 08:00-08:45",
+   "Grade 3B Room"
+  ],
+  [
+   "Friday",
+   "1st | 08:00-08:45",
+   "Grade 3Y Room"
+  ],
+  [
+   "Friday",
+   "1st | 08:00-08:45",
+   "Grade 4B Room"
+  ],
+  [
+   "Friday",
+   "1st | 08:00-08:45",
+   "Grade 4Y Room"
+  ],
+  [
+   "Friday",
+   "1st | 08:00-08:45",
+   "Grade 5B Room"
+  ],
+  [
+   "Friday",
+   "1st | 08:00-08:45",
+   "Grade 5Y Room"
+  ],
+  [
+   "Friday",
+   "1st | 08:00-08:45",
+   "ICT Room"
+  ],
+  [
+   "Friday",
+   "1st | 08:00-08:45",
+   "Lab 1"
+  ],
+  [
+   "Friday",
+   "1st | 08:00-08:45",
+   "Lab 2"
+  ],
+  [
+   "Friday",
+   "1st | 08:00-08:45",
+   "Lab 3"
+  ],
+  [
+   "Friday",
+   "1st | 08:00-08:45",
+   "Secondary Library"
+  ],
+  [
+   "Friday",
+   "1st | 08:00-08:45",
+   "T1"
+  ],
+  [
+   "Friday",
+   "1st | 08:00-08:45",
+   "T2"
+  ],
+  [
+   "Friday",
+   "1st | 08:00-08:45",
+   "T3"
+  ],
+  [
+   "Friday",
+   "1st | 08:00-08:45",
+   "T4"
+  ],
+  [
+   "Friday",
+   "1st | 08:00-08:45",
+   "T5"
   ],
   [
    "Friday",
@@ -37,7 +289,387 @@
   [
    "Friday",
    "2nd | 08:45-09:30",
+   "A4 Music Room"
+  ],
+  [
+   "Friday",
+   "2nd | 08:45-09:30",
+   "Big Hall"
+  ],
+  [
+   "Friday",
+   "2nd | 08:45-09:30",
+   "CAC2"
+  ],
+  [
+   "Friday",
+   "2nd | 08:45-09:30",
+   "CAC5"
+  ],
+  [
+   "Friday",
+   "2nd | 08:45-09:30",
+   "CAC6"
+  ],
+  [
+   "Friday",
+   "2nd | 08:45-09:30",
+   "E-Centre 1"
+  ],
+  [
+   "Friday",
+   "2nd | 08:45-09:30",
+   "E-Centre 10"
+  ],
+  [
+   "Friday",
+   "2nd | 08:45-09:30",
+   "E-Centre 2"
+  ],
+  [
+   "Friday",
+   "2nd | 08:45-09:30",
+   "E-Centre 3"
+  ],
+  [
+   "Friday",
+   "2nd | 08:45-09:30",
+   "E-Centre 4"
+  ],
+  [
+   "Friday",
+   "2nd | 08:45-09:30",
+   "E-Centre 5"
+  ],
+  [
+   "Friday",
+   "2nd | 08:45-09:30",
+   "E-Centre 6"
+  ],
+  [
+   "Friday",
+   "2nd | 08:45-09:30",
+   "E-Centre 7"
+  ],
+  [
+   "Friday",
+   "2nd | 08:45-09:30",
+   "E-Centre Terrace 1"
+  ],
+  [
+   "Friday",
+   "2nd | 08:45-09:30",
+   "E-Centre Terrace 2"
+  ],
+  [
+   "Friday",
+   "2nd | 08:45-09:30",
+   "Grade 0B Room"
+  ],
+  [
+   "Friday",
+   "2nd | 08:45-09:30",
+   "Grade 0Y Room"
+  ],
+  [
+   "Friday",
+   "2nd | 08:45-09:30",
+   "Grade 1B Room"
+  ],
+  [
+   "Friday",
+   "2nd | 08:45-09:30",
+   "Grade 1Y Room"
+  ],
+  [
+   "Friday",
+   "2nd | 08:45-09:30",
+   "Grade 2B Room"
+  ],
+  [
+   "Friday",
+   "2nd | 08:45-09:30",
+   "Grade 2Y Room"
+  ],
+  [
+   "Friday",
+   "2nd | 08:45-09:30",
+   "Grade 3B Room"
+  ],
+  [
+   "Friday",
+   "2nd | 08:45-09:30",
+   "Grade 3Y Room"
+  ],
+  [
+   "Friday",
+   "2nd | 08:45-09:30",
+   "Grade 4B Room"
+  ],
+  [
+   "Friday",
+   "2nd | 08:45-09:30",
+   "Grade 4Y Room"
+  ],
+  [
+   "Friday",
+   "2nd | 08:45-09:30",
+   "Grade 5B Room"
+  ],
+  [
+   "Friday",
+   "2nd | 08:45-09:30",
+   "Grade 5Y Room"
+  ],
+  [
+   "Friday",
+   "2nd | 08:45-09:30",
+   "ICT Room"
+  ],
+  [
+   "Friday",
+   "2nd | 08:45-09:30",
+   "Lab 1"
+  ],
+  [
+   "Friday",
+   "2nd | 08:45-09:30",
+   "Lab 2"
+  ],
+  [
+   "Friday",
+   "2nd | 08:45-09:30",
+   "Lab 3"
+  ],
+  [
+   "Friday",
+   "2nd | 08:45-09:30",
+   "Secondary Library"
+  ],
+  [
+   "Friday",
+   "2nd | 08:45-09:30",
+   "T1"
+  ],
+  [
+   "Friday",
+   "2nd | 08:45-09:30",
+   "T5"
+  ],
+  [
+   "Friday",
+   "2nd | 08:45-09:30",
    "T6"
+  ],
+  [
+   "Friday",
+   "3rd | 09:45-10:30",
+   "A2"
+  ],
+  [
+   "Friday",
+   "3rd | 09:45-10:30",
+   "A3"
+  ],
+  [
+   "Friday",
+   "3rd | 09:45-10:30",
+   "A4 Music Room"
+  ],
+  [
+   "Friday",
+   "3rd | 09:45-10:30",
+   "CAC1"
+  ],
+  [
+   "Friday",
+   "3rd | 09:45-10:30",
+   "CAC2"
+  ],
+  [
+   "Friday",
+   "3rd | 09:45-10:30",
+   "CAC5"
+  ],
+  [
+   "Friday",
+   "3rd | 09:45-10:30",
+   "CAC6"
+  ],
+  [
+   "Friday",
+   "3rd | 09:45-10:30",
+   "E-Centre 1"
+  ],
+  [
+   "Friday",
+   "3rd | 09:45-10:30",
+   "E-Centre 10"
+  ],
+  [
+   "Friday",
+   "3rd | 09:45-10:30",
+   "E-Centre 2"
+  ],
+  [
+   "Friday",
+   "3rd | 09:45-10:30",
+   "E-Centre 3"
+  ],
+  [
+   "Friday",
+   "3rd | 09:45-10:30",
+   "E-Centre 4"
+  ],
+  [
+   "Friday",
+   "3rd | 09:45-10:30",
+   "E-Centre 5"
+  ],
+  [
+   "Friday",
+   "3rd | 09:45-10:30",
+   "E-Centre 6"
+  ],
+  [
+   "Friday",
+   "3rd | 09:45-10:30",
+   "E-Centre 7"
+  ],
+  [
+   "Friday",
+   "3rd | 09:45-10:30",
+   "E-Centre Terrace 1"
+  ],
+  [
+   "Friday",
+   "3rd | 09:45-10:30",
+   "E-Centre Terrace 2"
+  ],
+  [
+   "Friday",
+   "3rd | 09:45-10:30",
+   "Grade 0B Room"
+  ],
+  [
+   "Friday",
+   "3rd | 09:45-10:30",
+   "Grade 0Y Room"
+  ],
+  [
+   "Friday",
+   "3rd | 09:45-10:30",
+   "Grade 1B Room"
+  ],
+  [
+   "Friday",
+   "3rd | 09:45-10:30",
+   "Grade 1Y Room"
+  ],
+  [
+   "Friday",
+   "3rd | 09:45-10:30",
+   "Grade 2B Room"
+  ],
+  [
+   "Friday",
+   "3rd | 09:45-10:30",
+   "Grade 2Y Room"
+  ],
+  [
+   "Friday",
+   "3rd | 09:45-10:30",
+   "Grade 3B Room"
+  ],
+  [
+   "Friday",
+   "3rd | 09:45-10:30",
+   "Grade 3Y Room"
+  ],
+  [
+   "Friday",
+   "3rd | 09:45-10:30",
+   "Grade 4B Room"
+  ],
+  [
+   "Friday",
+   "3rd | 09:45-10:30",
+   "Grade 4Y Room"
+  ],
+  [
+   "Friday",
+   "3rd | 09:45-10:30",
+   "Grade 5Y Room"
+  ],
+  [
+   "Friday",
+   "3rd | 09:45-10:30",
+   "Lab 2"
+  ],
+  [
+   "Friday",
+   "3rd | 09:45-10:30",
+   "Lab 3"
+  ],
+  [
+   "Friday",
+   "3rd | 09:45-10:30",
+   "Makerspace"
+  ],
+  [
+   "Friday",
+   "3rd | 09:45-10:30",
+   "PS2 Room"
+  ],
+  [
+   "Friday",
+   "3rd | 09:45-10:30",
+   "Preschool Gym"
+  ],
+  [
+   "Friday",
+   "3rd | 09:45-10:30",
+   "Primary Art Room"
+  ],
+  [
+   "Friday",
+   "3rd | 09:45-10:30",
+   "Primary Gym"
+  ],
+  [
+   "Friday",
+   "3rd | 09:45-10:30",
+   "S1"
+  ],
+  [
+   "Friday",
+   "3rd | 09:45-10:30",
+   "S2"
+  ],
+  [
+   "Friday",
+   "3rd | 09:45-10:30",
+   "T1"
+  ],
+  [
+   "Friday",
+   "3rd | 09:45-10:30",
+   "T2"
+  ],
+  [
+   "Friday",
+   "3rd | 09:45-10:30",
+   "T3"
+  ],
+  [
+   "Friday",
+   "3rd | 09:45-10:30",
+   "T4"
+  ],
+  [
+   "Friday",
+   "3rd | 09:45-10:30",
+   "T5"
   ],
   [
    "Friday",
@@ -47,12 +679,807 @@
   [
    "Friday",
    "4th | 10:35-11:20",
+   "A2"
+  ],
+  [
+   "Friday",
+   "4th | 10:35-11:20",
+   "A3"
+  ],
+  [
+   "Friday",
+   "4th | 10:35-11:20",
+   "A4 Music Room"
+  ],
+  [
+   "Friday",
+   "4th | 10:35-11:20",
+   "Big Hall"
+  ],
+  [
+   "Friday",
+   "4th | 10:35-11:20",
+   "CAC1"
+  ],
+  [
+   "Friday",
+   "4th | 10:35-11:20",
+   "CAC2"
+  ],
+  [
+   "Friday",
+   "4th | 10:35-11:20",
+   "CAC5"
+  ],
+  [
+   "Friday",
+   "4th | 10:35-11:20",
+   "CAC6"
+  ],
+  [
+   "Friday",
+   "4th | 10:35-11:20",
+   "E-Centre 1"
+  ],
+  [
+   "Friday",
+   "4th | 10:35-11:20",
+   "E-Centre 10"
+  ],
+  [
+   "Friday",
+   "4th | 10:35-11:20",
+   "E-Centre 2"
+  ],
+  [
+   "Friday",
+   "4th | 10:35-11:20",
+   "E-Centre 3"
+  ],
+  [
+   "Friday",
+   "4th | 10:35-11:20",
+   "E-Centre 4"
+  ],
+  [
+   "Friday",
+   "4th | 10:35-11:20",
+   "E-Centre 5"
+  ],
+  [
+   "Friday",
+   "4th | 10:35-11:20",
+   "E-Centre 7"
+  ],
+  [
+   "Friday",
+   "4th | 10:35-11:20",
+   "E-Centre Terrace 1"
+  ],
+  [
+   "Friday",
+   "4th | 10:35-11:20",
+   "E-Centre Terrace 2"
+  ],
+  [
+   "Friday",
+   "4th | 10:35-11:20",
+   "Grade 0Y Room"
+  ],
+  [
+   "Friday",
+   "4th | 10:35-11:20",
+   "Grade 1B Room"
+  ],
+  [
+   "Friday",
+   "4th | 10:35-11:20",
+   "Grade 1Y Room"
+  ],
+  [
+   "Friday",
+   "4th | 10:35-11:20",
+   "Grade 2B Room"
+  ],
+  [
+   "Friday",
+   "4th | 10:35-11:20",
+   "Grade 2Y Room"
+  ],
+  [
+   "Friday",
+   "4th | 10:35-11:20",
+   "Grade 3B Room"
+  ],
+  [
+   "Friday",
+   "4th | 10:35-11:20",
+   "Grade 3Y Room"
+  ],
+  [
+   "Friday",
+   "4th | 10:35-11:20",
+   "Grade 4B Room"
+  ],
+  [
+   "Friday",
+   "4th | 10:35-11:20",
+   "Grade 4Y Room"
+  ],
+  [
+   "Friday",
+   "4th | 10:35-11:20",
+   "Grade 5B Room"
+  ],
+  [
+   "Friday",
+   "4th | 10:35-11:20",
+   "Grade 5Y Room"
+  ],
+  [
+   "Friday",
+   "4th | 10:35-11:20",
+   "ICT Room"
+  ],
+  [
+   "Friday",
+   "4th | 10:35-11:20",
+   "Lab 2"
+  ],
+  [
+   "Friday",
+   "4th | 10:35-11:20",
+   "Lab 3"
+  ],
+  [
+   "Friday",
+   "4th | 10:35-11:20",
+   "Makerspace"
+  ],
+  [
+   "Friday",
+   "4th | 10:35-11:20",
+   "Preschool Gym"
+  ],
+  [
+   "Friday",
+   "4th | 10:35-11:20",
+   "Primary Art Room"
+  ],
+  [
+   "Friday",
+   "4th | 10:35-11:20",
+   "S1"
+  ],
+  [
+   "Friday",
+   "4th | 10:35-11:20",
+   "S2"
+  ],
+  [
+   "Friday",
+   "4th | 10:35-11:20",
+   "T1"
+  ],
+  [
+   "Friday",
+   "4th | 10:35-11:20",
+   "T2"
+  ],
+  [
+   "Friday",
+   "4th | 10:35-11:20",
+   "T3"
+  ],
+  [
+   "Friday",
+   "4th | 10:35-11:20",
+   "T4"
+  ],
+  [
+   "Friday",
+   "4th | 10:35-11:20",
+   "T5"
+  ],
+  [
+   "Friday",
+   "4th | 10:35-11:20",
    "T6"
   ],
   [
    "Friday",
    "5th | 11:20-12:05",
+   "A2"
+  ],
+  [
+   "Friday",
+   "5th | 11:20-12:05",
+   "A3"
+  ],
+  [
+   "Friday",
+   "5th | 11:20-12:05",
+   "A4 Music Room"
+  ],
+  [
+   "Friday",
+   "5th | 11:20-12:05",
+   "Big Hall"
+  ],
+  [
+   "Friday",
+   "5th | 11:20-12:05",
+   "CAC1"
+  ],
+  [
+   "Friday",
+   "5th | 11:20-12:05",
+   "CAC2"
+  ],
+  [
+   "Friday",
+   "5th | 11:20-12:05",
+   "CAC5"
+  ],
+  [
+   "Friday",
+   "5th | 11:20-12:05",
+   "CAC6"
+  ],
+  [
+   "Friday",
+   "5th | 11:20-12:05",
+   "E-Centre 1"
+  ],
+  [
+   "Friday",
+   "5th | 11:20-12:05",
+   "E-Centre 10"
+  ],
+  [
+   "Friday",
+   "5th | 11:20-12:05",
+   "E-Centre 2"
+  ],
+  [
+   "Friday",
+   "5th | 11:20-12:05",
+   "E-Centre 3"
+  ],
+  [
+   "Friday",
+   "5th | 11:20-12:05",
+   "E-Centre 4"
+  ],
+  [
+   "Friday",
+   "5th | 11:20-12:05",
+   "E-Centre 5"
+  ],
+  [
+   "Friday",
+   "5th | 11:20-12:05",
+   "E-Centre Terrace 1"
+  ],
+  [
+   "Friday",
+   "5th | 11:20-12:05",
+   "E-Centre Terrace 2"
+  ],
+  [
+   "Friday",
+   "5th | 11:20-12:05",
+   "Grade 0B Room"
+  ],
+  [
+   "Friday",
+   "5th | 11:20-12:05",
+   "Grade 1B Room"
+  ],
+  [
+   "Friday",
+   "5th | 11:20-12:05",
+   "Grade 1Y Room"
+  ],
+  [
+   "Friday",
+   "5th | 11:20-12:05",
+   "Grade 2Y Room"
+  ],
+  [
+   "Friday",
+   "5th | 11:20-12:05",
+   "Grade 3Y Room"
+  ],
+  [
+   "Friday",
+   "5th | 11:20-12:05",
+   "Grade 5B Room"
+  ],
+  [
+   "Friday",
+   "5th | 11:20-12:05",
+   "Grade 5Y Room"
+  ],
+  [
+   "Friday",
+   "5th | 11:20-12:05",
+   "ICT Room"
+  ],
+  [
+   "Friday",
+   "5th | 11:20-12:05",
+   "Lab 2"
+  ],
+  [
+   "Friday",
+   "5th | 11:20-12:05",
+   "Primary Art Room"
+  ],
+  [
+   "Friday",
+   "5th | 11:20-12:05",
+   "Primary Gym"
+  ],
+  [
+   "Friday",
+   "5th | 11:20-12:05",
+   "S1"
+  ],
+  [
+   "Friday",
+   "5th | 11:20-12:05",
+   "S2"
+  ],
+  [
+   "Friday",
+   "5th | 11:20-12:05",
+   "Secondary Library"
+  ],
+  [
+   "Friday",
+   "5th | 11:20-12:05",
+   "Small Hall"
+  ],
+  [
+   "Friday",
+   "5th | 11:20-12:05",
+   "Staffroom 5"
+  ],
+  [
+   "Friday",
+   "5th | 11:20-12:05",
+   "T1"
+  ],
+  [
+   "Friday",
+   "5th | 11:20-12:05",
+   "T2"
+  ],
+  [
+   "Friday",
+   "5th | 11:20-12:05",
+   "T3"
+  ],
+  [
+   "Friday",
+   "5th | 11:20-12:05",
+   "T4"
+  ],
+  [
+   "Friday",
+   "5th | 11:20-12:05",
+   "T5"
+  ],
+  [
+   "Friday",
+   "5th | 11:20-12:05",
    "T6"
+  ],
+  [
+   "Friday",
+   "6th (Lunch Break) | 12:05-12:50",
+   "A4 Music Room"
+  ],
+  [
+   "Friday",
+   "6th (Lunch Break) | 12:05-12:50",
+   "Big Hall"
+  ],
+  [
+   "Friday",
+   "6th (Lunch Break) | 12:05-12:50",
+   "Grade 2B Room"
+  ],
+  [
+   "Friday",
+   "6th (Lunch Break) | 12:05-12:50",
+   "Grade 3B Room"
+  ],
+  [
+   "Friday",
+   "6th (Lunch Break) | 12:05-12:50",
+   "Grade 3Y Room"
+  ],
+  [
+   "Friday",
+   "6th (Lunch Break) | 12:05-12:50",
+   "Grade 4B Room"
+  ],
+  [
+   "Friday",
+   "6th (Lunch Break) | 12:05-12:50",
+   "Grade 4Y Room"
+  ],
+  [
+   "Friday",
+   "6th (Lunch Break) | 12:05-12:50",
+   "Primary Art Room"
+  ],
+  [
+   "Friday",
+   "6th (Lunch Break) | 12:05-12:50",
+   "Primary Gym"
+  ],
+  [
+   "Friday",
+   "6th (Lunch Break) | 12:05-12:50",
+   "T1"
+  ],
+  [
+   "Friday",
+   "6th (Lunch Break) | 12:05-12:50",
+   "T2"
+  ],
+  [
+   "Friday",
+   "7th (Lunch Break) | 12:50-13:35",
+   "A2"
+  ],
+  [
+   "Friday",
+   "7th (Lunch Break) | 12:50-13:35",
+   "A3"
+  ],
+  [
+   "Friday",
+   "7th (Lunch Break) | 12:50-13:35",
+   "Big Hall"
+  ],
+  [
+   "Friday",
+   "7th (Lunch Break) | 12:50-13:35",
+   "CAC2"
+  ],
+  [
+   "Friday",
+   "7th (Lunch Break) | 12:50-13:35",
+   "CAC5"
+  ],
+  [
+   "Friday",
+   "7th (Lunch Break) | 12:50-13:35",
+   "CAC6"
+  ],
+  [
+   "Friday",
+   "7th (Lunch Break) | 12:50-13:35",
+   "E-Centre 1"
+  ],
+  [
+   "Friday",
+   "7th (Lunch Break) | 12:50-13:35",
+   "E-Centre 10"
+  ],
+  [
+   "Friday",
+   "7th (Lunch Break) | 12:50-13:35",
+   "E-Centre 2"
+  ],
+  [
+   "Friday",
+   "7th (Lunch Break) | 12:50-13:35",
+   "E-Centre 3"
+  ],
+  [
+   "Friday",
+   "7th (Lunch Break) | 12:50-13:35",
+   "E-Centre 4"
+  ],
+  [
+   "Friday",
+   "7th (Lunch Break) | 12:50-13:35",
+   "E-Centre 5"
+  ],
+  [
+   "Friday",
+   "7th (Lunch Break) | 12:50-13:35",
+   "E-Centre 6"
+  ],
+  [
+   "Friday",
+   "7th (Lunch Break) | 12:50-13:35",
+   "E-Centre Terrace 2"
+  ],
+  [
+   "Friday",
+   "7th (Lunch Break) | 12:50-13:35",
+   "Grade 0B Room"
+  ],
+  [
+   "Friday",
+   "7th (Lunch Break) | 12:50-13:35",
+   "Grade 1B Room"
+  ],
+  [
+   "Friday",
+   "7th (Lunch Break) | 12:50-13:35",
+   "Grade 1Y Room"
+  ],
+  [
+   "Friday",
+   "7th (Lunch Break) | 12:50-13:35",
+   "Grade 2B Room"
+  ],
+  [
+   "Friday",
+   "7th (Lunch Break) | 12:50-13:35",
+   "Grade 5B Room"
+  ],
+  [
+   "Friday",
+   "7th (Lunch Break) | 12:50-13:35",
+   "ICT Room"
+  ],
+  [
+   "Friday",
+   "7th (Lunch Break) | 12:50-13:35",
+   "Lab 2"
+  ],
+  [
+   "Friday",
+   "7th (Lunch Break) | 12:50-13:35",
+   "Lab 3"
+  ],
+  [
+   "Friday",
+   "7th (Lunch Break) | 12:50-13:35",
+   "Primary Gym"
+  ],
+  [
+   "Friday",
+   "7th (Lunch Break) | 12:50-13:35",
+   "S1"
+  ],
+  [
+   "Friday",
+   "7th (Lunch Break) | 12:50-13:35",
+   "S2"
+  ],
+  [
+   "Friday",
+   "7th (Lunch Break) | 12:50-13:35",
+   "T2"
+  ],
+  [
+   "Friday",
+   "7th (Lunch Break) | 12:50-13:35",
+   "T3"
+  ],
+  [
+   "Friday",
+   "7th (Lunch Break) | 12:50-13:35",
+   "T4"
+  ],
+  [
+   "Friday",
+   "7th (Lunch Break) | 12:50-13:35",
+   "T5"
+  ],
+  [
+   "Friday",
+   "8th | 13:40-14:25",
+   "A2"
+  ],
+  [
+   "Friday",
+   "8th | 13:40-14:25",
+   "A3"
+  ],
+  [
+   "Friday",
+   "8th | 13:40-14:25",
+   "A4 Music Room"
+  ],
+  [
+   "Friday",
+   "8th | 13:40-14:25",
+   "CAC1"
+  ],
+  [
+   "Friday",
+   "8th | 13:40-14:25",
+   "CAC2"
+  ],
+  [
+   "Friday",
+   "8th | 13:40-14:25",
+   "CAC5"
+  ],
+  [
+   "Friday",
+   "8th | 13:40-14:25",
+   "CAC6"
+  ],
+  [
+   "Friday",
+   "8th | 13:40-14:25",
+   "E-Centre 1"
+  ],
+  [
+   "Friday",
+   "8th | 13:40-14:25",
+   "E-Centre 10"
+  ],
+  [
+   "Friday",
+   "8th | 13:40-14:25",
+   "E-Centre 2"
+  ],
+  [
+   "Friday",
+   "8th | 13:40-14:25",
+   "E-Centre 3"
+  ],
+  [
+   "Friday",
+   "8th | 13:40-14:25",
+   "E-Centre 4"
+  ],
+  [
+   "Friday",
+   "8th | 13:40-14:25",
+   "E-Centre 5"
+  ],
+  [
+   "Friday",
+   "8th | 13:40-14:25",
+   "E-Centre 8 Music Room"
+  ],
+  [
+   "Friday",
+   "8th | 13:40-14:25",
+   "E-Centre Terrace 1"
+  ],
+  [
+   "Friday",
+   "8th | 13:40-14:25",
+   "E-Centre Terrace 2"
+  ],
+  [
+   "Friday",
+   "8th | 13:40-14:25",
+   "Grade 0Y Room"
+  ],
+  [
+   "Friday",
+   "8th | 13:40-14:25",
+   "Grade 1B Room"
+  ],
+  [
+   "Friday",
+   "8th | 13:40-14:25",
+   "Grade 1Y Room"
+  ],
+  [
+   "Friday",
+   "8th | 13:40-14:25",
+   "Grade 2B Room"
+  ],
+  [
+   "Friday",
+   "8th | 13:40-14:25",
+   "Grade 2Y Room"
+  ],
+  [
+   "Friday",
+   "8th | 13:40-14:25",
+   "Grade 3B Room"
+  ],
+  [
+   "Friday",
+   "8th | 13:40-14:25",
+   "Grade 3Y Room"
+  ],
+  [
+   "Friday",
+   "8th | 13:40-14:25",
+   "Grade 4B Room"
+  ],
+  [
+   "Friday",
+   "8th | 13:40-14:25",
+   "Grade 4Y Room"
+  ],
+  [
+   "Friday",
+   "8th | 13:40-14:25",
+   "Grade 5B Room"
+  ],
+  [
+   "Friday",
+   "8th | 13:40-14:25",
+   "Grade 5Y Room"
+  ],
+  [
+   "Friday",
+   "8th | 13:40-14:25",
+   "ICT Room"
+  ],
+  [
+   "Friday",
+   "8th | 13:40-14:25",
+   "Lab 2"
+  ],
+  [
+   "Friday",
+   "8th | 13:40-14:25",
+   "Lab 3"
+  ],
+  [
+   "Friday",
+   "8th | 13:40-14:25",
+   "Primary Art Room"
+  ],
+  [
+   "Friday",
+   "8th | 13:40-14:25",
+   "Primary Gym"
+  ],
+  [
+   "Friday",
+   "8th | 13:40-14:25",
+   "S1"
+  ],
+  [
+   "Friday",
+   "8th | 13:40-14:25",
+   "S2"
+  ],
+  [
+   "Friday",
+   "8th | 13:40-14:25",
+   "Secondary Library"
+  ],
+  [
+   "Friday",
+   "8th | 13:40-14:25",
+   "Small Hall"
+  ],
+  [
+   "Friday",
+   "8th | 13:40-14:25",
+   "T1"
+  ],
+  [
+   "Friday",
+   "8th | 13:40-14:25",
+   "T2"
+  ],
+  [
+   "Friday",
+   "8th | 13:40-14:25",
+   "T3"
+  ],
+  [
+   "Friday",
+   "8th | 13:40-14:25",
+   "T4"
+  ],
+  [
+   "Friday",
+   "8th | 13:40-14:25",
+   "T5"
   ],
   [
    "Friday",
@@ -62,7 +1489,332 @@
   [
    "Friday",
    "9th | 14:30-15:15",
+   "CAC1"
+  ],
+  [
+   "Friday",
+   "9th | 14:30-15:15",
+   "CAC2"
+  ],
+  [
+   "Friday",
+   "9th | 14:30-15:15",
+   "DP Study Room"
+  ],
+  [
+   "Friday",
+   "9th | 14:30-15:15",
+   "E-Centre 5"
+  ],
+  [
+   "Friday",
+   "9th | 14:30-15:15",
+   "E-Centre Terrace 1"
+  ],
+  [
+   "Friday",
+   "9th | 14:30-15:15",
+   "E-Centre Terrace 2"
+  ],
+  [
+   "Friday",
+   "9th | 14:30-15:15",
+   "Grade 0B Room"
+  ],
+  [
+   "Friday",
+   "9th | 14:30-15:15",
+   "Grade 0Y Room"
+  ],
+  [
+   "Friday",
+   "9th | 14:30-15:15",
+   "Grade 1B Room"
+  ],
+  [
+   "Friday",
+   "9th | 14:30-15:15",
+   "Grade 1Y Room"
+  ],
+  [
+   "Friday",
+   "9th | 14:30-15:15",
+   "Grade 2B Room"
+  ],
+  [
+   "Friday",
+   "9th | 14:30-15:15",
+   "Grade 2Y Room"
+  ],
+  [
+   "Friday",
+   "9th | 14:30-15:15",
+   "Grade 3B Room"
+  ],
+  [
+   "Friday",
+   "9th | 14:30-15:15",
+   "Grade 3Y Room"
+  ],
+  [
+   "Friday",
+   "9th | 14:30-15:15",
+   "Grade 4B Room"
+  ],
+  [
+   "Friday",
+   "9th | 14:30-15:15",
+   "Grade 4Y Room"
+  ],
+  [
+   "Friday",
+   "9th | 14:30-15:15",
+   "Grade 5B Room"
+  ],
+  [
+   "Friday",
+   "9th | 14:30-15:15",
+   "Grade 5Y Room"
+  ],
+  [
+   "Friday",
+   "9th | 14:30-15:15",
+   "S1"
+  ],
+  [
+   "Friday",
+   "9th | 14:30-15:15",
+   "S2"
+  ],
+  [
+   "Friday",
+   "9th | 14:30-15:15",
+   "T3"
+  ],
+  [
+   "Friday",
+   "9th | 14:30-15:15",
+   "T4"
+  ],
+  [
+   "Friday",
+   "9th | 14:30-15:15",
    "T6"
+  ],
+  [
+   "Monday",
+   "10th (ECA) | 15:30-16:30",
+   "CAC1"
+  ],
+  [
+   "Monday",
+   "10th (ECA) | 15:30-16:30",
+   "CAC6"
+  ],
+  [
+   "Monday",
+   "10th (ECA) | 15:30-16:30",
+   "Grade 3B Room"
+  ],
+  [
+   "Monday",
+   "10th (ECA) | 15:30-16:30",
+   "Grade 3Y Room"
+  ],
+  [
+   "Monday",
+   "10th (ECA) | 15:30-16:30",
+   "Grade 4B Room"
+  ],
+  [
+   "Monday",
+   "10th (ECA) | 15:30-16:30",
+   "Grade 4Y Room"
+  ],
+  [
+   "Monday",
+   "1st | 08:00-08:45",
+   "A2"
+  ],
+  [
+   "Monday",
+   "1st | 08:00-08:45",
+   "A3"
+  ],
+  [
+   "Monday",
+   "1st | 08:00-08:45",
+   "Big Hall"
+  ],
+  [
+   "Monday",
+   "1st | 08:00-08:45",
+   "Breakout Space 4 G4 Rooms"
+  ],
+  [
+   "Monday",
+   "1st | 08:00-08:45",
+   "CAC1"
+  ],
+  [
+   "Monday",
+   "1st | 08:00-08:45",
+   "CAC2"
+  ],
+  [
+   "Monday",
+   "1st | 08:00-08:45",
+   "CAC5"
+  ],
+  [
+   "Monday",
+   "1st | 08:00-08:45",
+   "CAC6"
+  ],
+  [
+   "Monday",
+   "1st | 08:00-08:45",
+   "E-Centre 1"
+  ],
+  [
+   "Monday",
+   "1st | 08:00-08:45",
+   "E-Centre 10"
+  ],
+  [
+   "Monday",
+   "1st | 08:00-08:45",
+   "E-Centre 2"
+  ],
+  [
+   "Monday",
+   "1st | 08:00-08:45",
+   "E-Centre 3"
+  ],
+  [
+   "Monday",
+   "1st | 08:00-08:45",
+   "E-Centre 4"
+  ],
+  [
+   "Monday",
+   "1st | 08:00-08:45",
+   "E-Centre 5"
+  ],
+  [
+   "Monday",
+   "1st | 08:00-08:45",
+   "E-Centre 6"
+  ],
+  [
+   "Monday",
+   "1st | 08:00-08:45",
+   "E-Centre 7"
+  ],
+  [
+   "Monday",
+   "1st | 08:00-08:45",
+   "E-Centre Terrace 1"
+  ],
+  [
+   "Monday",
+   "1st | 08:00-08:45",
+   "E-Centre Terrace 2"
+  ],
+  [
+   "Monday",
+   "1st | 08:00-08:45",
+   "Grade 0B Room"
+  ],
+  [
+   "Monday",
+   "1st | 08:00-08:45",
+   "Grade 0Y Room"
+  ],
+  [
+   "Monday",
+   "1st | 08:00-08:45",
+   "Grade 1B Room"
+  ],
+  [
+   "Monday",
+   "1st | 08:00-08:45",
+   "Grade 1Y Room"
+  ],
+  [
+   "Monday",
+   "1st | 08:00-08:45",
+   "Grade 2B Room"
+  ],
+  [
+   "Monday",
+   "1st | 08:00-08:45",
+   "Grade 2Y Room"
+  ],
+  [
+   "Monday",
+   "1st | 08:00-08:45",
+   "Grade 3B Room"
+  ],
+  [
+   "Monday",
+   "1st | 08:00-08:45",
+   "Grade 3Y Room"
+  ],
+  [
+   "Monday",
+   "1st | 08:00-08:45",
+   "Grade 4B Room"
+  ],
+  [
+   "Monday",
+   "1st | 08:00-08:45",
+   "Grade 4Y Room"
+  ],
+  [
+   "Monday",
+   "1st | 08:00-08:45",
+   "Grade 5B Room"
+  ],
+  [
+   "Monday",
+   "1st | 08:00-08:45",
+   "Grade 5Y Room"
+  ],
+  [
+   "Monday",
+   "1st | 08:00-08:45",
+   "ICT Room"
+  ],
+  [
+   "Monday",
+   "1st | 08:00-08:45",
+   "S2"
+  ],
+  [
+   "Monday",
+   "1st | 08:00-08:45",
+   "T1"
+  ],
+  [
+   "Monday",
+   "1st | 08:00-08:45",
+   "T2"
+  ],
+  [
+   "Monday",
+   "1st | 08:00-08:45",
+   "T3"
+  ],
+  [
+   "Monday",
+   "1st | 08:00-08:45",
+   "T4"
+  ],
+  [
+   "Monday",
+   "1st | 08:00-08:45",
+   "T5"
   ],
   [
    "Monday",
@@ -72,7 +1824,377 @@
   [
    "Monday",
    "2nd | 08:45-09:30",
+   "A2"
+  ],
+  [
+   "Monday",
+   "2nd | 08:45-09:30",
+   "A3"
+  ],
+  [
+   "Monday",
+   "2nd | 08:45-09:30",
+   "Big Hall"
+  ],
+  [
+   "Monday",
+   "2nd | 08:45-09:30",
+   "CAC1"
+  ],
+  [
+   "Monday",
+   "2nd | 08:45-09:30",
+   "CAC2"
+  ],
+  [
+   "Monday",
+   "2nd | 08:45-09:30",
+   "CAC5"
+  ],
+  [
+   "Monday",
+   "2nd | 08:45-09:30",
+   "CAC6"
+  ],
+  [
+   "Monday",
+   "2nd | 08:45-09:30",
+   "E-Centre 1"
+  ],
+  [
+   "Monday",
+   "2nd | 08:45-09:30",
+   "E-Centre 10"
+  ],
+  [
+   "Monday",
+   "2nd | 08:45-09:30",
+   "E-Centre 2"
+  ],
+  [
+   "Monday",
+   "2nd | 08:45-09:30",
+   "E-Centre 3"
+  ],
+  [
+   "Monday",
+   "2nd | 08:45-09:30",
+   "E-Centre 4"
+  ],
+  [
+   "Monday",
+   "2nd | 08:45-09:30",
+   "E-Centre 5"
+  ],
+  [
+   "Monday",
+   "2nd | 08:45-09:30",
+   "E-Centre 6"
+  ],
+  [
+   "Monday",
+   "2nd | 08:45-09:30",
+   "E-Centre 7"
+  ],
+  [
+   "Monday",
+   "2nd | 08:45-09:30",
+   "E-Centre Terrace 1"
+  ],
+  [
+   "Monday",
+   "2nd | 08:45-09:30",
+   "Grade 0B Room"
+  ],
+  [
+   "Monday",
+   "2nd | 08:45-09:30",
+   "Grade 0Y Room"
+  ],
+  [
+   "Monday",
+   "2nd | 08:45-09:30",
+   "Grade 1B Room"
+  ],
+  [
+   "Monday",
+   "2nd | 08:45-09:30",
+   "Grade 1Y Room"
+  ],
+  [
+   "Monday",
+   "2nd | 08:45-09:30",
+   "Grade 2B Room"
+  ],
+  [
+   "Monday",
+   "2nd | 08:45-09:30",
+   "Grade 2Y Room"
+  ],
+  [
+   "Monday",
+   "2nd | 08:45-09:30",
+   "Grade 3B Room"
+  ],
+  [
+   "Monday",
+   "2nd | 08:45-09:30",
+   "Grade 3Y Room"
+  ],
+  [
+   "Monday",
+   "2nd | 08:45-09:30",
+   "Grade 4B Room"
+  ],
+  [
+   "Monday",
+   "2nd | 08:45-09:30",
+   "Grade 4Y Room"
+  ],
+  [
+   "Monday",
+   "2nd | 08:45-09:30",
+   "Grade 5B Room"
+  ],
+  [
+   "Monday",
+   "2nd | 08:45-09:30",
+   "Grade 5Y Room"
+  ],
+  [
+   "Monday",
+   "2nd | 08:45-09:30",
+   "ICT Room"
+  ],
+  [
+   "Monday",
+   "2nd | 08:45-09:30",
+   "Lab 2"
+  ],
+  [
+   "Monday",
+   "2nd | 08:45-09:30",
+   "Lab 3"
+  ],
+  [
+   "Monday",
+   "2nd | 08:45-09:30",
+   "S2"
+  ],
+  [
+   "Monday",
+   "2nd | 08:45-09:30",
+   "T4"
+  ],
+  [
+   "Monday",
+   "2nd | 08:45-09:30",
+   "T5"
+  ],
+  [
+   "Monday",
+   "2nd | 08:45-09:30",
    "T6"
+  ],
+  [
+   "Monday",
+   "3rd | 09:45-10:30",
+   "A2"
+  ],
+  [
+   "Monday",
+   "3rd | 09:45-10:30",
+   "A3"
+  ],
+  [
+   "Monday",
+   "3rd | 09:45-10:30",
+   "A4 Music Room"
+  ],
+  [
+   "Monday",
+   "3rd | 09:45-10:30",
+   "CAC1"
+  ],
+  [
+   "Monday",
+   "3rd | 09:45-10:30",
+   "CAC2"
+  ],
+  [
+   "Monday",
+   "3rd | 09:45-10:30",
+   "CAC5"
+  ],
+  [
+   "Monday",
+   "3rd | 09:45-10:30",
+   "CAC6"
+  ],
+  [
+   "Monday",
+   "3rd | 09:45-10:30",
+   "E-Centre 1"
+  ],
+  [
+   "Monday",
+   "3rd | 09:45-10:30",
+   "E-Centre 10"
+  ],
+  [
+   "Monday",
+   "3rd | 09:45-10:30",
+   "E-Centre 2"
+  ],
+  [
+   "Monday",
+   "3rd | 09:45-10:30",
+   "E-Centre 3"
+  ],
+  [
+   "Monday",
+   "3rd | 09:45-10:30",
+   "E-Centre 4"
+  ],
+  [
+   "Monday",
+   "3rd | 09:45-10:30",
+   "E-Centre 5"
+  ],
+  [
+   "Monday",
+   "3rd | 09:45-10:30",
+   "E-Centre 6"
+  ],
+  [
+   "Monday",
+   "3rd | 09:45-10:30",
+   "E-Centre 7"
+  ],
+  [
+   "Monday",
+   "3rd | 09:45-10:30",
+   "E-Centre Terrace 1"
+  ],
+  [
+   "Monday",
+   "3rd | 09:45-10:30",
+   "E-Centre Terrace 2"
+  ],
+  [
+   "Monday",
+   "3rd | 09:45-10:30",
+   "Grade 0B Room"
+  ],
+  [
+   "Monday",
+   "3rd | 09:45-10:30",
+   "Grade 0Y Room"
+  ],
+  [
+   "Monday",
+   "3rd | 09:45-10:30",
+   "Grade 1B Room"
+  ],
+  [
+   "Monday",
+   "3rd | 09:45-10:30",
+   "Grade 1Y Room"
+  ],
+  [
+   "Monday",
+   "3rd | 09:45-10:30",
+   "Grade 2B Room"
+  ],
+  [
+   "Monday",
+   "3rd | 09:45-10:30",
+   "Grade 2Y Room"
+  ],
+  [
+   "Monday",
+   "3rd | 09:45-10:30",
+   "Grade 3B Room"
+  ],
+  [
+   "Monday",
+   "3rd | 09:45-10:30",
+   "Grade 3Y Room"
+  ],
+  [
+   "Monday",
+   "3rd | 09:45-10:30",
+   "Grade 4B Room"
+  ],
+  [
+   "Monday",
+   "3rd | 09:45-10:30",
+   "Grade 4Y Room"
+  ],
+  [
+   "Monday",
+   "3rd | 09:45-10:30",
+   "Grade 5Y Room"
+  ],
+  [
+   "Monday",
+   "3rd | 09:45-10:30",
+   "ICT Room"
+  ],
+  [
+   "Monday",
+   "3rd | 09:45-10:30",
+   "Lab 1"
+  ],
+  [
+   "Monday",
+   "3rd | 09:45-10:30",
+   "Lab 2"
+  ],
+  [
+   "Monday",
+   "3rd | 09:45-10:30",
+   "Lab 3"
+  ],
+  [
+   "Monday",
+   "3rd | 09:45-10:30",
+   "Preschool Gym"
+  ],
+  [
+   "Monday",
+   "3rd | 09:45-10:30",
+   "Primary Art Room"
+  ],
+  [
+   "Monday",
+   "3rd | 09:45-10:30",
+   "S1"
+  ],
+  [
+   "Monday",
+   "3rd | 09:45-10:30",
+   "S2"
+  ],
+  [
+   "Monday",
+   "3rd | 09:45-10:30",
+   "Secondary Library"
+  ],
+  [
+   "Monday",
+   "3rd | 09:45-10:30",
+   "Small Hall"
+  ],
+  [
+   "Monday",
+   "3rd | 09:45-10:30",
+   "T2"
+  ],
+  [
+   "Monday",
+   "3rd | 09:45-10:30",
+   "T4"
   ],
   [
    "Monday",
@@ -82,12 +2204,592 @@
   [
    "Monday",
    "4th | 10:35-11:20",
+   "A2"
+  ],
+  [
+   "Monday",
+   "4th | 10:35-11:20",
+   "A3"
+  ],
+  [
+   "Monday",
+   "4th | 10:35-11:20",
+   "Big Hall"
+  ],
+  [
+   "Monday",
+   "4th | 10:35-11:20",
+   "Breakout Space 3 G3 Rooms"
+  ],
+  [
+   "Monday",
+   "4th | 10:35-11:20",
+   "CAC1"
+  ],
+  [
+   "Monday",
+   "4th | 10:35-11:20",
+   "CAC2"
+  ],
+  [
+   "Monday",
+   "4th | 10:35-11:20",
+   "E-Centre 1"
+  ],
+  [
+   "Monday",
+   "4th | 10:35-11:20",
+   "E-Centre 10"
+  ],
+  [
+   "Monday",
+   "4th | 10:35-11:20",
+   "E-Centre 2"
+  ],
+  [
+   "Monday",
+   "4th | 10:35-11:20",
+   "E-Centre 3"
+  ],
+  [
+   "Monday",
+   "4th | 10:35-11:20",
+   "E-Centre 4"
+  ],
+  [
+   "Monday",
+   "4th | 10:35-11:20",
+   "E-Centre 5"
+  ],
+  [
+   "Monday",
+   "4th | 10:35-11:20",
+   "E-Centre 7"
+  ],
+  [
+   "Monday",
+   "4th | 10:35-11:20",
+   "Grade 0B Room"
+  ],
+  [
+   "Monday",
+   "4th | 10:35-11:20",
+   "Grade 0Y Room"
+  ],
+  [
+   "Monday",
+   "4th | 10:35-11:20",
+   "Grade 1B Room"
+  ],
+  [
+   "Monday",
+   "4th | 10:35-11:20",
+   "Grade 1Y Room"
+  ],
+  [
+   "Monday",
+   "4th | 10:35-11:20",
+   "Grade 2B Room"
+  ],
+  [
+   "Monday",
+   "4th | 10:35-11:20",
+   "Grade 2Y Room"
+  ],
+  [
+   "Monday",
+   "4th | 10:35-11:20",
+   "Grade 3B Room"
+  ],
+  [
+   "Monday",
+   "4th | 10:35-11:20",
+   "Grade 4Y Room"
+  ],
+  [
+   "Monday",
+   "4th | 10:35-11:20",
+   "Grade 5B Room"
+  ],
+  [
+   "Monday",
+   "4th | 10:35-11:20",
+   "Grade 5Y Room"
+  ],
+  [
+   "Monday",
+   "4th | 10:35-11:20",
+   "ICT Room"
+  ],
+  [
+   "Monday",
+   "4th | 10:35-11:20",
+   "Lab 1"
+  ],
+  [
+   "Monday",
+   "4th | 10:35-11:20",
+   "Lab 2"
+  ],
+  [
+   "Monday",
+   "4th | 10:35-11:20",
+   "Lab 3"
+  ],
+  [
+   "Monday",
+   "4th | 10:35-11:20",
+   "PS3 Room"
+  ],
+  [
+   "Monday",
+   "4th | 10:35-11:20",
+   "Preschool Gym"
+  ],
+  [
+   "Monday",
+   "4th | 10:35-11:20",
+   "Primary Art Room"
+  ],
+  [
+   "Monday",
+   "4th | 10:35-11:20",
+   "Primary Gym"
+  ],
+  [
+   "Monday",
+   "4th | 10:35-11:20",
+   "S1"
+  ],
+  [
+   "Monday",
+   "4th | 10:35-11:20",
+   "S2"
+  ],
+  [
+   "Monday",
+   "4th | 10:35-11:20",
+   "Secondary Library"
+  ],
+  [
+   "Monday",
+   "4th | 10:35-11:20",
+   "Small Hall"
+  ],
+  [
+   "Monday",
+   "4th | 10:35-11:20",
+   "T1"
+  ],
+  [
+   "Monday",
+   "4th | 10:35-11:20",
+   "T2"
+  ],
+  [
+   "Monday",
+   "4th | 10:35-11:20",
+   "T3"
+  ],
+  [
+   "Monday",
+   "4th | 10:35-11:20",
+   "T4"
+  ],
+  [
+   "Monday",
+   "4th | 10:35-11:20",
+   "T5"
+  ],
+  [
+   "Monday",
+   "4th | 10:35-11:20",
    "T6"
   ],
   [
    "Monday",
    "5th | 11:20-12:05",
+   "A2"
+  ],
+  [
+   "Monday",
+   "5th | 11:20-12:05",
+   "A3"
+  ],
+  [
+   "Monday",
+   "5th | 11:20-12:05",
+   "Big Hall"
+  ],
+  [
+   "Monday",
+   "5th | 11:20-12:05",
+   "CAC1"
+  ],
+  [
+   "Monday",
+   "5th | 11:20-12:05",
+   "CAC2"
+  ],
+  [
+   "Monday",
+   "5th | 11:20-12:05",
+   "CAC5"
+  ],
+  [
+   "Monday",
+   "5th | 11:20-12:05",
+   "CAC6"
+  ],
+  [
+   "Monday",
+   "5th | 11:20-12:05",
+   "E-Centre 1"
+  ],
+  [
+   "Monday",
+   "5th | 11:20-12:05",
+   "E-Centre 10"
+  ],
+  [
+   "Monday",
+   "5th | 11:20-12:05",
+   "E-Centre 2"
+  ],
+  [
+   "Monday",
+   "5th | 11:20-12:05",
+   "E-Centre 3"
+  ],
+  [
+   "Monday",
+   "5th | 11:20-12:05",
+   "E-Centre 4"
+  ],
+  [
+   "Monday",
+   "5th | 11:20-12:05",
+   "E-Centre 5"
+  ],
+  [
+   "Monday",
+   "5th | 11:20-12:05",
+   "E-Centre Terrace 1"
+  ],
+  [
+   "Monday",
+   "5th | 11:20-12:05",
+   "E-Centre Terrace 2"
+  ],
+  [
+   "Monday",
+   "5th | 11:20-12:05",
+   "Grade 0Y Room"
+  ],
+  [
+   "Monday",
+   "5th | 11:20-12:05",
+   "Grade 1B Room"
+  ],
+  [
+   "Monday",
+   "5th | 11:20-12:05",
+   "Grade 2B Room"
+  ],
+  [
+   "Monday",
+   "5th | 11:20-12:05",
+   "Grade 2Y Room"
+  ],
+  [
+   "Monday",
+   "5th | 11:20-12:05",
+   "Grade 3B Room"
+  ],
+  [
+   "Monday",
+   "5th | 11:20-12:05",
+   "Grade 3Y Room"
+  ],
+  [
+   "Monday",
+   "5th | 11:20-12:05",
+   "Grade 4B Room"
+  ],
+  [
+   "Monday",
+   "5th | 11:20-12:05",
+   "Grade 4Y Room"
+  ],
+  [
+   "Monday",
+   "5th | 11:20-12:05",
+   "Grade 5B Room"
+  ],
+  [
+   "Monday",
+   "5th | 11:20-12:05",
+   "ICT Room"
+  ],
+  [
+   "Monday",
+   "5th | 11:20-12:05",
+   "Lab 2"
+  ],
+  [
+   "Monday",
+   "5th | 11:20-12:05",
+   "Lab 3"
+  ],
+  [
+   "Monday",
+   "5th | 11:20-12:05",
+   "Primary Art Room"
+  ],
+  [
+   "Monday",
+   "5th | 11:20-12:05",
+   "Primary Gym"
+  ],
+  [
+   "Monday",
+   "5th | 11:20-12:05",
+   "S1"
+  ],
+  [
+   "Monday",
+   "5th | 11:20-12:05",
+   "S2"
+  ],
+  [
+   "Monday",
+   "5th | 11:20-12:05",
+   "Small Hall"
+  ],
+  [
+   "Monday",
+   "5th | 11:20-12:05",
+   "T1"
+  ],
+  [
+   "Monday",
+   "5th | 11:20-12:05",
+   "T2"
+  ],
+  [
+   "Monday",
+   "5th | 11:20-12:05",
+   "T3"
+  ],
+  [
+   "Monday",
+   "5th | 11:20-12:05",
+   "T4"
+  ],
+  [
+   "Monday",
+   "5th | 11:20-12:05",
+   "T5"
+  ],
+  [
+   "Monday",
+   "5th | 11:20-12:05",
    "T6"
+  ],
+  [
+   "Monday",
+   "6th (Lunch Break) | 12:05-12:50",
+   "A4 Music Room"
+  ],
+  [
+   "Monday",
+   "6th (Lunch Break) | 12:05-12:50",
+   "Big Hall"
+  ],
+  [
+   "Monday",
+   "6th (Lunch Break) | 12:05-12:50",
+   "Grade 2B Room"
+  ],
+  [
+   "Monday",
+   "6th (Lunch Break) | 12:05-12:50",
+   "Grade 3B Room"
+  ],
+  [
+   "Monday",
+   "6th (Lunch Break) | 12:05-12:50",
+   "Grade 3Y Room"
+  ],
+  [
+   "Monday",
+   "6th (Lunch Break) | 12:05-12:50",
+   "Grade 4B Room"
+  ],
+  [
+   "Monday",
+   "6th (Lunch Break) | 12:05-12:50",
+   "Grade 4Y Room"
+  ],
+  [
+   "Monday",
+   "6th (Lunch Break) | 12:05-12:50",
+   "Grade 5B Room"
+  ],
+  [
+   "Monday",
+   "6th (Lunch Break) | 12:05-12:50",
+   "Grade 5Y Room"
+  ],
+  [
+   "Monday",
+   "6th (Lunch Break) | 12:05-12:50",
+   "ICT Room"
+  ],
+  [
+   "Monday",
+   "6th (Lunch Break) | 12:05-12:50",
+   "T1"
+  ],
+  [
+   "Monday",
+   "6th (Lunch Break) | 12:05-12:50",
+   "T2"
+  ],
+  [
+   "Monday",
+   "6th (Lunch Break) | 12:05-12:50",
+   "T4"
+  ],
+  [
+   "Monday",
+   "7th (Lunch Break) | 12:50-13:35",
+   "A2"
+  ],
+  [
+   "Monday",
+   "7th (Lunch Break) | 12:50-13:35",
+   "A3"
+  ],
+  [
+   "Monday",
+   "7th (Lunch Break) | 12:50-13:35",
+   "A4 Music Room"
+  ],
+  [
+   "Monday",
+   "7th (Lunch Break) | 12:50-13:35",
+   "Big Hall"
+  ],
+  [
+   "Monday",
+   "7th (Lunch Break) | 12:50-13:35",
+   "CAC1"
+  ],
+  [
+   "Monday",
+   "7th (Lunch Break) | 12:50-13:35",
+   "CAC2"
+  ],
+  [
+   "Monday",
+   "7th (Lunch Break) | 12:50-13:35",
+   "CAC5"
+  ],
+  [
+   "Monday",
+   "7th (Lunch Break) | 12:50-13:35",
+   "CAC6"
+  ],
+  [
+   "Monday",
+   "7th (Lunch Break) | 12:50-13:35",
+   "E-Centre 1"
+  ],
+  [
+   "Monday",
+   "7th (Lunch Break) | 12:50-13:35",
+   "E-Centre 10"
+  ],
+  [
+   "Monday",
+   "7th (Lunch Break) | 12:50-13:35",
+   "E-Centre 2"
+  ],
+  [
+   "Monday",
+   "7th (Lunch Break) | 12:50-13:35",
+   "E-Centre 3"
+  ],
+  [
+   "Monday",
+   "7th (Lunch Break) | 12:50-13:35",
+   "E-Centre 4"
+  ],
+  [
+   "Monday",
+   "7th (Lunch Break) | 12:50-13:35",
+   "E-Centre 6"
+  ],
+  [
+   "Monday",
+   "7th (Lunch Break) | 12:50-13:35",
+   "E-Centre 7"
+  ],
+  [
+   "Monday",
+   "7th (Lunch Break) | 12:50-13:35",
+   "E-Centre Terrace 1"
+  ],
+  [
+   "Monday",
+   "7th (Lunch Break) | 12:50-13:35",
+   "E-Centre Terrace 2"
+  ],
+  [
+   "Monday",
+   "7th (Lunch Break) | 12:50-13:35",
+   "Lab 2"
+  ],
+  [
+   "Monday",
+   "7th (Lunch Break) | 12:50-13:35",
+   "Lab 3"
+  ],
+  [
+   "Monday",
+   "7th (Lunch Break) | 12:50-13:35",
+   "Primary Art Room"
+  ],
+  [
+   "Monday",
+   "7th (Lunch Break) | 12:50-13:35",
+   "Primary Gym"
+  ],
+  [
+   "Monday",
+   "7th (Lunch Break) | 12:50-13:35",
+   "S2"
+  ],
+  [
+   "Monday",
+   "7th (Lunch Break) | 12:50-13:35",
+   "T1"
+  ],
+  [
+   "Monday",
+   "7th (Lunch Break) | 12:50-13:35",
+   "T3"
+  ],
+  [
+   "Monday",
+   "7th (Lunch Break) | 12:50-13:35",
+   "T4"
+  ],
+  [
+   "Monday",
+   "7th (Lunch Break) | 12:50-13:35",
+   "T5"
   ],
   [
    "Monday",
@@ -97,7 +2799,407 @@
   [
    "Monday",
    "8th | 13:40-14:25",
+   "A2"
+  ],
+  [
+   "Monday",
+   "8th | 13:40-14:25",
+   "A3"
+  ],
+  [
+   "Monday",
+   "8th | 13:40-14:25",
+   "A4 Music Room"
+  ],
+  [
+   "Monday",
+   "8th | 13:40-14:25",
+   "Big Hall"
+  ],
+  [
+   "Monday",
+   "8th | 13:40-14:25",
+   "CAC1"
+  ],
+  [
+   "Monday",
+   "8th | 13:40-14:25",
+   "CAC2"
+  ],
+  [
+   "Monday",
+   "8th | 13:40-14:25",
+   "CAC5"
+  ],
+  [
+   "Monday",
+   "8th | 13:40-14:25",
+   "CAC6"
+  ],
+  [
+   "Monday",
+   "8th | 13:40-14:25",
+   "E-Centre 1"
+  ],
+  [
+   "Monday",
+   "8th | 13:40-14:25",
+   "E-Centre 10"
+  ],
+  [
+   "Monday",
+   "8th | 13:40-14:25",
+   "E-Centre 2"
+  ],
+  [
+   "Monday",
+   "8th | 13:40-14:25",
+   "E-Centre 3"
+  ],
+  [
+   "Monday",
+   "8th | 13:40-14:25",
+   "E-Centre 4"
+  ],
+  [
+   "Monday",
+   "8th | 13:40-14:25",
+   "E-Centre 6"
+  ],
+  [
+   "Monday",
+   "8th | 13:40-14:25",
+   "E-Centre 7"
+  ],
+  [
+   "Monday",
+   "8th | 13:40-14:25",
+   "E-Centre Terrace 1"
+  ],
+  [
+   "Monday",
+   "8th | 13:40-14:25",
+   "E-Centre Terrace 2"
+  ],
+  [
+   "Monday",
+   "8th | 13:40-14:25",
+   "Grade 0B Room"
+  ],
+  [
+   "Monday",
+   "8th | 13:40-14:25",
+   "Grade 1Y Room"
+  ],
+  [
+   "Monday",
+   "8th | 13:40-14:25",
+   "Grade 2Y Room"
+  ],
+  [
+   "Monday",
+   "8th | 13:40-14:25",
+   "Grade 3B Room"
+  ],
+  [
+   "Monday",
+   "8th | 13:40-14:25",
+   "Grade 3Y Room"
+  ],
+  [
+   "Monday",
+   "8th | 13:40-14:25",
+   "Grade 4B Room"
+  ],
+  [
+   "Monday",
+   "8th | 13:40-14:25",
+   "Grade 4Y Room"
+  ],
+  [
+   "Monday",
+   "8th | 13:40-14:25",
+   "Grade 5B Room"
+  ],
+  [
+   "Monday",
+   "8th | 13:40-14:25",
+   "Grade 5Y Room"
+  ],
+  [
+   "Monday",
+   "8th | 13:40-14:25",
+   "ICT Room"
+  ],
+  [
+   "Monday",
+   "8th | 13:40-14:25",
+   "Lab 2"
+  ],
+  [
+   "Monday",
+   "8th | 13:40-14:25",
+   "Lab 3"
+  ],
+  [
+   "Monday",
+   "8th | 13:40-14:25",
+   "Primary Art Room"
+  ],
+  [
+   "Monday",
+   "8th | 13:40-14:25",
+   "Primary Gym"
+  ],
+  [
+   "Monday",
+   "8th | 13:40-14:25",
+   "S1"
+  ],
+  [
+   "Monday",
+   "8th | 13:40-14:25",
+   "S2"
+  ],
+  [
+   "Monday",
+   "8th | 13:40-14:25",
+   "Secondary Library"
+  ],
+  [
+   "Monday",
+   "8th | 13:40-14:25",
+   "Small Hall"
+  ],
+  [
+   "Monday",
+   "8th | 13:40-14:25",
+   "T1"
+  ],
+  [
+   "Monday",
+   "8th | 13:40-14:25",
+   "T2"
+  ],
+  [
+   "Monday",
+   "8th | 13:40-14:25",
+   "T3"
+  ],
+  [
+   "Monday",
+   "8th | 13:40-14:25",
+   "T4"
+  ],
+  [
+   "Monday",
+   "8th | 13:40-14:25",
+   "T5"
+  ],
+  [
+   "Monday",
+   "8th | 13:40-14:25",
    "T6"
+  ],
+  [
+   "Monday",
+   "9th | 14:30-15:15",
+   "A2"
+  ],
+  [
+   "Monday",
+   "9th | 14:30-15:15",
+   "A3"
+  ],
+  [
+   "Monday",
+   "9th | 14:30-15:15",
+   "A4 Music Room"
+  ],
+  [
+   "Monday",
+   "9th | 14:30-15:15",
+   "CAC1"
+  ],
+  [
+   "Monday",
+   "9th | 14:30-15:15",
+   "CAC2"
+  ],
+  [
+   "Monday",
+   "9th | 14:30-15:15",
+   "CAC5"
+  ],
+  [
+   "Monday",
+   "9th | 14:30-15:15",
+   "CAC6"
+  ],
+  [
+   "Monday",
+   "9th | 14:30-15:15",
+   "E-Centre 1"
+  ],
+  [
+   "Monday",
+   "9th | 14:30-15:15",
+   "E-Centre 10"
+  ],
+  [
+   "Monday",
+   "9th | 14:30-15:15",
+   "E-Centre 2"
+  ],
+  [
+   "Monday",
+   "9th | 14:30-15:15",
+   "E-Centre 3"
+  ],
+  [
+   "Monday",
+   "9th | 14:30-15:15",
+   "E-Centre 4"
+  ],
+  [
+   "Monday",
+   "9th | 14:30-15:15",
+   "E-Centre 5"
+  ],
+  [
+   "Monday",
+   "9th | 14:30-15:15",
+   "E-Centre 6"
+  ],
+  [
+   "Monday",
+   "9th | 14:30-15:15",
+   "E-Centre 7"
+  ],
+  [
+   "Monday",
+   "9th | 14:30-15:15",
+   "E-Centre Terrace 1"
+  ],
+  [
+   "Monday",
+   "9th | 14:30-15:15",
+   "E-Centre Terrace 2"
+  ],
+  [
+   "Monday",
+   "9th | 14:30-15:15",
+   "Grade 0B Room"
+  ],
+  [
+   "Monday",
+   "9th | 14:30-15:15",
+   "Grade 0Y Room"
+  ],
+  [
+   "Monday",
+   "9th | 14:30-15:15",
+   "Grade 1B Room"
+  ],
+  [
+   "Monday",
+   "9th | 14:30-15:15",
+   "Grade 1Y Room"
+  ],
+  [
+   "Monday",
+   "9th | 14:30-15:15",
+   "Grade 2B Room"
+  ],
+  [
+   "Monday",
+   "9th | 14:30-15:15",
+   "Grade 2Y Room"
+  ],
+  [
+   "Monday",
+   "9th | 14:30-15:15",
+   "Grade 3B Room"
+  ],
+  [
+   "Monday",
+   "9th | 14:30-15:15",
+   "Grade 3Y Room"
+  ],
+  [
+   "Monday",
+   "9th | 14:30-15:15",
+   "Grade 4B Room"
+  ],
+  [
+   "Monday",
+   "9th | 14:30-15:15",
+   "Grade 5B Room"
+  ],
+  [
+   "Monday",
+   "9th | 14:30-15:15",
+   "Grade 5Y Room"
+  ],
+  [
+   "Monday",
+   "9th | 14:30-15:15",
+   "ICT Room"
+  ],
+  [
+   "Monday",
+   "9th | 14:30-15:15",
+   "Lab 2"
+  ],
+  [
+   "Monday",
+   "9th | 14:30-15:15",
+   "Lab 3"
+  ],
+  [
+   "Monday",
+   "9th | 14:30-15:15",
+   "Primary Gym"
+  ],
+  [
+   "Monday",
+   "9th | 14:30-15:15",
+   "S1"
+  ],
+  [
+   "Monday",
+   "9th | 14:30-15:15",
+   "S2"
+  ],
+  [
+   "Monday",
+   "9th | 14:30-15:15",
+   "Small Hall"
+  ],
+  [
+   "Monday",
+   "9th | 14:30-15:15",
+   "T1"
+  ],
+  [
+   "Monday",
+   "9th | 14:30-15:15",
+   "T2"
+  ],
+  [
+   "Monday",
+   "9th | 14:30-15:15",
+   "T3"
+  ],
+  [
+   "Monday",
+   "9th | 14:30-15:15",
+   "T4"
+  ],
+  [
+   "Monday",
+   "9th | 14:30-15:15",
+   "T5"
   ],
   [
    "Monday",
@@ -107,7 +3209,227 @@
   [
    "Thursday",
    "10th (ECA) | 15:30-16:30",
+   "E-Centre Terrace 2"
+  ],
+  [
+   "Thursday",
+   "10th (ECA) | 15:30-16:30",
+   "Grade 3B Room"
+  ],
+  [
+   "Thursday",
+   "10th (ECA) | 15:30-16:30",
+   "Grade 3Y Room"
+  ],
+  [
+   "Thursday",
+   "10th (ECA) | 15:30-16:30",
+   "Staffroom 5"
+  ],
+  [
+   "Thursday",
+   "10th (ECA) | 15:30-16:30",
+   "T3"
+  ],
+  [
+   "Thursday",
+   "10th (ECA) | 15:30-16:30",
    "T6"
+  ],
+  [
+   "Thursday",
+   "11th | 16:30-17:30",
+   "T3"
+  ],
+  [
+   "Thursday",
+   "1st | 08:00-08:45",
+   "A2"
+  ],
+  [
+   "Thursday",
+   "1st | 08:00-08:45",
+   "A3"
+  ],
+  [
+   "Thursday",
+   "1st | 08:00-08:45",
+   "A4 Music Room"
+  ],
+  [
+   "Thursday",
+   "1st | 08:00-08:45",
+   "Big Hall"
+  ],
+  [
+   "Thursday",
+   "1st | 08:00-08:45",
+   "Breakout Space 3 G3 Rooms"
+  ],
+  [
+   "Thursday",
+   "1st | 08:00-08:45",
+   "Breakout Space 4 G4 Rooms"
+  ],
+  [
+   "Thursday",
+   "1st | 08:00-08:45",
+   "CAC5"
+  ],
+  [
+   "Thursday",
+   "1st | 08:00-08:45",
+   "CAC6"
+  ],
+  [
+   "Thursday",
+   "1st | 08:00-08:45",
+   "E-Centre 1"
+  ],
+  [
+   "Thursday",
+   "1st | 08:00-08:45",
+   "E-Centre 10"
+  ],
+  [
+   "Thursday",
+   "1st | 08:00-08:45",
+   "E-Centre 2"
+  ],
+  [
+   "Thursday",
+   "1st | 08:00-08:45",
+   "E-Centre 4"
+  ],
+  [
+   "Thursday",
+   "1st | 08:00-08:45",
+   "E-Centre 5"
+  ],
+  [
+   "Thursday",
+   "1st | 08:00-08:45",
+   "E-Centre 6"
+  ],
+  [
+   "Thursday",
+   "1st | 08:00-08:45",
+   "E-Centre 7"
+  ],
+  [
+   "Thursday",
+   "1st | 08:00-08:45",
+   "Grade 0B Room"
+  ],
+  [
+   "Thursday",
+   "1st | 08:00-08:45",
+   "Grade 0Y Room"
+  ],
+  [
+   "Thursday",
+   "1st | 08:00-08:45",
+   "Grade 1B Room"
+  ],
+  [
+   "Thursday",
+   "1st | 08:00-08:45",
+   "Grade 1Y Room"
+  ],
+  [
+   "Thursday",
+   "1st | 08:00-08:45",
+   "Grade 2B Room"
+  ],
+  [
+   "Thursday",
+   "1st | 08:00-08:45",
+   "Grade 2Y Room"
+  ],
+  [
+   "Thursday",
+   "1st | 08:00-08:45",
+   "Grade 3B Room"
+  ],
+  [
+   "Thursday",
+   "1st | 08:00-08:45",
+   "Grade 3Y Room"
+  ],
+  [
+   "Thursday",
+   "1st | 08:00-08:45",
+   "Grade 4B Room"
+  ],
+  [
+   "Thursday",
+   "1st | 08:00-08:45",
+   "Grade 4Y Room"
+  ],
+  [
+   "Thursday",
+   "1st | 08:00-08:45",
+   "Grade 5B Room"
+  ],
+  [
+   "Thursday",
+   "1st | 08:00-08:45",
+   "Grade 5Y Room"
+  ],
+  [
+   "Thursday",
+   "1st | 08:00-08:45",
+   "ICT Room"
+  ],
+  [
+   "Thursday",
+   "1st | 08:00-08:45",
+   "Lab 1"
+  ],
+  [
+   "Thursday",
+   "1st | 08:00-08:45",
+   "Lab 2"
+  ],
+  [
+   "Thursday",
+   "1st | 08:00-08:45",
+   "Lab 3"
+  ],
+  [
+   "Thursday",
+   "1st | 08:00-08:45",
+   "S2"
+  ],
+  [
+   "Thursday",
+   "1st | 08:00-08:45",
+   "Secondary Library"
+  ],
+  [
+   "Thursday",
+   "1st | 08:00-08:45",
+   "T1"
+  ],
+  [
+   "Thursday",
+   "1st | 08:00-08:45",
+   "T2"
+  ],
+  [
+   "Thursday",
+   "1st | 08:00-08:45",
+   "T3"
+  ],
+  [
+   "Thursday",
+   "1st | 08:00-08:45",
+   "T4"
+  ],
+  [
+   "Thursday",
+   "1st | 08:00-08:45",
+   "T5"
   ],
   [
    "Thursday",
@@ -117,7 +3439,372 @@
   [
    "Thursday",
    "2nd | 08:45-09:30",
+   "A2"
+  ],
+  [
+   "Thursday",
+   "2nd | 08:45-09:30",
+   "A3"
+  ],
+  [
+   "Thursday",
+   "2nd | 08:45-09:30",
+   "Big Hall"
+  ],
+  [
+   "Thursday",
+   "2nd | 08:45-09:30",
+   "CAC2"
+  ],
+  [
+   "Thursday",
+   "2nd | 08:45-09:30",
+   "CAC5"
+  ],
+  [
+   "Thursday",
+   "2nd | 08:45-09:30",
+   "CAC6"
+  ],
+  [
+   "Thursday",
+   "2nd | 08:45-09:30",
+   "E-Centre 1"
+  ],
+  [
+   "Thursday",
+   "2nd | 08:45-09:30",
+   "E-Centre 2"
+  ],
+  [
+   "Thursday",
+   "2nd | 08:45-09:30",
+   "E-Centre 3"
+  ],
+  [
+   "Thursday",
+   "2nd | 08:45-09:30",
+   "E-Centre 4"
+  ],
+  [
+   "Thursday",
+   "2nd | 08:45-09:30",
+   "E-Centre 5"
+  ],
+  [
+   "Thursday",
+   "2nd | 08:45-09:30",
+   "E-Centre 6"
+  ],
+  [
+   "Thursday",
+   "2nd | 08:45-09:30",
+   "E-Centre 7"
+  ],
+  [
+   "Thursday",
+   "2nd | 08:45-09:30",
+   "E-Centre Terrace 2"
+  ],
+  [
+   "Thursday",
+   "2nd | 08:45-09:30",
+   "Grade 0B Room"
+  ],
+  [
+   "Thursday",
+   "2nd | 08:45-09:30",
+   "Grade 0Y Room"
+  ],
+  [
+   "Thursday",
+   "2nd | 08:45-09:30",
+   "Grade 1B Room"
+  ],
+  [
+   "Thursday",
+   "2nd | 08:45-09:30",
+   "Grade 1Y Room"
+  ],
+  [
+   "Thursday",
+   "2nd | 08:45-09:30",
+   "Grade 2B Room"
+  ],
+  [
+   "Thursday",
+   "2nd | 08:45-09:30",
+   "Grade 2Y Room"
+  ],
+  [
+   "Thursday",
+   "2nd | 08:45-09:30",
+   "Grade 3B Room"
+  ],
+  [
+   "Thursday",
+   "2nd | 08:45-09:30",
+   "Grade 3Y Room"
+  ],
+  [
+   "Thursday",
+   "2nd | 08:45-09:30",
+   "Grade 4B Room"
+  ],
+  [
+   "Thursday",
+   "2nd | 08:45-09:30",
+   "Grade 4Y Room"
+  ],
+  [
+   "Thursday",
+   "2nd | 08:45-09:30",
+   "Grade 5B Room"
+  ],
+  [
+   "Thursday",
+   "2nd | 08:45-09:30",
+   "Grade 5Y Room"
+  ],
+  [
+   "Thursday",
+   "2nd | 08:45-09:30",
+   "ICT Room"
+  ],
+  [
+   "Thursday",
+   "2nd | 08:45-09:30",
+   "Lab 1"
+  ],
+  [
+   "Thursday",
+   "2nd | 08:45-09:30",
+   "Lab 2"
+  ],
+  [
+   "Thursday",
+   "2nd | 08:45-09:30",
+   "Lab 3"
+  ],
+  [
+   "Thursday",
+   "2nd | 08:45-09:30",
+   "S2"
+  ],
+  [
+   "Thursday",
+   "2nd | 08:45-09:30",
+   "Secondary Library"
+  ],
+  [
+   "Thursday",
+   "2nd | 08:45-09:30",
+   "T1"
+  ],
+  [
+   "Thursday",
+   "2nd | 08:45-09:30",
    "T6"
+  ],
+  [
+   "Thursday",
+   "3rd | 09:45-10:30",
+   "A2"
+  ],
+  [
+   "Thursday",
+   "3rd | 09:45-10:30",
+   "A3"
+  ],
+  [
+   "Thursday",
+   "3rd | 09:45-10:30",
+   "CAC1"
+  ],
+  [
+   "Thursday",
+   "3rd | 09:45-10:30",
+   "CAC2"
+  ],
+  [
+   "Thursday",
+   "3rd | 09:45-10:30",
+   "CAC5"
+  ],
+  [
+   "Thursday",
+   "3rd | 09:45-10:30",
+   "CAC6"
+  ],
+  [
+   "Thursday",
+   "3rd | 09:45-10:30",
+   "E-Centre 1"
+  ],
+  [
+   "Thursday",
+   "3rd | 09:45-10:30",
+   "E-Centre 10"
+  ],
+  [
+   "Thursday",
+   "3rd | 09:45-10:30",
+   "E-Centre 2"
+  ],
+  [
+   "Thursday",
+   "3rd | 09:45-10:30",
+   "E-Centre 3"
+  ],
+  [
+   "Thursday",
+   "3rd | 09:45-10:30",
+   "E-Centre 4"
+  ],
+  [
+   "Thursday",
+   "3rd | 09:45-10:30",
+   "E-Centre 5"
+  ],
+  [
+   "Thursday",
+   "3rd | 09:45-10:30",
+   "E-Centre 6"
+  ],
+  [
+   "Thursday",
+   "3rd | 09:45-10:30",
+   "E-Centre 7"
+  ],
+  [
+   "Thursday",
+   "3rd | 09:45-10:30",
+   "E-Centre Terrace 1"
+  ],
+  [
+   "Thursday",
+   "3rd | 09:45-10:30",
+   "E-Centre Terrace 2"
+  ],
+  [
+   "Thursday",
+   "3rd | 09:45-10:30",
+   "Grade 0B Room"
+  ],
+  [
+   "Thursday",
+   "3rd | 09:45-10:30",
+   "Grade 0Y Room"
+  ],
+  [
+   "Thursday",
+   "3rd | 09:45-10:30",
+   "Grade 1B Room"
+  ],
+  [
+   "Thursday",
+   "3rd | 09:45-10:30",
+   "Grade 1Y Room"
+  ],
+  [
+   "Thursday",
+   "3rd | 09:45-10:30",
+   "Grade 2B Room"
+  ],
+  [
+   "Thursday",
+   "3rd | 09:45-10:30",
+   "Grade 2Y Room"
+  ],
+  [
+   "Thursday",
+   "3rd | 09:45-10:30",
+   "Grade 3B Room"
+  ],
+  [
+   "Thursday",
+   "3rd | 09:45-10:30",
+   "Grade 3Y Room"
+  ],
+  [
+   "Thursday",
+   "3rd | 09:45-10:30",
+   "Grade 4B Room"
+  ],
+  [
+   "Thursday",
+   "3rd | 09:45-10:30",
+   "Grade 4Y Room"
+  ],
+  [
+   "Thursday",
+   "3rd | 09:45-10:30",
+   "Grade 5B Room"
+  ],
+  [
+   "Thursday",
+   "3rd | 09:45-10:30",
+   "Grade 5Y Room"
+  ],
+  [
+   "Thursday",
+   "3rd | 09:45-10:30",
+   "ICT Room"
+  ],
+  [
+   "Thursday",
+   "3rd | 09:45-10:30",
+   "Lab 2"
+  ],
+  [
+   "Thursday",
+   "3rd | 09:45-10:30",
+   "Lab 3"
+  ],
+  [
+   "Thursday",
+   "3rd | 09:45-10:30",
+   "PS2 Room"
+  ],
+  [
+   "Thursday",
+   "3rd | 09:45-10:30",
+   "PS3 Room"
+  ],
+  [
+   "Thursday",
+   "3rd | 09:45-10:30",
+   "Preschool Gym"
+  ],
+  [
+   "Thursday",
+   "3rd | 09:45-10:30",
+   "S1"
+  ],
+  [
+   "Thursday",
+   "3rd | 09:45-10:30",
+   "S2"
+  ],
+  [
+   "Thursday",
+   "3rd | 09:45-10:30",
+   "T1"
+  ],
+  [
+   "Thursday",
+   "3rd | 09:45-10:30",
+   "T2"
+  ],
+  [
+   "Thursday",
+   "3rd | 09:45-10:30",
+   "T4"
+  ],
+  [
+   "Thursday",
+   "3rd | 09:45-10:30",
+   "T5"
   ],
   [
    "Thursday",
@@ -127,7 +3814,392 @@
   [
    "Thursday",
    "4th | 10:35-11:20",
+   "A2"
+  ],
+  [
+   "Thursday",
+   "4th | 10:35-11:20",
+   "A3"
+  ],
+  [
+   "Thursday",
+   "4th | 10:35-11:20",
+   "A4 Music Room"
+  ],
+  [
+   "Thursday",
+   "4th | 10:35-11:20",
+   "Big Hall"
+  ],
+  [
+   "Thursday",
+   "4th | 10:35-11:20",
+   "CAC1"
+  ],
+  [
+   "Thursday",
+   "4th | 10:35-11:20",
+   "CAC2"
+  ],
+  [
+   "Thursday",
+   "4th | 10:35-11:20",
+   "CAC5"
+  ],
+  [
+   "Thursday",
+   "4th | 10:35-11:20",
+   "CAC6"
+  ],
+  [
+   "Thursday",
+   "4th | 10:35-11:20",
+   "E-Centre 1"
+  ],
+  [
+   "Thursday",
+   "4th | 10:35-11:20",
+   "E-Centre 10"
+  ],
+  [
+   "Thursday",
+   "4th | 10:35-11:20",
+   "E-Centre 2"
+  ],
+  [
+   "Thursday",
+   "4th | 10:35-11:20",
+   "E-Centre 3"
+  ],
+  [
+   "Thursday",
+   "4th | 10:35-11:20",
+   "E-Centre 4"
+  ],
+  [
+   "Thursday",
+   "4th | 10:35-11:20",
+   "E-Centre 5"
+  ],
+  [
+   "Thursday",
+   "4th | 10:35-11:20",
+   "E-Centre 6"
+  ],
+  [
+   "Thursday",
+   "4th | 10:35-11:20",
+   "E-Centre Terrace 1"
+  ],
+  [
+   "Thursday",
+   "4th | 10:35-11:20",
+   "Grade 0B Room"
+  ],
+  [
+   "Thursday",
+   "4th | 10:35-11:20",
+   "Grade 0Y Room"
+  ],
+  [
+   "Thursday",
+   "4th | 10:35-11:20",
+   "Grade 2B Room"
+  ],
+  [
+   "Thursday",
+   "4th | 10:35-11:20",
+   "Grade 2Y Room"
+  ],
+  [
+   "Thursday",
+   "4th | 10:35-11:20",
+   "Grade 3B Room"
+  ],
+  [
+   "Thursday",
+   "4th | 10:35-11:20",
+   "Grade 3Y Room"
+  ],
+  [
+   "Thursday",
+   "4th | 10:35-11:20",
+   "Grade 4B Room"
+  ],
+  [
+   "Thursday",
+   "4th | 10:35-11:20",
+   "Grade 4Y Room"
+  ],
+  [
+   "Thursday",
+   "4th | 10:35-11:20",
+   "Grade 5B Room"
+  ],
+  [
+   "Thursday",
+   "4th | 10:35-11:20",
+   "Grade 5Y Room"
+  ],
+  [
+   "Thursday",
+   "4th | 10:35-11:20",
+   "ICT Room"
+  ],
+  [
+   "Thursday",
+   "4th | 10:35-11:20",
+   "Lab 2"
+  ],
+  [
+   "Thursday",
+   "4th | 10:35-11:20",
+   "Lab 3"
+  ],
+  [
+   "Thursday",
+   "4th | 10:35-11:20",
+   "Preschool Gym"
+  ],
+  [
+   "Thursday",
+   "4th | 10:35-11:20",
+   "Primary Art Room"
+  ],
+  [
+   "Thursday",
+   "4th | 10:35-11:20",
+   "Primary Gym"
+  ],
+  [
+   "Thursday",
+   "4th | 10:35-11:20",
+   "S1"
+  ],
+  [
+   "Thursday",
+   "4th | 10:35-11:20",
+   "T1"
+  ],
+  [
+   "Thursday",
+   "4th | 10:35-11:20",
+   "T2"
+  ],
+  [
+   "Thursday",
+   "4th | 10:35-11:20",
+   "T3"
+  ],
+  [
+   "Thursday",
+   "4th | 10:35-11:20",
+   "T4"
+  ],
+  [
+   "Thursday",
+   "4th | 10:35-11:20",
+   "T5"
+  ],
+  [
+   "Thursday",
+   "4th | 10:35-11:20",
    "T6"
+  ],
+  [
+   "Thursday",
+   "5th | 11:20-12:05",
+   "A4 Music Room"
+  ],
+  [
+   "Thursday",
+   "5th | 11:20-12:05",
+   "Big Hall"
+  ],
+  [
+   "Thursday",
+   "5th | 11:20-12:05",
+   "Breakout Space 3 G3 Rooms"
+  ],
+  [
+   "Thursday",
+   "5th | 11:20-12:05",
+   "CAC2"
+  ],
+  [
+   "Thursday",
+   "5th | 11:20-12:05",
+   "CAC6"
+  ],
+  [
+   "Thursday",
+   "5th | 11:20-12:05",
+   "E-Centre 1"
+  ],
+  [
+   "Thursday",
+   "5th | 11:20-12:05",
+   "E-Centre 10"
+  ],
+  [
+   "Thursday",
+   "5th | 11:20-12:05",
+   "E-Centre 3"
+  ],
+  [
+   "Thursday",
+   "5th | 11:20-12:05",
+   "E-Centre 5"
+  ],
+  [
+   "Thursday",
+   "5th | 11:20-12:05",
+   "E-Centre 6"
+  ],
+  [
+   "Thursday",
+   "5th | 11:20-12:05",
+   "E-Centre 8 Music Room"
+  ],
+  [
+   "Thursday",
+   "5th | 11:20-12:05",
+   "E-Centre Terrace 1"
+  ],
+  [
+   "Thursday",
+   "5th | 11:20-12:05",
+   "Grade 0B Room"
+  ],
+  [
+   "Thursday",
+   "5th | 11:20-12:05",
+   "Grade 0Y Room"
+  ],
+  [
+   "Thursday",
+   "5th | 11:20-12:05",
+   "Grade 1B Room"
+  ],
+  [
+   "Thursday",
+   "5th | 11:20-12:05",
+   "Grade 1Y Room"
+  ],
+  [
+   "Thursday",
+   "5th | 11:20-12:05",
+   "Grade 2B Room"
+  ],
+  [
+   "Thursday",
+   "5th | 11:20-12:05",
+   "Grade 2Y Room"
+  ],
+  [
+   "Thursday",
+   "5th | 11:20-12:05",
+   "Grade 3B Room"
+  ],
+  [
+   "Thursday",
+   "5th | 11:20-12:05",
+   "Grade 3Y Room"
+  ],
+  [
+   "Thursday",
+   "5th | 11:20-12:05",
+   "Grade 4B Room"
+  ],
+  [
+   "Thursday",
+   "5th | 11:20-12:05",
+   "Grade 4Y Room"
+  ],
+  [
+   "Thursday",
+   "5th | 11:20-12:05",
+   "Grade 5B Room"
+  ],
+  [
+   "Thursday",
+   "5th | 11:20-12:05",
+   "Grade 5Y Room"
+  ],
+  [
+   "Thursday",
+   "5th | 11:20-12:05",
+   "ICT Room"
+  ],
+  [
+   "Thursday",
+   "5th | 11:20-12:05",
+   "LDIC"
+  ],
+  [
+   "Thursday",
+   "5th | 11:20-12:05",
+   "Lab 1"
+  ],
+  [
+   "Thursday",
+   "5th | 11:20-12:05",
+   "Lab 2"
+  ],
+  [
+   "Thursday",
+   "5th | 11:20-12:05",
+   "Lab 3"
+  ],
+  [
+   "Thursday",
+   "5th | 11:20-12:05",
+   "Primary Art Room"
+  ],
+  [
+   "Thursday",
+   "5th | 11:20-12:05",
+   "Primary Gym"
+  ],
+  [
+   "Thursday",
+   "5th | 11:20-12:05",
+   "S1"
+  ],
+  [
+   "Thursday",
+   "5th | 11:20-12:05",
+   "S2"
+  ],
+  [
+   "Thursday",
+   "5th | 11:20-12:05",
+   "Small Hall"
+  ],
+  [
+   "Thursday",
+   "5th | 11:20-12:05",
+   "T1"
+  ],
+  [
+   "Thursday",
+   "5th | 11:20-12:05",
+   "T2"
+  ],
+  [
+   "Thursday",
+   "5th | 11:20-12:05",
+   "T3"
+  ],
+  [
+   "Thursday",
+   "5th | 11:20-12:05",
+   "T4"
+  ],
+  [
+   "Thursday",
+   "5th | 11:20-12:05",
+   "T5"
   ],
   [
    "Thursday",
@@ -136,8 +4208,398 @@
   ],
   [
    "Thursday",
+   "6th (Lunch Break) | 12:05-12:50",
+   "A4 Music Room"
+  ],
+  [
+   "Thursday",
+   "6th (Lunch Break) | 12:05-12:50",
+   "Big Hall"
+  ],
+  [
+   "Thursday",
+   "6th (Lunch Break) | 12:05-12:50",
+   "CAC2"
+  ],
+  [
+   "Thursday",
+   "6th (Lunch Break) | 12:05-12:50",
+   "CAC5"
+  ],
+  [
+   "Thursday",
+   "6th (Lunch Break) | 12:05-12:50",
+   "E-Centre 2"
+  ],
+  [
+   "Thursday",
+   "6th (Lunch Break) | 12:05-12:50",
+   "Grade 3Y Room"
+  ],
+  [
+   "Thursday",
+   "6th (Lunch Break) | 12:05-12:50",
+   "Grade 4B Room"
+  ],
+  [
+   "Thursday",
+   "6th (Lunch Break) | 12:05-12:50",
+   "Grade 4Y Room"
+  ],
+  [
+   "Thursday",
+   "6th (Lunch Break) | 12:05-12:50",
+   "Grade 5Y Room"
+  ],
+  [
+   "Thursday",
+   "6th (Lunch Break) | 12:05-12:50",
+   "ICT Room"
+  ],
+  [
+   "Thursday",
+   "6th (Lunch Break) | 12:05-12:50",
+   "Primary Gym"
+  ],
+  [
+   "Thursday",
+   "6th (Lunch Break) | 12:05-12:50",
+   "T1"
+  ],
+  [
+   "Thursday",
+   "7th (Lunch Break) | 12:50-13:35",
+   "A2"
+  ],
+  [
+   "Thursday",
+   "7th (Lunch Break) | 12:50-13:35",
+   "A3"
+  ],
+  [
+   "Thursday",
+   "7th (Lunch Break) | 12:50-13:35",
+   "A4 Music Room"
+  ],
+  [
+   "Thursday",
+   "7th (Lunch Break) | 12:50-13:35",
+   "Big Hall"
+  ],
+  [
+   "Thursday",
+   "7th (Lunch Break) | 12:50-13:35",
+   "CAC1"
+  ],
+  [
+   "Thursday",
+   "7th (Lunch Break) | 12:50-13:35",
+   "CAC2"
+  ],
+  [
+   "Thursday",
+   "7th (Lunch Break) | 12:50-13:35",
+   "DP Art Studio"
+  ],
+  [
+   "Thursday",
+   "7th (Lunch Break) | 12:50-13:35",
+   "E-Centre 1"
+  ],
+  [
+   "Thursday",
+   "7th (Lunch Break) | 12:50-13:35",
+   "E-Centre 2"
+  ],
+  [
+   "Thursday",
+   "7th (Lunch Break) | 12:50-13:35",
+   "E-Centre 3"
+  ],
+  [
+   "Thursday",
+   "7th (Lunch Break) | 12:50-13:35",
+   "E-Centre 4"
+  ],
+  [
+   "Thursday",
+   "7th (Lunch Break) | 12:50-13:35",
+   "E-Centre 5"
+  ],
+  [
+   "Thursday",
+   "7th (Lunch Break) | 12:50-13:35",
+   "E-Centre 6"
+  ],
+  [
+   "Thursday",
+   "7th (Lunch Break) | 12:50-13:35",
+   "E-Centre 7"
+  ],
+  [
+   "Thursday",
+   "7th (Lunch Break) | 12:50-13:35",
+   "E-Centre Terrace 2"
+  ],
+  [
+   "Thursday",
+   "7th (Lunch Break) | 12:50-13:35",
+   "Grade 1B Room"
+  ],
+  [
+   "Thursday",
+   "7th (Lunch Break) | 12:50-13:35",
+   "Grade 1Y Room"
+  ],
+  [
+   "Thursday",
+   "7th (Lunch Break) | 12:50-13:35",
+   "ICT Room"
+  ],
+  [
+   "Thursday",
+   "7th (Lunch Break) | 12:50-13:35",
+   "Lab 1"
+  ],
+  [
+   "Thursday",
+   "7th (Lunch Break) | 12:50-13:35",
+   "Lab 3"
+  ],
+  [
+   "Thursday",
+   "7th (Lunch Break) | 12:50-13:35",
+   "Primary Gym"
+  ],
+  [
+   "Thursday",
+   "7th (Lunch Break) | 12:50-13:35",
+   "S2"
+  ],
+  [
+   "Thursday",
+   "7th (Lunch Break) | 12:50-13:35",
+   "Secondary Library"
+  ],
+  [
+   "Thursday",
+   "7th (Lunch Break) | 12:50-13:35",
+   "Small Hall"
+  ],
+  [
+   "Thursday",
+   "7th (Lunch Break) | 12:50-13:35",
+   "T1"
+  ],
+  [
+   "Thursday",
+   "7th (Lunch Break) | 12:50-13:35",
+   "T2"
+  ],
+  [
+   "Thursday",
+   "7th (Lunch Break) | 12:50-13:35",
+   "T4"
+  ],
+  [
+   "Thursday",
+   "7th (Lunch Break) | 12:50-13:35",
+   "T5"
+  ],
+  [
+   "Thursday",
    "7th (Lunch Break) | 12:50-13:35",
    "T6"
+  ],
+  [
+   "Thursday",
+   "8th | 13:40-14:25",
+   "A2"
+  ],
+  [
+   "Thursday",
+   "8th | 13:40-14:25",
+   "A3"
+  ],
+  [
+   "Thursday",
+   "8th | 13:40-14:25",
+   "A4 Music Room"
+  ],
+  [
+   "Thursday",
+   "8th | 13:40-14:25",
+   "Big Hall"
+  ],
+  [
+   "Thursday",
+   "8th | 13:40-14:25",
+   "CAC1"
+  ],
+  [
+   "Thursday",
+   "8th | 13:40-14:25",
+   "CAC2"
+  ],
+  [
+   "Thursday",
+   "8th | 13:40-14:25",
+   "CAC5"
+  ],
+  [
+   "Thursday",
+   "8th | 13:40-14:25",
+   "CAC6"
+  ],
+  [
+   "Thursday",
+   "8th | 13:40-14:25",
+   "E-Centre 10"
+  ],
+  [
+   "Thursday",
+   "8th | 13:40-14:25",
+   "E-Centre 2"
+  ],
+  [
+   "Thursday",
+   "8th | 13:40-14:25",
+   "E-Centre 4"
+  ],
+  [
+   "Thursday",
+   "8th | 13:40-14:25",
+   "E-Centre 5"
+  ],
+  [
+   "Thursday",
+   "8th | 13:40-14:25",
+   "E-Centre 7"
+  ],
+  [
+   "Thursday",
+   "8th | 13:40-14:25",
+   "E-Centre Terrace 1"
+  ],
+  [
+   "Thursday",
+   "8th | 13:40-14:25",
+   "E-Centre Terrace 2"
+  ],
+  [
+   "Thursday",
+   "8th | 13:40-14:25",
+   "Grade 0B Room"
+  ],
+  [
+   "Thursday",
+   "8th | 13:40-14:25",
+   "Grade 0Y Room"
+  ],
+  [
+   "Thursday",
+   "8th | 13:40-14:25",
+   "Grade 1B Room"
+  ],
+  [
+   "Thursday",
+   "8th | 13:40-14:25",
+   "Grade 1Y Room"
+  ],
+  [
+   "Thursday",
+   "8th | 13:40-14:25",
+   "Grade 2Y Room"
+  ],
+  [
+   "Thursday",
+   "8th | 13:40-14:25",
+   "Grade 3B Room"
+  ],
+  [
+   "Thursday",
+   "8th | 13:40-14:25",
+   "Grade 4B Room"
+  ],
+  [
+   "Thursday",
+   "8th | 13:40-14:25",
+   "Grade 5Y Room"
+  ],
+  [
+   "Thursday",
+   "8th | 13:40-14:25",
+   "ICT Room"
+  ],
+  [
+   "Thursday",
+   "8th | 13:40-14:25",
+   "Lab 1"
+  ],
+  [
+   "Thursday",
+   "8th | 13:40-14:25",
+   "Lab 3"
+  ],
+  [
+   "Thursday",
+   "8th | 13:40-14:25",
+   "Primary Art Room"
+  ],
+  [
+   "Thursday",
+   "8th | 13:40-14:25",
+   "Primary Gym"
+  ],
+  [
+   "Thursday",
+   "8th | 13:40-14:25",
+   "S1"
+  ],
+  [
+   "Thursday",
+   "8th | 13:40-14:25",
+   "S2"
+  ],
+  [
+   "Thursday",
+   "8th | 13:40-14:25",
+   "Secondary Library"
+  ],
+  [
+   "Thursday",
+   "8th | 13:40-14:25",
+   "Small Hall"
+  ],
+  [
+   "Thursday",
+   "8th | 13:40-14:25",
+   "Staffroom 5"
+  ],
+  [
+   "Thursday",
+   "8th | 13:40-14:25",
+   "T1"
+  ],
+  [
+   "Thursday",
+   "8th | 13:40-14:25",
+   "T2"
+  ],
+  [
+   "Thursday",
+   "8th | 13:40-14:25",
+   "T3"
+  ],
+  [
+   "Thursday",
+   "8th | 13:40-14:25",
+   "T4"
+  ],
+  [
+   "Thursday",
+   "8th | 13:40-14:25",
+   "T5"
   ],
   [
    "Thursday",
@@ -147,7 +4609,417 @@
   [
    "Thursday",
    "9th | 14:30-15:15",
+   "A2"
+  ],
+  [
+   "Thursday",
+   "9th | 14:30-15:15",
+   "A3"
+  ],
+  [
+   "Thursday",
+   "9th | 14:30-15:15",
+   "A4 Music Room"
+  ],
+  [
+   "Thursday",
+   "9th | 14:30-15:15",
+   "Big Hall"
+  ],
+  [
+   "Thursday",
+   "9th | 14:30-15:15",
+   "CAC1"
+  ],
+  [
+   "Thursday",
+   "9th | 14:30-15:15",
+   "CAC2"
+  ],
+  [
+   "Thursday",
+   "9th | 14:30-15:15",
+   "CAC5"
+  ],
+  [
+   "Thursday",
+   "9th | 14:30-15:15",
+   "CAC6"
+  ],
+  [
+   "Thursday",
+   "9th | 14:30-15:15",
+   "E-Centre 1"
+  ],
+  [
+   "Thursday",
+   "9th | 14:30-15:15",
+   "E-Centre 10"
+  ],
+  [
+   "Thursday",
+   "9th | 14:30-15:15",
+   "E-Centre 2"
+  ],
+  [
+   "Thursday",
+   "9th | 14:30-15:15",
+   "E-Centre 3"
+  ],
+  [
+   "Thursday",
+   "9th | 14:30-15:15",
+   "E-Centre 4"
+  ],
+  [
+   "Thursday",
+   "9th | 14:30-15:15",
+   "E-Centre 5"
+  ],
+  [
+   "Thursday",
+   "9th | 14:30-15:15",
+   "E-Centre 6"
+  ],
+  [
+   "Thursday",
+   "9th | 14:30-15:15",
+   "E-Centre 7"
+  ],
+  [
+   "Thursday",
+   "9th | 14:30-15:15",
+   "E-Centre Terrace 1"
+  ],
+  [
+   "Thursday",
+   "9th | 14:30-15:15",
+   "E-Centre Terrace 2"
+  ],
+  [
+   "Thursday",
+   "9th | 14:30-15:15",
+   "Grade 0B Room"
+  ],
+  [
+   "Thursday",
+   "9th | 14:30-15:15",
+   "Grade 0Y Room"
+  ],
+  [
+   "Thursday",
+   "9th | 14:30-15:15",
+   "Grade 1B Room"
+  ],
+  [
+   "Thursday",
+   "9th | 14:30-15:15",
+   "Grade 1Y Room"
+  ],
+  [
+   "Thursday",
+   "9th | 14:30-15:15",
+   "Grade 2B Room"
+  ],
+  [
+   "Thursday",
+   "9th | 14:30-15:15",
+   "Grade 2Y Room"
+  ],
+  [
+   "Thursday",
+   "9th | 14:30-15:15",
+   "Grade 3B Room"
+  ],
+  [
+   "Thursday",
+   "9th | 14:30-15:15",
+   "Grade 3Y Room"
+  ],
+  [
+   "Thursday",
+   "9th | 14:30-15:15",
+   "Grade 4B Room"
+  ],
+  [
+   "Thursday",
+   "9th | 14:30-15:15",
+   "Grade 4Y Room"
+  ],
+  [
+   "Thursday",
+   "9th | 14:30-15:15",
+   "Grade 5B Room"
+  ],
+  [
+   "Thursday",
+   "9th | 14:30-15:15",
+   "ICT Room"
+  ],
+  [
+   "Thursday",
+   "9th | 14:30-15:15",
+   "Lab 1"
+  ],
+  [
+   "Thursday",
+   "9th | 14:30-15:15",
+   "Primary Art Room"
+  ],
+  [
+   "Thursday",
+   "9th | 14:30-15:15",
+   "S1"
+  ],
+  [
+   "Thursday",
+   "9th | 14:30-15:15",
+   "S2"
+  ],
+  [
+   "Thursday",
+   "9th | 14:30-15:15",
+   "Secondary Library"
+  ],
+  [
+   "Thursday",
+   "9th | 14:30-15:15",
+   "T1"
+  ],
+  [
+   "Thursday",
+   "9th | 14:30-15:15",
+   "T2"
+  ],
+  [
+   "Thursday",
+   "9th | 14:30-15:15",
+   "T3"
+  ],
+  [
+   "Thursday",
+   "9th | 14:30-15:15",
+   "T4"
+  ],
+  [
+   "Thursday",
+   "9th | 14:30-15:15",
+   "T5"
+  ],
+  [
+   "Thursday",
+   "9th | 14:30-15:15",
    "T6"
+  ],
+  [
+   "Tuesday",
+   "10th (ECA) | 15:30-16:30",
+   "Grade 3B Room"
+  ],
+  [
+   "Tuesday",
+   "10th (ECA) | 15:30-16:30",
+   "Grade 3Y Room"
+  ],
+  [
+   "Tuesday",
+   "10th (ECA) | 15:30-16:30",
+   "Grade 4B Room"
+  ],
+  [
+   "Tuesday",
+   "10th (ECA) | 15:30-16:30",
+   "Grade 4Y Room"
+  ],
+  [
+   "Tuesday",
+   "10th (ECA) | 15:30-16:30",
+   "Staffroom 5"
+  ],
+  [
+   "Tuesday",
+   "1st | 08:00-08:45",
+   "A2"
+  ],
+  [
+   "Tuesday",
+   "1st | 08:00-08:45",
+   "A3"
+  ],
+  [
+   "Tuesday",
+   "1st | 08:00-08:45",
+   "Big Hall"
+  ],
+  [
+   "Tuesday",
+   "1st | 08:00-08:45",
+   "Breakout Space 3 G3 Rooms"
+  ],
+  [
+   "Tuesday",
+   "1st | 08:00-08:45",
+   "Breakout Space 4 G4 Rooms"
+  ],
+  [
+   "Tuesday",
+   "1st | 08:00-08:45",
+   "CAC1"
+  ],
+  [
+   "Tuesday",
+   "1st | 08:00-08:45",
+   "CAC2"
+  ],
+  [
+   "Tuesday",
+   "1st | 08:00-08:45",
+   "CAC6"
+  ],
+  [
+   "Tuesday",
+   "1st | 08:00-08:45",
+   "E-Centre 1"
+  ],
+  [
+   "Tuesday",
+   "1st | 08:00-08:45",
+   "E-Centre 10"
+  ],
+  [
+   "Tuesday",
+   "1st | 08:00-08:45",
+   "E-Centre 2"
+  ],
+  [
+   "Tuesday",
+   "1st | 08:00-08:45",
+   "E-Centre 4"
+  ],
+  [
+   "Tuesday",
+   "1st | 08:00-08:45",
+   "E-Centre 5"
+  ],
+  [
+   "Tuesday",
+   "1st | 08:00-08:45",
+   "E-Centre Terrace 1"
+  ],
+  [
+   "Tuesday",
+   "1st | 08:00-08:45",
+   "E-Centre Terrace 2"
+  ],
+  [
+   "Tuesday",
+   "1st | 08:00-08:45",
+   "Grade 0B Room"
+  ],
+  [
+   "Tuesday",
+   "1st | 08:00-08:45",
+   "Grade 0Y Room"
+  ],
+  [
+   "Tuesday",
+   "1st | 08:00-08:45",
+   "Grade 1B Room"
+  ],
+  [
+   "Tuesday",
+   "1st | 08:00-08:45",
+   "Grade 1Y Room"
+  ],
+  [
+   "Tuesday",
+   "1st | 08:00-08:45",
+   "Grade 2B Room"
+  ],
+  [
+   "Tuesday",
+   "1st | 08:00-08:45",
+   "Grade 2Y Room"
+  ],
+  [
+   "Tuesday",
+   "1st | 08:00-08:45",
+   "Grade 3B Room"
+  ],
+  [
+   "Tuesday",
+   "1st | 08:00-08:45",
+   "Grade 3Y Room"
+  ],
+  [
+   "Tuesday",
+   "1st | 08:00-08:45",
+   "Grade 4B Room"
+  ],
+  [
+   "Tuesday",
+   "1st | 08:00-08:45",
+   "Grade 4Y Room"
+  ],
+  [
+   "Tuesday",
+   "1st | 08:00-08:45",
+   "Grade 5B Room"
+  ],
+  [
+   "Tuesday",
+   "1st | 08:00-08:45",
+   "Grade 5Y Room"
+  ],
+  [
+   "Tuesday",
+   "1st | 08:00-08:45",
+   "ICT Room"
+  ],
+  [
+   "Tuesday",
+   "1st | 08:00-08:45",
+   "LDIC"
+  ],
+  [
+   "Tuesday",
+   "1st | 08:00-08:45",
+   "Lab 2"
+  ],
+  [
+   "Tuesday",
+   "1st | 08:00-08:45",
+   "S1"
+  ],
+  [
+   "Tuesday",
+   "1st | 08:00-08:45",
+   "S2"
+  ],
+  [
+   "Tuesday",
+   "1st | 08:00-08:45",
+   "T1"
+  ],
+  [
+   "Tuesday",
+   "1st | 08:00-08:45",
+   "T2"
+  ],
+  [
+   "Tuesday",
+   "1st | 08:00-08:45",
+   "T3"
+  ],
+  [
+   "Tuesday",
+   "1st | 08:00-08:45",
+   "T4"
+  ],
+  [
+   "Tuesday",
+   "1st | 08:00-08:45",
+   "T5"
   ],
   [
    "Tuesday",
@@ -157,7 +5029,362 @@
   [
    "Tuesday",
    "2nd | 08:45-09:30",
+   "A2"
+  ],
+  [
+   "Tuesday",
+   "2nd | 08:45-09:30",
+   "A3"
+  ],
+  [
+   "Tuesday",
+   "2nd | 08:45-09:30",
+   "Big Hall"
+  ],
+  [
+   "Tuesday",
+   "2nd | 08:45-09:30",
+   "CAC1"
+  ],
+  [
+   "Tuesday",
+   "2nd | 08:45-09:30",
+   "CAC5"
+  ],
+  [
+   "Tuesday",
+   "2nd | 08:45-09:30",
+   "CAC6"
+  ],
+  [
+   "Tuesday",
+   "2nd | 08:45-09:30",
+   "E-Centre 1"
+  ],
+  [
+   "Tuesday",
+   "2nd | 08:45-09:30",
+   "E-Centre 10"
+  ],
+  [
+   "Tuesday",
+   "2nd | 08:45-09:30",
+   "E-Centre 2"
+  ],
+  [
+   "Tuesday",
+   "2nd | 08:45-09:30",
+   "E-Centre 4"
+  ],
+  [
+   "Tuesday",
+   "2nd | 08:45-09:30",
+   "E-Centre 5"
+  ],
+  [
+   "Tuesday",
+   "2nd | 08:45-09:30",
+   "E-Centre 6"
+  ],
+  [
+   "Tuesday",
+   "2nd | 08:45-09:30",
+   "E-Centre 7"
+  ],
+  [
+   "Tuesday",
+   "2nd | 08:45-09:30",
+   "E-Centre Terrace 1"
+  ],
+  [
+   "Tuesday",
+   "2nd | 08:45-09:30",
+   "E-Centre Terrace 2"
+  ],
+  [
+   "Tuesday",
+   "2nd | 08:45-09:30",
+   "Grade 0B Room"
+  ],
+  [
+   "Tuesday",
+   "2nd | 08:45-09:30",
+   "Grade 0Y Room"
+  ],
+  [
+   "Tuesday",
+   "2nd | 08:45-09:30",
+   "Grade 1B Room"
+  ],
+  [
+   "Tuesday",
+   "2nd | 08:45-09:30",
+   "Grade 1Y Room"
+  ],
+  [
+   "Tuesday",
+   "2nd | 08:45-09:30",
+   "Grade 2B Room"
+  ],
+  [
+   "Tuesday",
+   "2nd | 08:45-09:30",
+   "Grade 2Y Room"
+  ],
+  [
+   "Tuesday",
+   "2nd | 08:45-09:30",
+   "Grade 3B Room"
+  ],
+  [
+   "Tuesday",
+   "2nd | 08:45-09:30",
+   "Grade 3Y Room"
+  ],
+  [
+   "Tuesday",
+   "2nd | 08:45-09:30",
+   "Grade 4B Room"
+  ],
+  [
+   "Tuesday",
+   "2nd | 08:45-09:30",
+   "Grade 4Y Room"
+  ],
+  [
+   "Tuesday",
+   "2nd | 08:45-09:30",
+   "Grade 5B Room"
+  ],
+  [
+   "Tuesday",
+   "2nd | 08:45-09:30",
+   "Grade 5Y Room"
+  ],
+  [
+   "Tuesday",
+   "2nd | 08:45-09:30",
+   "Lab 2"
+  ],
+  [
+   "Tuesday",
+   "2nd | 08:45-09:30",
+   "Lab 3"
+  ],
+  [
+   "Tuesday",
+   "2nd | 08:45-09:30",
+   "S2"
+  ],
+  [
+   "Tuesday",
+   "2nd | 08:45-09:30",
+   "Secondary Library"
+  ],
+  [
+   "Tuesday",
+   "2nd | 08:45-09:30",
+   "Staffroom 5"
+  ],
+  [
+   "Tuesday",
+   "2nd | 08:45-09:30",
+   "T1"
+  ],
+  [
+   "Tuesday",
+   "2nd | 08:45-09:30",
+   "T2"
+  ],
+  [
+   "Tuesday",
+   "2nd | 08:45-09:30",
+   "T5"
+  ],
+  [
+   "Tuesday",
+   "2nd | 08:45-09:30",
    "T6"
+  ],
+  [
+   "Tuesday",
+   "3rd | 09:45-10:30",
+   "A2"
+  ],
+  [
+   "Tuesday",
+   "3rd | 09:45-10:30",
+   "A3"
+  ],
+  [
+   "Tuesday",
+   "3rd | 09:45-10:30",
+   "A4 Music Room"
+  ],
+  [
+   "Tuesday",
+   "3rd | 09:45-10:30",
+   "CAC1"
+  ],
+  [
+   "Tuesday",
+   "3rd | 09:45-10:30",
+   "CAC5"
+  ],
+  [
+   "Tuesday",
+   "3rd | 09:45-10:30",
+   "CAC6"
+  ],
+  [
+   "Tuesday",
+   "3rd | 09:45-10:30",
+   "E-Centre 1"
+  ],
+  [
+   "Tuesday",
+   "3rd | 09:45-10:30",
+   "E-Centre 2"
+  ],
+  [
+   "Tuesday",
+   "3rd | 09:45-10:30",
+   "E-Centre 4"
+  ],
+  [
+   "Tuesday",
+   "3rd | 09:45-10:30",
+   "E-Centre 5"
+  ],
+  [
+   "Tuesday",
+   "3rd | 09:45-10:30",
+   "E-Centre 7"
+  ],
+  [
+   "Tuesday",
+   "3rd | 09:45-10:30",
+   "E-Centre Terrace 1"
+  ],
+  [
+   "Tuesday",
+   "3rd | 09:45-10:30",
+   "E-Centre Terrace 2"
+  ],
+  [
+   "Tuesday",
+   "3rd | 09:45-10:30",
+   "Grade 0B Room"
+  ],
+  [
+   "Tuesday",
+   "3rd | 09:45-10:30",
+   "Grade 0Y Room"
+  ],
+  [
+   "Tuesday",
+   "3rd | 09:45-10:30",
+   "Grade 1B Room"
+  ],
+  [
+   "Tuesday",
+   "3rd | 09:45-10:30",
+   "Grade 1Y Room"
+  ],
+  [
+   "Tuesday",
+   "3rd | 09:45-10:30",
+   "Grade 2B Room"
+  ],
+  [
+   "Tuesday",
+   "3rd | 09:45-10:30",
+   "Grade 2Y Room"
+  ],
+  [
+   "Tuesday",
+   "3rd | 09:45-10:30",
+   "Grade 3B Room"
+  ],
+  [
+   "Tuesday",
+   "3rd | 09:45-10:30",
+   "Grade 3Y Room"
+  ],
+  [
+   "Tuesday",
+   "3rd | 09:45-10:30",
+   "Grade 4B Room"
+  ],
+  [
+   "Tuesday",
+   "3rd | 09:45-10:30",
+   "Grade 4Y Room"
+  ],
+  [
+   "Tuesday",
+   "3rd | 09:45-10:30",
+   "Grade 5Y Room"
+  ],
+  [
+   "Tuesday",
+   "3rd | 09:45-10:30",
+   "ICT Room"
+  ],
+  [
+   "Tuesday",
+   "3rd | 09:45-10:30",
+   "Lab 2"
+  ],
+  [
+   "Tuesday",
+   "3rd | 09:45-10:30",
+   "Lab 3"
+  ],
+  [
+   "Tuesday",
+   "3rd | 09:45-10:30",
+   "PS1 Room"
+  ],
+  [
+   "Tuesday",
+   "3rd | 09:45-10:30",
+   "PS3 Room"
+  ],
+  [
+   "Tuesday",
+   "3rd | 09:45-10:30",
+   "Preschool Gym"
+  ],
+  [
+   "Tuesday",
+   "3rd | 09:45-10:30",
+   "S2"
+  ],
+  [
+   "Tuesday",
+   "3rd | 09:45-10:30",
+   "Secondary Library"
+  ],
+  [
+   "Tuesday",
+   "3rd | 09:45-10:30",
+   "Small Hall"
+  ],
+  [
+   "Tuesday",
+   "3rd | 09:45-10:30",
+   "T1"
+  ],
+  [
+   "Tuesday",
+   "3rd | 09:45-10:30",
+   "T2"
+  ],
+  [
+   "Tuesday",
+   "3rd | 09:45-10:30",
+   "T5"
   ],
   [
    "Tuesday",
@@ -167,7 +5394,337 @@
   [
    "Tuesday",
    "4th | 10:35-11:20",
+   "A3"
+  ],
+  [
+   "Tuesday",
+   "4th | 10:35-11:20",
+   "A4 Music Room"
+  ],
+  [
+   "Tuesday",
+   "4th | 10:35-11:20",
+   "Big Hall"
+  ],
+  [
+   "Tuesday",
+   "4th | 10:35-11:20",
+   "CAC1"
+  ],
+  [
+   "Tuesday",
+   "4th | 10:35-11:20",
+   "CAC2"
+  ],
+  [
+   "Tuesday",
+   "4th | 10:35-11:20",
+   "CAC5"
+  ],
+  [
+   "Tuesday",
+   "4th | 10:35-11:20",
+   "CAC6"
+  ],
+  [
+   "Tuesday",
+   "4th | 10:35-11:20",
+   "E-Centre 1"
+  ],
+  [
+   "Tuesday",
+   "4th | 10:35-11:20",
+   "E-Centre 3"
+  ],
+  [
+   "Tuesday",
+   "4th | 10:35-11:20",
+   "E-Centre 4"
+  ],
+  [
+   "Tuesday",
+   "4th | 10:35-11:20",
+   "E-Centre 6"
+  ],
+  [
+   "Tuesday",
+   "4th | 10:35-11:20",
+   "E-Centre Terrace 1"
+  ],
+  [
+   "Tuesday",
+   "4th | 10:35-11:20",
+   "Grade 0B Room"
+  ],
+  [
+   "Tuesday",
+   "4th | 10:35-11:20",
+   "Grade 0Y Room"
+  ],
+  [
+   "Tuesday",
+   "4th | 10:35-11:20",
+   "Grade 1B Room"
+  ],
+  [
+   "Tuesday",
+   "4th | 10:35-11:20",
+   "Grade 2B Room"
+  ],
+  [
+   "Tuesday",
+   "4th | 10:35-11:20",
+   "Grade 2Y Room"
+  ],
+  [
+   "Tuesday",
+   "4th | 10:35-11:20",
+   "Grade 3B Room"
+  ],
+  [
+   "Tuesday",
+   "4th | 10:35-11:20",
+   "Grade 3Y Room"
+  ],
+  [
+   "Tuesday",
+   "4th | 10:35-11:20",
+   "Grade 4B Room"
+  ],
+  [
+   "Tuesday",
+   "4th | 10:35-11:20",
+   "Grade 5B Room"
+  ],
+  [
+   "Tuesday",
+   "4th | 10:35-11:20",
+   "Grade 5Y Room"
+  ],
+  [
+   "Tuesday",
+   "4th | 10:35-11:20",
+   "ICT Room"
+  ],
+  [
+   "Tuesday",
+   "4th | 10:35-11:20",
+   "Primary Art Room"
+  ],
+  [
+   "Tuesday",
+   "4th | 10:35-11:20",
+   "Primary Gym"
+  ],
+  [
+   "Tuesday",
+   "4th | 10:35-11:20",
+   "S1"
+  ],
+  [
+   "Tuesday",
+   "4th | 10:35-11:20",
+   "Small Hall"
+  ],
+  [
+   "Tuesday",
+   "4th | 10:35-11:20",
+   "T1"
+  ],
+  [
+   "Tuesday",
+   "4th | 10:35-11:20",
+   "T2"
+  ],
+  [
+   "Tuesday",
+   "4th | 10:35-11:20",
+   "T3"
+  ],
+  [
+   "Tuesday",
+   "4th | 10:35-11:20",
+   "T4"
+  ],
+  [
+   "Tuesday",
+   "4th | 10:35-11:20",
+   "T5"
+  ],
+  [
+   "Tuesday",
+   "4th | 10:35-11:20",
    "T6"
+  ],
+  [
+   "Tuesday",
+   "5th | 11:20-12:05",
+   "A3"
+  ],
+  [
+   "Tuesday",
+   "5th | 11:20-12:05",
+   "A4 Music Room"
+  ],
+  [
+   "Tuesday",
+   "5th | 11:20-12:05",
+   "Big Hall"
+  ],
+  [
+   "Tuesday",
+   "5th | 11:20-12:05",
+   "CAC1"
+  ],
+  [
+   "Tuesday",
+   "5th | 11:20-12:05",
+   "CAC2"
+  ],
+  [
+   "Tuesday",
+   "5th | 11:20-12:05",
+   "CAC5"
+  ],
+  [
+   "Tuesday",
+   "5th | 11:20-12:05",
+   "CAC6"
+  ],
+  [
+   "Tuesday",
+   "5th | 11:20-12:05",
+   "E-Centre 1"
+  ],
+  [
+   "Tuesday",
+   "5th | 11:20-12:05",
+   "E-Centre 3"
+  ],
+  [
+   "Tuesday",
+   "5th | 11:20-12:05",
+   "E-Centre 4"
+  ],
+  [
+   "Tuesday",
+   "5th | 11:20-12:05",
+   "E-Centre 6"
+  ],
+  [
+   "Tuesday",
+   "5th | 11:20-12:05",
+   "E-Centre 7"
+  ],
+  [
+   "Tuesday",
+   "5th | 11:20-12:05",
+   "E-Centre Terrace 1"
+  ],
+  [
+   "Tuesday",
+   "5th | 11:20-12:05",
+   "Grade 0B Room"
+  ],
+  [
+   "Tuesday",
+   "5th | 11:20-12:05",
+   "Grade 1B Room"
+  ],
+  [
+   "Tuesday",
+   "5th | 11:20-12:05",
+   "Grade 1Y Room"
+  ],
+  [
+   "Tuesday",
+   "5th | 11:20-12:05",
+   "Grade 2B Room"
+  ],
+  [
+   "Tuesday",
+   "5th | 11:20-12:05",
+   "Grade 3Y Room"
+  ],
+  [
+   "Tuesday",
+   "5th | 11:20-12:05",
+   "Grade 4B Room"
+  ],
+  [
+   "Tuesday",
+   "5th | 11:20-12:05",
+   "Grade 4Y Room"
+  ],
+  [
+   "Tuesday",
+   "5th | 11:20-12:05",
+   "Grade 5B Room"
+  ],
+  [
+   "Tuesday",
+   "5th | 11:20-12:05",
+   "Grade 5Y Room"
+  ],
+  [
+   "Tuesday",
+   "5th | 11:20-12:05",
+   "ICT Room"
+  ],
+  [
+   "Tuesday",
+   "5th | 11:20-12:05",
+   "Lab 2"
+  ],
+  [
+   "Tuesday",
+   "5th | 11:20-12:05",
+   "Lab 3"
+  ],
+  [
+   "Tuesday",
+   "5th | 11:20-12:05",
+   "Primary Art Room"
+  ],
+  [
+   "Tuesday",
+   "5th | 11:20-12:05",
+   "Primary Gym"
+  ],
+  [
+   "Tuesday",
+   "5th | 11:20-12:05",
+   "S1"
+  ],
+  [
+   "Tuesday",
+   "5th | 11:20-12:05",
+   "S2"
+  ],
+  [
+   "Tuesday",
+   "5th | 11:20-12:05",
+   "Small Hall"
+  ],
+  [
+   "Tuesday",
+   "5th | 11:20-12:05",
+   "T1"
+  ],
+  [
+   "Tuesday",
+   "5th | 11:20-12:05",
+   "T2"
+  ],
+  [
+   "Tuesday",
+   "5th | 11:20-12:05",
+   "T4"
+  ],
+  [
+   "Tuesday",
+   "5th | 11:20-12:05",
+   "T5"
   ],
   [
    "Tuesday",
@@ -177,7 +5734,222 @@
   [
    "Tuesday",
    "6th (Lunch Break) | 12:05-12:50",
+   "A4 Music Room"
+  ],
+  [
+   "Tuesday",
+   "6th (Lunch Break) | 12:05-12:50",
+   "Grade 2B Room"
+  ],
+  [
+   "Tuesday",
+   "6th (Lunch Break) | 12:05-12:50",
+   "Grade 2Y Room"
+  ],
+  [
+   "Tuesday",
+   "6th (Lunch Break) | 12:05-12:50",
+   "Grade 3Y Room"
+  ],
+  [
+   "Tuesday",
+   "6th (Lunch Break) | 12:05-12:50",
+   "Grade 4Y Room"
+  ],
+  [
+   "Tuesday",
+   "6th (Lunch Break) | 12:05-12:50",
+   "Grade 5Y Room"
+  ],
+  [
+   "Tuesday",
+   "6th (Lunch Break) | 12:05-12:50",
+   "ICT Room"
+  ],
+  [
+   "Tuesday",
+   "6th (Lunch Break) | 12:05-12:50",
+   "Primary Gym"
+  ],
+  [
+   "Tuesday",
+   "6th (Lunch Break) | 12:05-12:50",
+   "Small Hall"
+  ],
+  [
+   "Tuesday",
+   "6th (Lunch Break) | 12:05-12:50",
+   "T1"
+  ],
+  [
+   "Tuesday",
+   "6th (Lunch Break) | 12:05-12:50",
+   "T2"
+  ],
+  [
+   "Tuesday",
+   "6th (Lunch Break) | 12:05-12:50",
+   "T5"
+  ],
+  [
+   "Tuesday",
+   "6th (Lunch Break) | 12:05-12:50",
    "T6"
+  ],
+  [
+   "Tuesday",
+   "7th (Lunch Break) | 12:50-13:35",
+   "A2"
+  ],
+  [
+   "Tuesday",
+   "7th (Lunch Break) | 12:50-13:35",
+   "A3"
+  ],
+  [
+   "Tuesday",
+   "7th (Lunch Break) | 12:50-13:35",
+   "A4 Music Room"
+  ],
+  [
+   "Tuesday",
+   "7th (Lunch Break) | 12:50-13:35",
+   "Big Hall"
+  ],
+  [
+   "Tuesday",
+   "7th (Lunch Break) | 12:50-13:35",
+   "CAC1"
+  ],
+  [
+   "Tuesday",
+   "7th (Lunch Break) | 12:50-13:35",
+   "CAC2"
+  ],
+  [
+   "Tuesday",
+   "7th (Lunch Break) | 12:50-13:35",
+   "CAC5"
+  ],
+  [
+   "Tuesday",
+   "7th (Lunch Break) | 12:50-13:35",
+   "CAC6"
+  ],
+  [
+   "Tuesday",
+   "7th (Lunch Break) | 12:50-13:35",
+   "E-Centre 1"
+  ],
+  [
+   "Tuesday",
+   "7th (Lunch Break) | 12:50-13:35",
+   "E-Centre 2"
+  ],
+  [
+   "Tuesday",
+   "7th (Lunch Break) | 12:50-13:35",
+   "E-Centre 3"
+  ],
+  [
+   "Tuesday",
+   "7th (Lunch Break) | 12:50-13:35",
+   "E-Centre 4"
+  ],
+  [
+   "Tuesday",
+   "7th (Lunch Break) | 12:50-13:35",
+   "E-Centre 5"
+  ],
+  [
+   "Tuesday",
+   "7th (Lunch Break) | 12:50-13:35",
+   "E-Centre 7"
+  ],
+  [
+   "Tuesday",
+   "7th (Lunch Break) | 12:50-13:35",
+   "E-Centre Terrace 1"
+  ],
+  [
+   "Tuesday",
+   "7th (Lunch Break) | 12:50-13:35",
+   "E-Centre Terrace 2"
+  ],
+  [
+   "Tuesday",
+   "7th (Lunch Break) | 12:50-13:35",
+   "Grade 0B Room"
+  ],
+  [
+   "Tuesday",
+   "7th (Lunch Break) | 12:50-13:35",
+   "Grade 0Y Room"
+  ],
+  [
+   "Tuesday",
+   "7th (Lunch Break) | 12:50-13:35",
+   "Grade 4Y Room"
+  ],
+  [
+   "Tuesday",
+   "7th (Lunch Break) | 12:50-13:35",
+   "ICT Room"
+  ],
+  [
+   "Tuesday",
+   "7th (Lunch Break) | 12:50-13:35",
+   "Lab 2"
+  ],
+  [
+   "Tuesday",
+   "7th (Lunch Break) | 12:50-13:35",
+   "Lab 3"
+  ],
+  [
+   "Tuesday",
+   "7th (Lunch Break) | 12:50-13:35",
+   "Primary Gym"
+  ],
+  [
+   "Tuesday",
+   "7th (Lunch Break) | 12:50-13:35",
+   "S1"
+  ],
+  [
+   "Tuesday",
+   "7th (Lunch Break) | 12:50-13:35",
+   "Secondary Library"
+  ],
+  [
+   "Tuesday",
+   "7th (Lunch Break) | 12:50-13:35",
+   "Small Hall"
+  ],
+  [
+   "Tuesday",
+   "7th (Lunch Break) | 12:50-13:35",
+   "T1"
+  ],
+  [
+   "Tuesday",
+   "7th (Lunch Break) | 12:50-13:35",
+   "T2"
+  ],
+  [
+   "Tuesday",
+   "7th (Lunch Break) | 12:50-13:35",
+   "T3"
+  ],
+  [
+   "Tuesday",
+   "7th (Lunch Break) | 12:50-13:35",
+   "T4"
+  ],
+  [
+   "Tuesday",
+   "7th (Lunch Break) | 12:50-13:35",
+   "T5"
   ],
   [
    "Tuesday",
@@ -187,7 +5959,392 @@
   [
    "Tuesday",
    "8th | 13:40-14:25",
+   "A2"
+  ],
+  [
+   "Tuesday",
+   "8th | 13:40-14:25",
+   "A3"
+  ],
+  [
+   "Tuesday",
+   "8th | 13:40-14:25",
+   "A4 Music Room"
+  ],
+  [
+   "Tuesday",
+   "8th | 13:40-14:25",
+   "Big Hall"
+  ],
+  [
+   "Tuesday",
+   "8th | 13:40-14:25",
+   "Breakout Space 3 G3 Rooms"
+  ],
+  [
+   "Tuesday",
+   "8th | 13:40-14:25",
+   "CAC1"
+  ],
+  [
+   "Tuesday",
+   "8th | 13:40-14:25",
+   "CAC2"
+  ],
+  [
+   "Tuesday",
+   "8th | 13:40-14:25",
+   "CAC6"
+  ],
+  [
+   "Tuesday",
+   "8th | 13:40-14:25",
+   "E-Centre 1"
+  ],
+  [
+   "Tuesday",
+   "8th | 13:40-14:25",
+   "E-Centre 2"
+  ],
+  [
+   "Tuesday",
+   "8th | 13:40-14:25",
+   "E-Centre 3"
+  ],
+  [
+   "Tuesday",
+   "8th | 13:40-14:25",
+   "E-Centre 4"
+  ],
+  [
+   "Tuesday",
+   "8th | 13:40-14:25",
+   "E-Centre 5"
+  ],
+  [
+   "Tuesday",
+   "8th | 13:40-14:25",
+   "E-Centre 6"
+  ],
+  [
+   "Tuesday",
+   "8th | 13:40-14:25",
+   "E-Centre 7"
+  ],
+  [
+   "Tuesday",
+   "8th | 13:40-14:25",
+   "E-Centre Terrace 1"
+  ],
+  [
+   "Tuesday",
+   "8th | 13:40-14:25",
+   "E-Centre Terrace 2"
+  ],
+  [
+   "Tuesday",
+   "8th | 13:40-14:25",
+   "Grade 0Y Room"
+  ],
+  [
+   "Tuesday",
+   "8th | 13:40-14:25",
+   "Grade 1B Room"
+  ],
+  [
+   "Tuesday",
+   "8th | 13:40-14:25",
+   "Grade 1Y Room"
+  ],
+  [
+   "Tuesday",
+   "8th | 13:40-14:25",
+   "Grade 2B Room"
+  ],
+  [
+   "Tuesday",
+   "8th | 13:40-14:25",
+   "Grade 2Y Room"
+  ],
+  [
+   "Tuesday",
+   "8th | 13:40-14:25",
+   "Grade 3B Room"
+  ],
+  [
+   "Tuesday",
+   "8th | 13:40-14:25",
+   "Grade 3Y Room"
+  ],
+  [
+   "Tuesday",
+   "8th | 13:40-14:25",
+   "Grade 4B Room"
+  ],
+  [
+   "Tuesday",
+   "8th | 13:40-14:25",
+   "Grade 4Y Room"
+  ],
+  [
+   "Tuesday",
+   "8th | 13:40-14:25",
+   "Grade 5B Room"
+  ],
+  [
+   "Tuesday",
+   "8th | 13:40-14:25",
+   "Grade 5Y Room"
+  ],
+  [
+   "Tuesday",
+   "8th | 13:40-14:25",
+   "ICT Room"
+  ],
+  [
+   "Tuesday",
+   "8th | 13:40-14:25",
+   "LDIC"
+  ],
+  [
+   "Tuesday",
+   "8th | 13:40-14:25",
+   "Lab 2"
+  ],
+  [
+   "Tuesday",
+   "8th | 13:40-14:25",
+   "Lab 3"
+  ],
+  [
+   "Tuesday",
+   "8th | 13:40-14:25",
+   "Primary Art Room"
+  ],
+  [
+   "Tuesday",
+   "8th | 13:40-14:25",
+   "Primary Gym"
+  ],
+  [
+   "Tuesday",
+   "8th | 13:40-14:25",
+   "S1"
+  ],
+  [
+   "Tuesday",
+   "8th | 13:40-14:25",
+   "S2"
+  ],
+  [
+   "Tuesday",
+   "8th | 13:40-14:25",
+   "Secondary Library"
+  ],
+  [
+   "Tuesday",
+   "8th | 13:40-14:25",
+   "Small Hall"
+  ],
+  [
+   "Tuesday",
+   "8th | 13:40-14:25",
+   "T1"
+  ],
+  [
+   "Tuesday",
+   "8th | 13:40-14:25",
+   "T2"
+  ],
+  [
+   "Tuesday",
+   "8th | 13:40-14:25",
+   "T3"
+  ],
+  [
+   "Tuesday",
+   "8th | 13:40-14:25",
+   "T4"
+  ],
+  [
+   "Tuesday",
+   "8th | 13:40-14:25",
+   "T5"
+  ],
+  [
+   "Tuesday",
+   "8th | 13:40-14:25",
    "T6"
+  ],
+  [
+   "Tuesday",
+   "9th | 14:30-15:15",
+   "A2"
+  ],
+  [
+   "Tuesday",
+   "9th | 14:30-15:15",
+   "A3"
+  ],
+  [
+   "Tuesday",
+   "9th | 14:30-15:15",
+   "A4 Music Room"
+  ],
+  [
+   "Tuesday",
+   "9th | 14:30-15:15",
+   "Big Hall"
+  ],
+  [
+   "Tuesday",
+   "9th | 14:30-15:15",
+   "CAC1"
+  ],
+  [
+   "Tuesday",
+   "9th | 14:30-15:15",
+   "CAC2"
+  ],
+  [
+   "Tuesday",
+   "9th | 14:30-15:15",
+   "CAC6"
+  ],
+  [
+   "Tuesday",
+   "9th | 14:30-15:15",
+   "E-Centre 1"
+  ],
+  [
+   "Tuesday",
+   "9th | 14:30-15:15",
+   "E-Centre 2"
+  ],
+  [
+   "Tuesday",
+   "9th | 14:30-15:15",
+   "E-Centre 3"
+  ],
+  [
+   "Tuesday",
+   "9th | 14:30-15:15",
+   "E-Centre 5"
+  ],
+  [
+   "Tuesday",
+   "9th | 14:30-15:15",
+   "E-Centre Terrace 2"
+  ],
+  [
+   "Tuesday",
+   "9th | 14:30-15:15",
+   "Grade 0B Room"
+  ],
+  [
+   "Tuesday",
+   "9th | 14:30-15:15",
+   "Grade 0Y Room"
+  ],
+  [
+   "Tuesday",
+   "9th | 14:30-15:15",
+   "Grade 1B Room"
+  ],
+  [
+   "Tuesday",
+   "9th | 14:30-15:15",
+   "Grade 1Y Room"
+  ],
+  [
+   "Tuesday",
+   "9th | 14:30-15:15",
+   "Grade 2B Room"
+  ],
+  [
+   "Tuesday",
+   "9th | 14:30-15:15",
+   "Grade 2Y Room"
+  ],
+  [
+   "Tuesday",
+   "9th | 14:30-15:15",
+   "Grade 3B Room"
+  ],
+  [
+   "Tuesday",
+   "9th | 14:30-15:15",
+   "Grade 3Y Room"
+  ],
+  [
+   "Tuesday",
+   "9th | 14:30-15:15",
+   "Grade 4Y Room"
+  ],
+  [
+   "Tuesday",
+   "9th | 14:30-15:15",
+   "Grade 5B Room"
+  ],
+  [
+   "Tuesday",
+   "9th | 14:30-15:15",
+   "Grade 5Y Room"
+  ],
+  [
+   "Tuesday",
+   "9th | 14:30-15:15",
+   "Lab 2"
+  ],
+  [
+   "Tuesday",
+   "9th | 14:30-15:15",
+   "Lab 3"
+  ],
+  [
+   "Tuesday",
+   "9th | 14:30-15:15",
+   "Primary Art Room"
+  ],
+  [
+   "Tuesday",
+   "9th | 14:30-15:15",
+   "Primary Gym"
+  ],
+  [
+   "Tuesday",
+   "9th | 14:30-15:15",
+   "Secondary Library"
+  ],
+  [
+   "Tuesday",
+   "9th | 14:30-15:15",
+   "Small Hall"
+  ],
+  [
+   "Tuesday",
+   "9th | 14:30-15:15",
+   "T1"
+  ],
+  [
+   "Tuesday",
+   "9th | 14:30-15:15",
+   "T2"
+  ],
+  [
+   "Tuesday",
+   "9th | 14:30-15:15",
+   "T3"
+  ],
+  [
+   "Tuesday",
+   "9th | 14:30-15:15",
+   "T4"
+  ],
+  [
+   "Tuesday",
+   "9th | 14:30-15:15",
+   "T5"
   ],
   [
    "Tuesday",
@@ -197,7 +6354,232 @@
   [
    "Wednesday",
    "10th (ECA) | 15:30-16:30",
+   "A2"
+  ],
+  [
+   "Wednesday",
+   "10th (ECA) | 15:30-16:30",
+   "CAC1"
+  ],
+  [
+   "Wednesday",
+   "10th (ECA) | 15:30-16:30",
+   "Grade 3B Room"
+  ],
+  [
+   "Wednesday",
+   "10th (ECA) | 15:30-16:30",
+   "Grade 4B Room"
+  ],
+  [
+   "Wednesday",
+   "10th (ECA) | 15:30-16:30",
+   "Grade 4Y Room"
+  ],
+  [
+   "Wednesday",
+   "10th (ECA) | 15:30-16:30",
+   "T3"
+  ],
+  [
+   "Wednesday",
+   "10th (ECA) | 15:30-16:30",
    "T6"
+  ],
+  [
+   "Wednesday",
+   "11th | 16:30-17:30",
+   "T3"
+  ],
+  [
+   "Wednesday",
+   "1st | 08:00-08:45",
+   "A2"
+  ],
+  [
+   "Wednesday",
+   "1st | 08:00-08:45",
+   "A3"
+  ],
+  [
+   "Wednesday",
+   "1st | 08:00-08:45",
+   "A4 Music Room"
+  ],
+  [
+   "Wednesday",
+   "1st | 08:00-08:45",
+   "Breakout Space 3 G3 Rooms"
+  ],
+  [
+   "Wednesday",
+   "1st | 08:00-08:45",
+   "Breakout Space 4 G4 Rooms"
+  ],
+  [
+   "Wednesday",
+   "1st | 08:00-08:45",
+   "CAC5"
+  ],
+  [
+   "Wednesday",
+   "1st | 08:00-08:45",
+   "E-Centre 1"
+  ],
+  [
+   "Wednesday",
+   "1st | 08:00-08:45",
+   "E-Centre 10"
+  ],
+  [
+   "Wednesday",
+   "1st | 08:00-08:45",
+   "E-Centre 2"
+  ],
+  [
+   "Wednesday",
+   "1st | 08:00-08:45",
+   "E-Centre 3"
+  ],
+  [
+   "Wednesday",
+   "1st | 08:00-08:45",
+   "E-Centre 4"
+  ],
+  [
+   "Wednesday",
+   "1st | 08:00-08:45",
+   "E-Centre 5"
+  ],
+  [
+   "Wednesday",
+   "1st | 08:00-08:45",
+   "E-Centre 6"
+  ],
+  [
+   "Wednesday",
+   "1st | 08:00-08:45",
+   "E-Centre Terrace 1"
+  ],
+  [
+   "Wednesday",
+   "1st | 08:00-08:45",
+   "E-Centre Terrace 2"
+  ],
+  [
+   "Wednesday",
+   "1st | 08:00-08:45",
+   "Grade 0B Room"
+  ],
+  [
+   "Wednesday",
+   "1st | 08:00-08:45",
+   "Grade 0Y Room"
+  ],
+  [
+   "Wednesday",
+   "1st | 08:00-08:45",
+   "Grade 1B Room"
+  ],
+  [
+   "Wednesday",
+   "1st | 08:00-08:45",
+   "Grade 1Y Room"
+  ],
+  [
+   "Wednesday",
+   "1st | 08:00-08:45",
+   "Grade 2B Room"
+  ],
+  [
+   "Wednesday",
+   "1st | 08:00-08:45",
+   "Grade 2Y Room"
+  ],
+  [
+   "Wednesday",
+   "1st | 08:00-08:45",
+   "Grade 3B Room"
+  ],
+  [
+   "Wednesday",
+   "1st | 08:00-08:45",
+   "Grade 3Y Room"
+  ],
+  [
+   "Wednesday",
+   "1st | 08:00-08:45",
+   "Grade 4B Room"
+  ],
+  [
+   "Wednesday",
+   "1st | 08:00-08:45",
+   "Grade 4Y Room"
+  ],
+  [
+   "Wednesday",
+   "1st | 08:00-08:45",
+   "Grade 5B Room"
+  ],
+  [
+   "Wednesday",
+   "1st | 08:00-08:45",
+   "Grade 5Y Room"
+  ],
+  [
+   "Wednesday",
+   "1st | 08:00-08:45",
+   "ICT Room"
+  ],
+  [
+   "Wednesday",
+   "1st | 08:00-08:45",
+   "Lab 1"
+  ],
+  [
+   "Wednesday",
+   "1st | 08:00-08:45",
+   "Lab 3"
+  ],
+  [
+   "Wednesday",
+   "1st | 08:00-08:45",
+   "Primary Gym"
+  ],
+  [
+   "Wednesday",
+   "1st | 08:00-08:45",
+   "S2"
+  ],
+  [
+   "Wednesday",
+   "1st | 08:00-08:45",
+   "Small Hall"
+  ],
+  [
+   "Wednesday",
+   "1st | 08:00-08:45",
+   "T1"
+  ],
+  [
+   "Wednesday",
+   "1st | 08:00-08:45",
+   "T2"
+  ],
+  [
+   "Wednesday",
+   "1st | 08:00-08:45",
+   "T3"
+  ],
+  [
+   "Wednesday",
+   "1st | 08:00-08:45",
+   "T4"
+  ],
+  [
+   "Wednesday",
+   "1st | 08:00-08:45",
+   "T5"
   ],
   [
    "Wednesday",
@@ -207,7 +6589,382 @@
   [
    "Wednesday",
    "2nd | 08:45-09:30",
+   "A2"
+  ],
+  [
+   "Wednesday",
+   "2nd | 08:45-09:30",
+   "A3"
+  ],
+  [
+   "Wednesday",
+   "2nd | 08:45-09:30",
+   "CAC1"
+  ],
+  [
+   "Wednesday",
+   "2nd | 08:45-09:30",
+   "CAC2"
+  ],
+  [
+   "Wednesday",
+   "2nd | 08:45-09:30",
+   "CAC5"
+  ],
+  [
+   "Wednesday",
+   "2nd | 08:45-09:30",
+   "CAC6"
+  ],
+  [
+   "Wednesday",
+   "2nd | 08:45-09:30",
+   "E-Centre 1"
+  ],
+  [
+   "Wednesday",
+   "2nd | 08:45-09:30",
+   "E-Centre 10"
+  ],
+  [
+   "Wednesday",
+   "2nd | 08:45-09:30",
+   "E-Centre 2"
+  ],
+  [
+   "Wednesday",
+   "2nd | 08:45-09:30",
+   "E-Centre 4"
+  ],
+  [
+   "Wednesday",
+   "2nd | 08:45-09:30",
+   "E-Centre 5"
+  ],
+  [
+   "Wednesday",
+   "2nd | 08:45-09:30",
+   "E-Centre Terrace 1"
+  ],
+  [
+   "Wednesday",
+   "2nd | 08:45-09:30",
+   "E-Centre Terrace 2"
+  ],
+  [
+   "Wednesday",
+   "2nd | 08:45-09:30",
+   "Grade 0B Room"
+  ],
+  [
+   "Wednesday",
+   "2nd | 08:45-09:30",
+   "Grade 0Y Room"
+  ],
+  [
+   "Wednesday",
+   "2nd | 08:45-09:30",
+   "Grade 1B Room"
+  ],
+  [
+   "Wednesday",
+   "2nd | 08:45-09:30",
+   "Grade 1Y Room"
+  ],
+  [
+   "Wednesday",
+   "2nd | 08:45-09:30",
+   "Grade 2B Room"
+  ],
+  [
+   "Wednesday",
+   "2nd | 08:45-09:30",
+   "Grade 2Y Room"
+  ],
+  [
+   "Wednesday",
+   "2nd | 08:45-09:30",
+   "Grade 3B Room"
+  ],
+  [
+   "Wednesday",
+   "2nd | 08:45-09:30",
+   "Grade 3Y Room"
+  ],
+  [
+   "Wednesday",
+   "2nd | 08:45-09:30",
+   "Grade 4B Room"
+  ],
+  [
+   "Wednesday",
+   "2nd | 08:45-09:30",
+   "Grade 4Y Room"
+  ],
+  [
+   "Wednesday",
+   "2nd | 08:45-09:30",
+   "Grade 5B Room"
+  ],
+  [
+   "Wednesday",
+   "2nd | 08:45-09:30",
+   "Grade 5Y Room"
+  ],
+  [
+   "Wednesday",
+   "2nd | 08:45-09:30",
+   "Lab 1"
+  ],
+  [
+   "Wednesday",
+   "2nd | 08:45-09:30",
+   "Lab 3"
+  ],
+  [
+   "Wednesday",
+   "2nd | 08:45-09:30",
+   "Meeting Room"
+  ],
+  [
+   "Wednesday",
+   "2nd | 08:45-09:30",
+   "S1"
+  ],
+  [
+   "Wednesday",
+   "2nd | 08:45-09:30",
+   "S2"
+  ],
+  [
+   "Wednesday",
+   "2nd | 08:45-09:30",
+   "Secondary Library"
+  ],
+  [
+   "Wednesday",
+   "2nd | 08:45-09:30",
+   "Small Hall"
+  ],
+  [
+   "Wednesday",
+   "2nd | 08:45-09:30",
+   "T1"
+  ],
+  [
+   "Wednesday",
+   "2nd | 08:45-09:30",
+   "T3"
+  ],
+  [
+   "Wednesday",
+   "2nd | 08:45-09:30",
    "T6"
+  ],
+  [
+   "Wednesday",
+   "3rd | 09:45-10:30",
+   "A2"
+  ],
+  [
+   "Wednesday",
+   "3rd | 09:45-10:30",
+   "A3"
+  ],
+  [
+   "Wednesday",
+   "3rd | 09:45-10:30",
+   "A4 Music Room"
+  ],
+  [
+   "Wednesday",
+   "3rd | 09:45-10:30",
+   "CAC1"
+  ],
+  [
+   "Wednesday",
+   "3rd | 09:45-10:30",
+   "CAC2"
+  ],
+  [
+   "Wednesday",
+   "3rd | 09:45-10:30",
+   "CAC5"
+  ],
+  [
+   "Wednesday",
+   "3rd | 09:45-10:30",
+   "CAC6"
+  ],
+  [
+   "Wednesday",
+   "3rd | 09:45-10:30",
+   "E-Centre 1"
+  ],
+  [
+   "Wednesday",
+   "3rd | 09:45-10:30",
+   "E-Centre 10"
+  ],
+  [
+   "Wednesday",
+   "3rd | 09:45-10:30",
+   "E-Centre 2"
+  ],
+  [
+   "Wednesday",
+   "3rd | 09:45-10:30",
+   "E-Centre 3"
+  ],
+  [
+   "Wednesday",
+   "3rd | 09:45-10:30",
+   "E-Centre 4"
+  ],
+  [
+   "Wednesday",
+   "3rd | 09:45-10:30",
+   "E-Centre 5"
+  ],
+  [
+   "Wednesday",
+   "3rd | 09:45-10:30",
+   "E-Centre 7"
+  ],
+  [
+   "Wednesday",
+   "3rd | 09:45-10:30",
+   "E-Centre Terrace 1"
+  ],
+  [
+   "Wednesday",
+   "3rd | 09:45-10:30",
+   "E-Centre Terrace 2"
+  ],
+  [
+   "Wednesday",
+   "3rd | 09:45-10:30",
+   "Grade 0B Room"
+  ],
+  [
+   "Wednesday",
+   "3rd | 09:45-10:30",
+   "Grade 0Y Room"
+  ],
+  [
+   "Wednesday",
+   "3rd | 09:45-10:30",
+   "Grade 1B Room"
+  ],
+  [
+   "Wednesday",
+   "3rd | 09:45-10:30",
+   "Grade 1Y Room"
+  ],
+  [
+   "Wednesday",
+   "3rd | 09:45-10:30",
+   "Grade 2B Room"
+  ],
+  [
+   "Wednesday",
+   "3rd | 09:45-10:30",
+   "Grade 2Y Room"
+  ],
+  [
+   "Wednesday",
+   "3rd | 09:45-10:30",
+   "Grade 3B Room"
+  ],
+  [
+   "Wednesday",
+   "3rd | 09:45-10:30",
+   "Grade 3Y Room"
+  ],
+  [
+   "Wednesday",
+   "3rd | 09:45-10:30",
+   "Grade 4B Room"
+  ],
+  [
+   "Wednesday",
+   "3rd | 09:45-10:30",
+   "Grade 4Y Room"
+  ],
+  [
+   "Wednesday",
+   "3rd | 09:45-10:30",
+   "ICT Room"
+  ],
+  [
+   "Wednesday",
+   "3rd | 09:45-10:30",
+   "LDIC"
+  ],
+  [
+   "Wednesday",
+   "3rd | 09:45-10:30",
+   "Lab 1"
+  ],
+  [
+   "Wednesday",
+   "3rd | 09:45-10:30",
+   "Lab 3"
+  ],
+  [
+   "Wednesday",
+   "3rd | 09:45-10:30",
+   "PS1 Room"
+  ],
+  [
+   "Wednesday",
+   "3rd | 09:45-10:30",
+   "Preschool Gym"
+  ],
+  [
+   "Wednesday",
+   "3rd | 09:45-10:30",
+   "Primary Art Room"
+  ],
+  [
+   "Wednesday",
+   "3rd | 09:45-10:30",
+   "S1"
+  ],
+  [
+   "Wednesday",
+   "3rd | 09:45-10:30",
+   "Secondary Library"
+  ],
+  [
+   "Wednesday",
+   "3rd | 09:45-10:30",
+   "Small Hall"
+  ],
+  [
+   "Wednesday",
+   "3rd | 09:45-10:30",
+   "Staffroom 5"
+  ],
+  [
+   "Wednesday",
+   "3rd | 09:45-10:30",
+   "T1"
+  ],
+  [
+   "Wednesday",
+   "3rd | 09:45-10:30",
+   "T3"
+  ],
+  [
+   "Wednesday",
+   "3rd | 09:45-10:30",
+   "T4"
+  ],
+  [
+   "Wednesday",
+   "3rd | 09:45-10:30",
+   "T5"
   ],
   [
    "Wednesday",
@@ -217,7 +6974,417 @@
   [
    "Wednesday",
    "4th | 10:35-11:20",
+   "A2"
+  ],
+  [
+   "Wednesday",
+   "4th | 10:35-11:20",
+   "A3"
+  ],
+  [
+   "Wednesday",
+   "4th | 10:35-11:20",
+   "A4 Music Room"
+  ],
+  [
+   "Wednesday",
+   "4th | 10:35-11:20",
+   "Big Hall"
+  ],
+  [
+   "Wednesday",
+   "4th | 10:35-11:20",
+   "Breakout Space 1 Prim Libr"
+  ],
+  [
+   "Wednesday",
+   "4th | 10:35-11:20",
+   "CAC1"
+  ],
+  [
+   "Wednesday",
+   "4th | 10:35-11:20",
+   "CAC2"
+  ],
+  [
+   "Wednesday",
+   "4th | 10:35-11:20",
+   "CAC5"
+  ],
+  [
+   "Wednesday",
+   "4th | 10:35-11:20",
+   "CAC6"
+  ],
+  [
+   "Wednesday",
+   "4th | 10:35-11:20",
+   "DP Art Studio"
+  ],
+  [
+   "Wednesday",
+   "4th | 10:35-11:20",
+   "E-Centre 1"
+  ],
+  [
+   "Wednesday",
+   "4th | 10:35-11:20",
+   "E-Centre 10"
+  ],
+  [
+   "Wednesday",
+   "4th | 10:35-11:20",
+   "E-Centre 2"
+  ],
+  [
+   "Wednesday",
+   "4th | 10:35-11:20",
+   "E-Centre 3"
+  ],
+  [
+   "Wednesday",
+   "4th | 10:35-11:20",
+   "E-Centre 4"
+  ],
+  [
+   "Wednesday",
+   "4th | 10:35-11:20",
+   "E-Centre 5"
+  ],
+  [
+   "Wednesday",
+   "4th | 10:35-11:20",
+   "E-Centre 6"
+  ],
+  [
+   "Wednesday",
+   "4th | 10:35-11:20",
+   "E-Centre 7"
+  ],
+  [
+   "Wednesday",
+   "4th | 10:35-11:20",
+   "E-Centre Terrace 1"
+  ],
+  [
+   "Wednesday",
+   "4th | 10:35-11:20",
+   "E-Centre Terrace 2"
+  ],
+  [
+   "Wednesday",
+   "4th | 10:35-11:20",
+   "Grade 0Y Room"
+  ],
+  [
+   "Wednesday",
+   "4th | 10:35-11:20",
+   "Grade 1B Room"
+  ],
+  [
+   "Wednesday",
+   "4th | 10:35-11:20",
+   "Grade 1Y Room"
+  ],
+  [
+   "Wednesday",
+   "4th | 10:35-11:20",
+   "Grade 2B Room"
+  ],
+  [
+   "Wednesday",
+   "4th | 10:35-11:20",
+   "Grade 2Y Room"
+  ],
+  [
+   "Wednesday",
+   "4th | 10:35-11:20",
+   "Grade 3B Room"
+  ],
+  [
+   "Wednesday",
+   "4th | 10:35-11:20",
+   "Grade 3Y Room"
+  ],
+  [
+   "Wednesday",
+   "4th | 10:35-11:20",
+   "Grade 4B Room"
+  ],
+  [
+   "Wednesday",
+   "4th | 10:35-11:20",
+   "Grade 4Y Room"
+  ],
+  [
+   "Wednesday",
+   "4th | 10:35-11:20",
+   "Grade 5B Room"
+  ],
+  [
+   "Wednesday",
+   "4th | 10:35-11:20",
+   "Grade 5Y Room"
+  ],
+  [
+   "Wednesday",
+   "4th | 10:35-11:20",
+   "ICT Room"
+  ],
+  [
+   "Wednesday",
+   "4th | 10:35-11:20",
+   "Lab 1"
+  ],
+  [
+   "Wednesday",
+   "4th | 10:35-11:20",
+   "Lab 2"
+  ],
+  [
+   "Wednesday",
+   "4th | 10:35-11:20",
+   "Lab 3"
+  ],
+  [
+   "Wednesday",
+   "4th | 10:35-11:20",
+   "Preschool Gym"
+  ],
+  [
+   "Wednesday",
+   "4th | 10:35-11:20",
+   "Primary Art Room"
+  ],
+  [
+   "Wednesday",
+   "4th | 10:35-11:20",
+   "S1"
+  ],
+  [
+   "Wednesday",
+   "4th | 10:35-11:20",
+   "S2"
+  ],
+  [
+   "Wednesday",
+   "4th | 10:35-11:20",
+   "Secondary Library"
+  ],
+  [
+   "Wednesday",
+   "4th | 10:35-11:20",
+   "Small Hall"
+  ],
+  [
+   "Wednesday",
+   "4th | 10:35-11:20",
+   "Staffroom 5"
+  ],
+  [
+   "Wednesday",
+   "4th | 10:35-11:20",
+   "T1"
+  ],
+  [
+   "Wednesday",
+   "4th | 10:35-11:20",
+   "T2"
+  ],
+  [
+   "Wednesday",
+   "4th | 10:35-11:20",
+   "T3"
+  ],
+  [
+   "Wednesday",
+   "4th | 10:35-11:20",
+   "T4"
+  ],
+  [
+   "Wednesday",
+   "4th | 10:35-11:20",
+   "T5"
+  ],
+  [
+   "Wednesday",
+   "4th | 10:35-11:20",
    "T6"
+  ],
+  [
+   "Wednesday",
+   "5th | 11:20-12:05",
+   "A2"
+  ],
+  [
+   "Wednesday",
+   "5th | 11:20-12:05",
+   "A3"
+  ],
+  [
+   "Wednesday",
+   "5th | 11:20-12:05",
+   "A4 Music Room"
+  ],
+  [
+   "Wednesday",
+   "5th | 11:20-12:05",
+   "Big Hall"
+  ],
+  [
+   "Wednesday",
+   "5th | 11:20-12:05",
+   "CAC1"
+  ],
+  [
+   "Wednesday",
+   "5th | 11:20-12:05",
+   "CAC2"
+  ],
+  [
+   "Wednesday",
+   "5th | 11:20-12:05",
+   "CAC6"
+  ],
+  [
+   "Wednesday",
+   "5th | 11:20-12:05",
+   "DP Art Studio"
+  ],
+  [
+   "Wednesday",
+   "5th | 11:20-12:05",
+   "E-Centre 1"
+  ],
+  [
+   "Wednesday",
+   "5th | 11:20-12:05",
+   "E-Centre 10"
+  ],
+  [
+   "Wednesday",
+   "5th | 11:20-12:05",
+   "E-Centre 4"
+  ],
+  [
+   "Wednesday",
+   "5th | 11:20-12:05",
+   "E-Centre 5"
+  ],
+  [
+   "Wednesday",
+   "5th | 11:20-12:05",
+   "E-Centre 6"
+  ],
+  [
+   "Wednesday",
+   "5th | 11:20-12:05",
+   "E-Centre 7"
+  ],
+  [
+   "Wednesday",
+   "5th | 11:20-12:05",
+   "E-Centre Terrace 1"
+  ],
+  [
+   "Wednesday",
+   "5th | 11:20-12:05",
+   "E-Centre Terrace 2"
+  ],
+  [
+   "Wednesday",
+   "5th | 11:20-12:05",
+   "Grade 0B Room"
+  ],
+  [
+   "Wednesday",
+   "5th | 11:20-12:05",
+   "Grade 0Y Room"
+  ],
+  [
+   "Wednesday",
+   "5th | 11:20-12:05",
+   "Grade 2Y Room"
+  ],
+  [
+   "Wednesday",
+   "5th | 11:20-12:05",
+   "Grade 3B Room"
+  ],
+  [
+   "Wednesday",
+   "5th | 11:20-12:05",
+   "Grade 3Y Room"
+  ],
+  [
+   "Wednesday",
+   "5th | 11:20-12:05",
+   "Grade 4B Room"
+  ],
+  [
+   "Wednesday",
+   "5th | 11:20-12:05",
+   "Grade 4Y Room"
+  ],
+  [
+   "Wednesday",
+   "5th | 11:20-12:05",
+   "Grade 5B Room"
+  ],
+  [
+   "Wednesday",
+   "5th | 11:20-12:05",
+   "Grade 5Y Room"
+  ],
+  [
+   "Wednesday",
+   "5th | 11:20-12:05",
+   "ICT Room"
+  ],
+  [
+   "Wednesday",
+   "5th | 11:20-12:05",
+   "Lab 2"
+  ],
+  [
+   "Wednesday",
+   "5th | 11:20-12:05",
+   "Lab 3"
+  ],
+  [
+   "Wednesday",
+   "5th | 11:20-12:05",
+   "Primary Art Room"
+  ],
+  [
+   "Wednesday",
+   "5th | 11:20-12:05",
+   "Primary Gym"
+  ],
+  [
+   "Wednesday",
+   "5th | 11:20-12:05",
+   "S2"
+  ],
+  [
+   "Wednesday",
+   "5th | 11:20-12:05",
+   "T1"
+  ],
+  [
+   "Wednesday",
+   "5th | 11:20-12:05",
+   "T2"
+  ],
+  [
+   "Wednesday",
+   "5th | 11:20-12:05",
+   "T4"
+  ],
+  [
+   "Wednesday",
+   "5th | 11:20-12:05",
+   "T5"
   ],
   [
    "Wednesday",
@@ -227,7 +7394,212 @@
   [
    "Wednesday",
    "6th (Lunch Break) | 12:05-12:50",
+   "A4 Music Room"
+  ],
+  [
+   "Wednesday",
+   "6th (Lunch Break) | 12:05-12:50",
+   "Big Hall"
+  ],
+  [
+   "Wednesday",
+   "6th (Lunch Break) | 12:05-12:50",
+   "E-Centre 10"
+  ],
+  [
+   "Wednesday",
+   "6th (Lunch Break) | 12:05-12:50",
+   "Grade 2B Room"
+  ],
+  [
+   "Wednesday",
+   "6th (Lunch Break) | 12:05-12:50",
+   "Grade 3B Room"
+  ],
+  [
+   "Wednesday",
+   "6th (Lunch Break) | 12:05-12:50",
+   "Grade 4B Room"
+  ],
+  [
+   "Wednesday",
+   "6th (Lunch Break) | 12:05-12:50",
+   "Grade 4Y Room"
+  ],
+  [
+   "Wednesday",
+   "6th (Lunch Break) | 12:05-12:50",
+   "Grade 5B Room"
+  ],
+  [
+   "Wednesday",
+   "6th (Lunch Break) | 12:05-12:50",
+   "Grade 5Y Room"
+  ],
+  [
+   "Wednesday",
+   "6th (Lunch Break) | 12:05-12:50",
+   "ICT Room"
+  ],
+  [
+   "Wednesday",
+   "6th (Lunch Break) | 12:05-12:50",
+   "Primary Art Room"
+  ],
+  [
+   "Wednesday",
+   "6th (Lunch Break) | 12:05-12:50",
+   "T1"
+  ],
+  [
+   "Wednesday",
+   "6th (Lunch Break) | 12:05-12:50",
+   "T2"
+  ],
+  [
+   "Wednesday",
+   "6th (Lunch Break) | 12:05-12:50",
+   "T5"
+  ],
+  [
+   "Wednesday",
+   "6th (Lunch Break) | 12:05-12:50",
    "T6"
+  ],
+  [
+   "Wednesday",
+   "7th (Lunch Break) | 12:50-13:35",
+   "A2"
+  ],
+  [
+   "Wednesday",
+   "7th (Lunch Break) | 12:50-13:35",
+   "A3"
+  ],
+  [
+   "Wednesday",
+   "7th (Lunch Break) | 12:50-13:35",
+   "A4 Music Room"
+  ],
+  [
+   "Wednesday",
+   "7th (Lunch Break) | 12:50-13:35",
+   "Big Hall"
+  ],
+  [
+   "Wednesday",
+   "7th (Lunch Break) | 12:50-13:35",
+   "CAC1"
+  ],
+  [
+   "Wednesday",
+   "7th (Lunch Break) | 12:50-13:35",
+   "CAC2"
+  ],
+  [
+   "Wednesday",
+   "7th (Lunch Break) | 12:50-13:35",
+   "CAC5"
+  ],
+  [
+   "Wednesday",
+   "7th (Lunch Break) | 12:50-13:35",
+   "CAC6"
+  ],
+  [
+   "Wednesday",
+   "7th (Lunch Break) | 12:50-13:35",
+   "E-Centre 1"
+  ],
+  [
+   "Wednesday",
+   "7th (Lunch Break) | 12:50-13:35",
+   "E-Centre 2"
+  ],
+  [
+   "Wednesday",
+   "7th (Lunch Break) | 12:50-13:35",
+   "E-Centre 3"
+  ],
+  [
+   "Wednesday",
+   "7th (Lunch Break) | 12:50-13:35",
+   "E-Centre 4"
+  ],
+  [
+   "Wednesday",
+   "7th (Lunch Break) | 12:50-13:35",
+   "E-Centre Terrace 1"
+  ],
+  [
+   "Wednesday",
+   "7th (Lunch Break) | 12:50-13:35",
+   "E-Centre Terrace 2"
+  ],
+  [
+   "Wednesday",
+   "7th (Lunch Break) | 12:50-13:35",
+   "Grade 0B Room"
+  ],
+  [
+   "Wednesday",
+   "7th (Lunch Break) | 12:50-13:35",
+   "Grade 1B Room"
+  ],
+  [
+   "Wednesday",
+   "7th (Lunch Break) | 12:50-13:35",
+   "Grade 1Y Room"
+  ],
+  [
+   "Wednesday",
+   "7th (Lunch Break) | 12:50-13:35",
+   "ICT Room"
+  ],
+  [
+   "Wednesday",
+   "7th (Lunch Break) | 12:50-13:35",
+   "Primary Gym"
+  ],
+  [
+   "Wednesday",
+   "7th (Lunch Break) | 12:50-13:35",
+   "S1"
+  ],
+  [
+   "Wednesday",
+   "7th (Lunch Break) | 12:50-13:35",
+   "S2"
+  ],
+  [
+   "Wednesday",
+   "7th (Lunch Break) | 12:50-13:35",
+   "Small Hall"
+  ],
+  [
+   "Wednesday",
+   "7th (Lunch Break) | 12:50-13:35",
+   "T1"
+  ],
+  [
+   "Wednesday",
+   "7th (Lunch Break) | 12:50-13:35",
+   "T2"
+  ],
+  [
+   "Wednesday",
+   "7th (Lunch Break) | 12:50-13:35",
+   "T3"
+  ],
+  [
+   "Wednesday",
+   "7th (Lunch Break) | 12:50-13:35",
+   "T4"
+  ],
+  [
+   "Wednesday",
+   "7th (Lunch Break) | 12:50-13:35",
+   "T5"
   ],
   [
    "Wednesday",
@@ -237,12 +7609,373 @@
   [
    "Wednesday",
    "8th | 13:40-14:25",
+   "A2"
+  ],
+  [
+   "Wednesday",
+   "8th | 13:40-14:25",
+   "A3"
+  ],
+  [
+   "Wednesday",
+   "8th | 13:40-14:25",
+   "Big Hall"
+  ],
+  [
+   "Wednesday",
+   "8th | 13:40-14:25",
+   "CAC1"
+  ],
+  [
+   "Wednesday",
+   "8th | 13:40-14:25",
+   "CAC2"
+  ],
+  [
+   "Wednesday",
+   "8th | 13:40-14:25",
+   "CAC5"
+  ],
+  [
+   "Wednesday",
+   "8th | 13:40-14:25",
+   "E-Centre 10"
+  ],
+  [
+   "Wednesday",
+   "8th | 13:40-14:25",
+   "E-Centre 2"
+  ],
+  [
+   "Wednesday",
+   "8th | 13:40-14:25",
+   "E-Centre 3"
+  ],
+  [
+   "Wednesday",
+   "8th | 13:40-14:25",
+   "E-Centre 4"
+  ],
+  [
+   "Wednesday",
+   "8th | 13:40-14:25",
+   "E-Centre 5"
+  ],
+  [
+   "Wednesday",
+   "8th | 13:40-14:25",
+   "E-Centre Terrace 1"
+  ],
+  [
+   "Wednesday",
+   "8th | 13:40-14:25",
+   "E-Centre Terrace 2"
+  ],
+  [
+   "Wednesday",
+   "8th | 13:40-14:25",
+   "Grade 0B Room"
+  ],
+  [
+   "Wednesday",
+   "8th | 13:40-14:25",
+   "Grade 0Y Room"
+  ],
+  [
+   "Wednesday",
+   "8th | 13:40-14:25",
+   "Grade 1B Room"
+  ],
+  [
+   "Wednesday",
+   "8th | 13:40-14:25",
+   "Grade 2B Room"
+  ],
+  [
+   "Wednesday",
+   "8th | 13:40-14:25",
+   "Grade 2Y Room"
+  ],
+  [
+   "Wednesday",
+   "8th | 13:40-14:25",
+   "Grade 4B Room"
+  ],
+  [
+   "Wednesday",
+   "8th | 13:40-14:25",
+   "Grade 4Y Room"
+  ],
+  [
+   "Wednesday",
+   "8th | 13:40-14:25",
+   "Grade 5B Room"
+  ],
+  [
+   "Wednesday",
+   "8th | 13:40-14:25",
+   "ICT Room"
+  ],
+  [
+   "Wednesday",
+   "8th | 13:40-14:25",
+   "Lab 2"
+  ],
+  [
+   "Wednesday",
+   "8th | 13:40-14:25",
+   "Lab 3"
+  ],
+  [
+   "Wednesday",
+   "8th | 13:40-14:25",
+   "Primary Art Room"
+  ],
+  [
+   "Wednesday",
+   "8th | 13:40-14:25",
+   "Primary Gym"
+  ],
+  [
+   "Wednesday",
+   "8th | 13:40-14:25",
+   "S1"
+  ],
+  [
+   "Wednesday",
+   "8th | 13:40-14:25",
+   "Secondary Library"
+  ],
+  [
+   "Wednesday",
+   "8th | 13:40-14:25",
+   "Small Hall"
+  ],
+  [
+   "Wednesday",
+   "8th | 13:40-14:25",
+   "Staffroom 5"
+  ],
+  [
+   "Wednesday",
+   "8th | 13:40-14:25",
+   "T2"
+  ],
+  [
+   "Wednesday",
+   "8th | 13:40-14:25",
+   "T3"
+  ],
+  [
+   "Wednesday",
+   "8th | 13:40-14:25",
+   "T4"
+  ],
+  [
+   "Wednesday",
+   "8th | 13:40-14:25",
+   "T5"
+  ],
+  [
+   "Wednesday",
+   "8th | 13:40-14:25",
    "T6"
+  ],
+  [
+   "Wednesday",
+   "9th | 14:30-15:15",
+   "A3"
+  ],
+  [
+   "Wednesday",
+   "9th | 14:30-15:15",
+   "A4 Music Room"
+  ],
+  [
+   "Wednesday",
+   "9th | 14:30-15:15",
+   "Big Hall"
+  ],
+  [
+   "Wednesday",
+   "9th | 14:30-15:15",
+   "CAC1"
+  ],
+  [
+   "Wednesday",
+   "9th | 14:30-15:15",
+   "CAC2"
+  ],
+  [
+   "Wednesday",
+   "9th | 14:30-15:15",
+   "CAC6"
+  ],
+  [
+   "Wednesday",
+   "9th | 14:30-15:15",
+   "E-Centre 1"
+  ],
+  [
+   "Wednesday",
+   "9th | 14:30-15:15",
+   "E-Centre 10"
+  ],
+  [
+   "Wednesday",
+   "9th | 14:30-15:15",
+   "E-Centre 2"
+  ],
+  [
+   "Wednesday",
+   "9th | 14:30-15:15",
+   "E-Centre 3"
+  ],
+  [
+   "Wednesday",
+   "9th | 14:30-15:15",
+   "E-Centre 4"
+  ],
+  [
+   "Wednesday",
+   "9th | 14:30-15:15",
+   "E-Centre 5"
+  ],
+  [
+   "Wednesday",
+   "9th | 14:30-15:15",
+   "E-Centre 6"
+  ],
+  [
+   "Wednesday",
+   "9th | 14:30-15:15",
+   "E-Centre 8 Music Room"
+  ],
+  [
+   "Wednesday",
+   "9th | 14:30-15:15",
+   "Grade 0B Room"
+  ],
+  [
+   "Wednesday",
+   "9th | 14:30-15:15",
+   "Grade 0Y Room"
+  ],
+  [
+   "Wednesday",
+   "9th | 14:30-15:15",
+   "Grade 1B Room"
+  ],
+  [
+   "Wednesday",
+   "9th | 14:30-15:15",
+   "Grade 1Y Room"
+  ],
+  [
+   "Wednesday",
+   "9th | 14:30-15:15",
+   "Grade 2B Room"
+  ],
+  [
+   "Wednesday",
+   "9th | 14:30-15:15",
+   "Grade 2Y Room"
+  ],
+  [
+   "Wednesday",
+   "9th | 14:30-15:15",
+   "Grade 3B Room"
+  ],
+  [
+   "Wednesday",
+   "9th | 14:30-15:15",
+   "Grade 3Y Room"
+  ],
+  [
+   "Wednesday",
+   "9th | 14:30-15:15",
+   "Grade 5B Room"
+  ],
+  [
+   "Wednesday",
+   "9th | 14:30-15:15",
+   "Grade 5Y Room"
+  ],
+  [
+   "Wednesday",
+   "9th | 14:30-15:15",
+   "ICT Room"
+  ],
+  [
+   "Wednesday",
+   "9th | 14:30-15:15",
+   "Lab 2"
+  ],
+  [
+   "Wednesday",
+   "9th | 14:30-15:15",
+   "Lab 3"
+  ],
+  [
+   "Wednesday",
+   "9th | 14:30-15:15",
+   "Makerspace"
+  ],
+  [
+   "Wednesday",
+   "9th | 14:30-15:15",
+   "Primary Art Room"
+  ],
+  [
+   "Wednesday",
+   "9th | 14:30-15:15",
+   "Primary Gym"
+  ],
+  [
+   "Wednesday",
+   "9th | 14:30-15:15",
+   "S1"
+  ],
+  [
+   "Wednesday",
+   "9th | 14:30-15:15",
+   "S2"
+  ],
+  [
+   "Wednesday",
+   "9th | 14:30-15:15",
+   "Small Hall"
+  ],
+  [
+   "Wednesday",
+   "9th | 14:30-15:15",
+   "T1"
+  ],
+  [
+   "Wednesday",
+   "9th | 14:30-15:15",
+   "T2"
+  ],
+  [
+   "Wednesday",
+   "9th | 14:30-15:15",
+   "T3"
+  ],
+  [
+   "Wednesday",
+   "9th | 14:30-15:15",
+   "T4"
+  ],
+  [
+   "Wednesday",
+   "9th | 14:30-15:15",
+   "T5"
   ],
   [
    "Wednesday",
    "9th | 14:30-15:15",
    "T6"
   ]
- ]
+ ],
+ "warnings": []
 }
