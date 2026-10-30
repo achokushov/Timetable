@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BIS Timetable</title>
+  <style>
+    :root {
+      --bg: #121212;
+      --card-bg: #1e1e1e;
+      --accent: #4da6ff;
+      --text: #ffffff;
+      --text-sub: #aaaaaa;
+      --border: #333333;
+    }
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+    }
+    header {
+      background: var(--card-bg);
+      padding: 15px 20px;
+      font-size: 20px;
+      font-weight: bold;
+      border-bottom: 1px solid var(--border);
+    }
+    header span { color: var(--accent); }
+    nav {
+      display: flex;
+      background: #181818;
+      border-bottom: 1px solid var(--border);
+      overflow-x: auto;
+    }
+    nav button {
+      background: none;
+      border: none;
+      color: var(--text-sub);
+      padding: 14px 20px;
+      font-size: 15px;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+    nav button.active {
+      color: var(--accent);
+      border-bottom: 2px solid var(--accent);
+    }
+    .container { padding: 20px; max-width: 900px; margin: 0 auto; }
+    .controls { margin-bottom: 20px; display: flex; gap: 10px; flex-wrap: wrap; }
+    select {
+      background: var(--card-bg);
+      color: var(--text);
+      border: 1px solid var(--border);
+      padding: 10px 15px;
+      border-radius: 6px;
+      font-size: 14px;
+    }
+    .grid { display: grid; gap: 10px; }
+    .card {
+      background: var(--card-bg);
+      padding: 15px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .card-title { font-weight: bold; font-size: 16px; margin-bottom: 4px; }
+    .card-sub { font-size: 13px; color: var(--text-sub); }
+    .badge {
+      background: rgba(77, 166, 255, 0.15);
+      color: var(--accent);
+      padding: 6px 12px;
+      border-radius: 4px;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+
+<header>BIS <span>Timetable</span></header>
+
+<nav>
+  <button class="active" onclick="switchTab('grades')">Grades</button>
+  <button onclick="switchTab('teachers')">Teachers</button>
+  <button onclick="switchTab('rooms')">Rooms</button>
+  <button onclick="switchTab('empty')">Empty rooms</button>
+</nav>
+
+<div class="container">
+  <div class="controls" id="controls"></div>
+  <div class="grid" id="output">Загрузка данных...</div>
+</div>
+
+<script>
+  let scheduleData = [];
+  const ALL_ROOMS = ["101", "102", "103", "201", "202", "Lab 1"];
+  let currentTab = 'grades';
+
+  async function loadData() {
+    try {
+      const res = await fetch('./data.json');
+      scheduleData = await res.json();
+      render();
+    } catch(e) {
+      document.getElementById('output').innerText = 'Ошибка загрузки данных или файл еще не создан';
+    }
+  }
+
+  function switchTab(tab) {
+    currentTab = tab;
+    document.querySelectorAll('nav button').forEach(b => b.classList.remove('active'));
+    event.target.classList.add('active');
+    render();
+  }
+
+  function render() {
+    const controls = document.getElementById('controls');
+    const output = document.getElementById('output');
+    controls.innerHTML = '';
+    output.innerHTML = '';
+
+    if (!scheduleData.length) {
+      output.innerText = 'Нет данных';
+      return;
+    }
+
+    if (currentTab === 'grades' || currentTab === 'teachers' || currentTab === 'rooms') {
+      const field = currentTab === 'grades' ? 'Grade' : currentTab === 'teachers' ? 'Teacher' : 'Room';
+      const items = [...new Set(scheduleData.map(d => d[field]))].sort();
+      
+      controls.innerHTML = `
+        <select id="filterSelect" onchange="renderList('${field}')">
+          ${items.map(item => `<option value="${item}">${item}</option>`).join('')}
+        </select>
+      `;
+      renderList(field);
+    } 
+    else if (currentTab === 'empty') {
+      const days = [...new Set(scheduleData.map(d => d.Day))];
+      const times = [...new Set(scheduleData.map(d => d.Time))];
+
+      controls.innerHTML = `
+        <select id="daySelect" onchange="renderEmptyRooms()">
+          ${days.map(d => `<option value="${d}">${d}</option>`).join('')}
+        </select>
+        <select id="timeSelect" onchange="renderEmptyRooms()">
+          ${times.map(t => `<option value="${t}">${t}</option>`).join('')}
+        </select>
+      `;
+      renderEmptyRooms();
+    }
+  }
+
+  function renderList(field) {
+    const val = document.getElementById('filterSelect').value;
+    const filtered = scheduleData.filter(d => d[field] === val);
+    const output = document.getElementById('output');
+
+    output.innerHTML = filtered.map(item => `
+      <div class="card">
+        <div>
+          <div class="card-title">${item.Subject} (${item.Grade})</div>
+          <div class="card-sub">${item.Day} | ${item.Time} | Преподаватель: ${item.Teacher}</div>
+        </div>
+        <div class="badge">Каб. ${item.Room}</div>
+      </div>
+    `).join('');
+  }
+
+  function renderEmptyRooms() {
+    const day = document.getElementById('daySelect').value;
+    const time = document.getElementById('timeSelect').value;
+    
+    const busyRooms = scheduleData
+      .filter(d => d.Day === day && d.Time === time)
+      .map(d => d.Room);
+
+    const empty = ALL_ROOMS.filter(r => !busyRooms.includes(r));
+    const output = document.getElementById('output');
+
+    output.innerHTML = empty.length 
+      ? empty.map(room => `
+          <div class="card">
+            <div>
+              <div class="card-title">Кабинет ${room}</div>
+              <div class="card-sub">Свободен в это время</div>
+            </div>
+            <div class="badge" style="background:rgba(46,204,113,0.15); color:#2ecc71;">Свободно</div>
+          </div>
+        `).join('')
+      : '<div style="color:var(--text-sub)">Нет свободных кабинетов</div>';
+  }
+
+  loadData();
+</script>
+</body>
+</html>
