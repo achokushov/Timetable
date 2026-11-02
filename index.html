@@ -27,7 +27,7 @@
     }
     header {
       background: var(--card-bg);
-      padding: 16px 24px;
+      padding: 12px 20px;
       font-size: 20px;
       font-weight: 700;
       border-bottom: 1px solid var(--border);
@@ -59,44 +59,49 @@
       border-bottom-color: var(--accent);
       background: rgba(56, 189, 248, 0.05);
     }
-    .container { padding: 24px; max-width: 960px; margin: 0 auto; }
-    .controls { display: flex; gap: 12px; margin-bottom: 20px; flex-wrap: wrap; }
+    .container { padding: 14px 20px 24px; max-width: 1100px; margin: 0 auto; }
+    .controls { display: flex; gap: 10px; margin-bottom: 10px; flex-wrap: wrap; }
     select, input[type=text] {
       background: var(--card-bg);
       color: var(--text);
       border: 1px solid var(--border);
-      padding: 10px 16px;
+      padding: 8px 14px;
       border-radius: 8px;
       font-size: 15px;
       outline: none;
       font-family: inherit;
     }
     select:focus, input[type=text]:focus { border-color: var(--accent); }
-    .status { margin-bottom: 16px; font-size: 14px; color: var(--text-sub); }
+    .status { margin-bottom: 10px; font-size: 14px; color: var(--text-sub); }
     .hint { margin: 0 0 16px; font-size: 14px; color: var(--text-sub); line-height: 1.5; }
     .grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-      gap: 12px;
+      grid-template-columns: repeat(auto-fill, minmax(124px, 1fr));
+      gap: 6px;
     }
     .card {
-      padding: 16px;
-      border-radius: 8px;
+      padding: 6px 9px;
+      border-radius: 6px;
       border: 1px solid rgba(34, 197, 94, 0.3);
-      background: rgba(34, 197, 94, 0.05);
+      background: rgba(34, 197, 94, 0.07);
       display: flex;
-      justify-content: space-between;
       align-items: center;
-      gap: 8px;
+      gap: 7px;
+      min-height: 34px;
     }
-    .room-title { font-weight: 600; font-size: 16px; overflow-wrap: anywhere; }
-    .badge {
-      background: rgba(34, 197, 94, 0.15);
-      color: var(--success);
-      padding: 4px 10px;
-      border-radius: 4px;
-      font-size: 13px;
-      font-weight: 600;
+    .card::before {
+      content: ""; flex: none; width: 7px; height: 7px; border-radius: 50%;
+      background: var(--success);
+    }
+    .room-title { font-weight: 600; font-size: 12.5px; line-height: 1.2; overflow-wrap: anywhere; }
+    @media (max-width: 600px) {
+      .container { padding: 10px 12px 20px; }
+      header { padding: 10px 12px; font-size: 18px; }
+      .statsbar { padding: 6px 12px; }
+      .grid { grid-template-columns: repeat(3, 1fr); gap: 5px; }
+      .card { padding: 5px 6px; gap: 5px; min-height: 32px; }
+      .card::before { width: 6px; height: 6px; }
+      .room-title { font-size: 11.5px; }
     }
     .empty { color: var(--text-sub); }
 
@@ -146,6 +151,14 @@
     td.busy { background: rgba(239, 68, 68, 0.10); color: #fca5a5; font-size: 12px; }
     td.busy small { display: block; color: var(--text-sub); font-size: 11px; line-height: 1.3; }
     .legend { margin-top: 12px; font-size: 13px; color: var(--text-sub); }
+    .statsbar {
+      display: flex; gap: 6px 18px; flex-wrap: wrap; padding: 8px 20px;
+      max-width: 1100px; margin: 0 auto; font-size: 13px; color: var(--text-sub);
+    }
+    .statsbar b { font-weight: 700; font-size: 14px; }
+    .statsbar .room b { color: var(--room); }
+    .statsbar .teacher b { color: var(--teacher); }
+    .statsbar .class b { color: var(--class); }
     .hidden { display: none; }
   </style>
 </head>
@@ -157,6 +170,8 @@
   <a href="#/empty" id="tabEmpty">Empty rooms</a>
   <a href="#/free" id="tabFree">Find a slot</a>
 </nav>
+
+<div class="statsbar" id="statsbar"></div>
 
 <div class="container">
 
@@ -240,14 +255,27 @@
         card.className = 'card';
         const t = document.createElement('div');
         t.className = 'room-title'; t.textContent = room;
-        const b = document.createElement('div');
-        b.className = 'badge'; b.textContent = 'Free';
-        card.append(t, b);
+        card.append(t);
         out.append(card);
       });
     }
     $('statusMsg').textContent =
       `${day}, ${period}: свободно ${free.length} из ${data.rooms.length}`;
+  }
+
+  function showStats() {
+    const items = [
+      ['room', data.rooms.length, 'Rooms'],
+      ['teacher', Object.keys(data.teachers || {}).length, 'Teachers'],
+      ['class', Object.keys(data.classes || {}).length, 'Classes'],
+    ];
+    $('statsbar').replaceChildren(...items.map(([kind, n, label]) => {
+      const el = document.createElement('span');
+      el.className = kind;
+      const b = document.createElement('b'); b.textContent = n;
+      el.append(b, ' ' + label);
+      return el;
+    }));
   }
 
   function showUpdated() {
@@ -476,6 +504,7 @@
       pickDefaults();
       daySel.onchange = perSel.onchange = renderEmpty;
       showUpdated();
+      showStats();
 
       // сущности для поиска слотов
       const dayIdx = Object.fromEntries(data.days.map((d, i) => [d, i]));
