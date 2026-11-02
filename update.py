@@ -133,26 +133,46 @@ def main():
         sys.exit("Страница кабинетов не распознана (кабинеты/дни/периоды не найдены). "
                  "Смотрите raw/cr.html — data.json не изменён.")
 
-    # Страницы классов и учителей: если в уроке в скобках указан кабинет
-    # (ТОЧНОЕ совпадение с названием кабинета со страницы кабинетов) — он тоже занят.
+    # Страницы классов (sy) и учителей (te).
+    #  1) по ним строится поиск общих свободных слотов (data["classes"], data["teachers"]);
+    #  2) если в уроке в скобках указан кабинет (ТОЧНОЕ совпадение с названием со страницы
+    #     кабинетов), он тоже считается занятым.
+    # Слоты хранятся строкой "д.п д.п ..." — индексы в списках days и periods.
     room_set = set(rooms)
+    day_i = {d: i for i, d in enumerate(days)}
+    per_i = {p: i for i, p in enumerate(periods)}
     warnings = []
-    for view in ("sy", "te"):
+    try:
+        previous = json.loads(pathlib.Path("data.json").read_text(encoding="utf-8"))
+    except Exception:  # noqa: BLE001
+        previous = {}
+    people = {}
+    for view, key in (("sy", "classes"), ("te", "teachers")):
         try:
             tables = parse_tables(fetch(view))
+            found = {}
+            for t in tables:
+                if not t["title"]:
+                    continue
+                slots = found.setdefault(t["title"], set())
+                for day, period, text in t["lessons"]:
+                    if day in day_i and period in per_i:
+                        slots.add((day_i[day], per_i[period]))
+                    for g in PAREN_RE.findall(text):
+                        g = g.strip()
+                        name = g if g in room_set else (
+                            g.split("-", 1)[1].strip() if "-" in g and g.split("-", 1)[1].strip() in room_set else None)
+                        if name:
+                            busy.add((day, period, name))
+            if not found:
+                raise RuntimeError("таблицы не найдены")
+            people[key] = {n: " ".join(f"{d}.{p}" for d, p in sorted(sl)) for n, sl in
+                           sorted(found.items(), key=lambda kv: kv[0].casefold())}
         except Exception as e:  # noqa: BLE001
             msg = f"view={view} пропущен: {e}"
             print("ВНИМАНИЕ:", msg, file=sys.stderr)
             warnings.append(msg)
-            continue
-        for t in tables:
-            for day, period, text in t["lessons"]:
-                for g in PAREN_RE.findall(text):
-                    g = g.strip()
-                    name = g if g in room_set else (
-                        g.split("-", 1)[1].strip() if "-" in g and g.split("-", 1)[1].strip() in room_set else None)
-                    if name:
-                        busy.add((day, period, name))
+            people[key] = previous.get(key, {})   # оставляем прошлые данные
 
     out = {
         "updated": datetime.datetime.now(datetime.timezone.utc).isoformat(timespec="seconds"),
@@ -160,14 +180,17 @@ def main():
         "periods": periods,
         "rooms": sorted(rooms, key=str.casefold),
         "busy": [list(x) for x in sorted(busy)],
+        "classes": people["classes"],
+        "teachers": people["teachers"],
         "warnings": warnings,
     }
     with open("data.json", "w", encoding="utf-8") as f:
         json.dump(out, f, ensure_ascii=False, indent=1)
 
     print(f"Кабинетов: {len(rooms)}, дней: {len(days)}, периодов: {len(periods)}")
-    print(f"Занятых слотов: {len(busy)} (со страницы кабинетов: {from_rooms}, "
+    print(f"Занятых слотов кабинетов: {len(busy)} (со страницы кабинетов: {from_rooms}, "
           f"добавлено из классов/учителей: {len(busy) - from_rooms})")
+    print(f"Классов: {len(people['classes'])}, учителей: {len(people['teachers'])}")
 
 
 if __name__ == "__main__":
