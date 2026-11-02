@@ -27,7 +27,14 @@
       font-size: 20px;
       font-weight: 700;
       border-bottom: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 4px 16px;
     }
+    #updated { font-size: 13px; font-weight: 500; color: var(--text-sub); }
+    #updated.stale { color: #f59e0b; }
     header span { color: var(--accent); }
     .container { padding: 24px; max-width: 900px; margin: 0 auto; }
     .controls { display: flex; gap: 12px; margin-bottom: 20px; flex-wrap: wrap; }
@@ -71,7 +78,7 @@
 </head>
 <body>
 
-<header>BIS <span>Timetable</span> · Empty rooms</header>
+<header><div>BIS <span>Timetable</span> · Empty rooms</div><div id="updated"></div></header>
 
 <div class="container">
   <div class="controls">
@@ -139,9 +146,23 @@
         out.append(card);
       });
     }
-    const upd = new Date(data.updated).toLocaleString('ru-RU', { timeZone: 'Asia/Bishkek' });
     document.getElementById('statusMsg').textContent =
-      `${day}, ${period}: свободно ${free.length} из ${data.rooms.length}. Данные обновлены: ${upd}`;
+      `${day}, ${period}: свободно ${free.length} из ${data.rooms.length}`;
+  }
+
+  function showUpdated() {
+    const el = document.getElementById('updated');
+    const t = new Date(data.updated);
+    if (isNaN(t)) return;
+    el.textContent = 'Обновлено: ' + t.toLocaleString('ru-RU', {
+      timeZone: 'Asia/Bishkek', day: '2-digit', month: '2-digit', year: 'numeric',
+      hour: '2-digit', minute: '2-digit'
+    });
+    // автообновление идёт каждые 6 часов; если данные старше 13 часов — что-то сломалось
+    if (Date.now() - t.getTime() > 13 * 3600 * 1000) {
+      el.classList.add('stale');
+      el.textContent += ' · данные могли устареть';
+    }
   }
 
   async function init() {
@@ -153,6 +174,7 @@
       fill(daySel, data.days);
       fill(perSel, data.periods);
       pickDefaults();
+      showUpdated();
       daySel.onchange = perSel.onchange = render;
       render();
     } catch (e) {
