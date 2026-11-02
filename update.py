@@ -128,6 +128,59 @@ def parse_tables(html):
     return result
 
 
+KIND_ORDER = {"room": 0, "teacher": 1, "class": 2}
+MAX_ITEMS_PER_RUN = 300     # сколько изменений хранить за один запуск (всего изменений пишется отдельно)
+MAX_RUNS_KEPT = 20          # сколько последних запусков с изменениями хранить в журнале
+
+
+def snapshot(d):
+    """{(kind, name): {(day, period), ...}} — занятость кабинетов, учителей и классов."""
+    days, periods = d.get("days", []), d.get("periods", [])
+    snap = {("room", r): set() for r in d.get("rooms", [])}
+    for day, period, room in d.get("busy", []):
+        snap.setdefault(("room", room), set()).add((day, period))
+    for kind, key in (("class", "classes"), ("teacher", "teachers")):
+        for name, text in (d.get(key) or {}).items():
+            slots = set()
+            for tok in text.split():
+                di, pi = tok.split(".")
+                if int(di) < len(days) and int(pi) < len(periods):
+                    slots.add((days[int(di)], periods[int(pi)]))
+            snap[(kind, name)] = slots
+    return snap
+
+
+def diff_data(prev, cur):
+    """Что изменилось между прошлым и новым data.json.
+    Возвращает список [kind, name, day, period, change], change: busy | free | new | gone."""
+    kinds = {"room"} if prev.get("rooms") else set()
+    if prev.get("teachers"):
+        kinds.add("teacher")
+    if prev.get("classes"):
+        kinds.add("class")
+    if not kinds:
+        return []
+    a, b = snapshot(prev), snapshot(cur)
+    d_i = {d: i for i, d in enumerate(cur["days"])}
+    p_i = {p: i for i, p in enumerate(cur["periods"])}
+    order = lambda sl: (d_i.get(sl[0], 99), p_i.get(sl[1], 99))  # noqa: E731
+    items = []
+    for kind, name in sorted(set(a) | set(b), key=lambda k: (KIND_ORDER[k[0]], k[1].casefold())):
+        if kind not in kinds:
+            continue
+        key = (kind, name)
+        if key not in a:
+            items.append([kind, name, "", "", "new"])
+        elif key not in b:
+            items.append([kind, name, "", "", "gone"])
+        else:
+            for day, period in sorted(b[key] - a[key], key=order):
+                items.append([kind, name, day, period, "busy"])
+            for day, period in sorted(a[key] - b[key], key=order):
+                items.append([kind, name, day, period, "free"])
+    return items
+
+
 def main():
     cr = parse_tables(fetch("cr"))
     rooms, days, periods, busy = [], [], [], set()
@@ -194,14 +247,26 @@ def main():
 
     out = {
         "updated": datetime.datetime.now(datetime.timezone.utc).isoformat(timespec="seconds"),
+        "warnings": warnings,
         "days": days,
         "periods": periods,
         "rooms": sorted(rooms, key=str.casefold),
-        "busy": [list(x) for x in sorted(busy)],
         "classes": people["classes"],
         "teachers": people["teachers"],
-        "warnings": warnings,
+        "changes": [],
+        "busy": [list(x) for x in sorted(busy)],
     }
+
+    # Журнал изменений: сравниваем с предыдущим data.json
+    changes = list(previous.get("changes", []))
+    items = diff_data(previous, out) if previous else []
+    structure = bool(previous) and (previous.get("days") != days or previous.get("periods") != periods)
+    if items or structure:
+        changes.append({"at": out["updated"], "total": len(items), "structure": structure,
+                        "items": items[:MAX_ITEMS_PER_RUN]})
+    out["changes"] = changes[-MAX_RUNS_KEPT:]
+    n_changes = len(items)
+
     with open("data.json", "w", encoding="utf-8") as f:
         json.dump(out, f, ensure_ascii=False, indent=1)
 
@@ -209,6 +274,7 @@ def main():
     print(f"Занятых слотов кабинетов: {len(busy)} (со страницы кабинетов: {from_rooms}, "
           f"добавлено из классов/учителей: {len(busy) - from_rooms})")
     print(f"Классов: {len(people['classes'])}, учителей: {len(people['teachers'])}")
+    print(f"Изменений с прошлого обновления: {n_changes}")
 
 
 if __name__ == "__main__":

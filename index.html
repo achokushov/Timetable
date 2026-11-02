@@ -60,7 +60,8 @@
       background: rgba(56, 189, 248, 0.05);
     }
     .container { padding: 14px 20px 24px; max-width: 1100px; margin: 0 auto; }
-    .controls { display: flex; gap: 10px; margin-bottom: 10px; flex-wrap: wrap; }
+    .controls { display: flex; gap: 10px; margin-bottom: 10px; flex-wrap: wrap; align-items: center; }
+    .controls .to { color: var(--text-sub); }
     select, input[type=text] {
       background: var(--card-bg);
       color: var(--text);
@@ -73,7 +74,9 @@
     }
     select:focus, input[type=text]:focus { border-color: var(--accent); }
     .status { margin-bottom: 10px; font-size: 14px; color: var(--text-sub); }
-    .hint { margin: 0 0 16px; font-size: 14px; color: var(--text-sub); line-height: 1.5; }
+    .hint { margin: 0 0 12px; font-size: 13px; color: var(--text-sub); line-height: 1.5; }
+    h3.sect { margin: 16px 0 8px; font-size: 14px; font-weight: 600; color: var(--text); }
+    h3.sect small { font-weight: 400; color: var(--text-sub); margin-left: 6px; }
     .grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(124px, 1fr));
@@ -93,17 +96,46 @@
       content: ""; flex: none; width: 7px; height: 7px; border-radius: 50%;
       background: var(--success);
     }
-    .room-title { font-weight: 600; font-size: 12.5px; line-height: 1.2; overflow-wrap: anywhere; }
+    .room-title { font-weight: 600; font-size: 12.5px; line-height: 1.2; overflow-wrap: anywhere; flex: 1; }
+    .card .sub { flex: none; font-size: 11px; color: var(--text-sub); }
+    .grid.wide { grid-template-columns: repeat(auto-fill, minmax(188px, 1fr)); }
+    .empty { color: var(--text-sub); font-size: 14px; }
+
+    /* ближайшие варианты */
+    .plist { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 8px; }
+    .pcard {
+      border: 1px solid var(--border); border-radius: 8px; background: var(--card-bg);
+      padding: 8px 10px; display: flex; flex-direction: column; gap: 6px;
+    }
+    .pcard .top { display: flex; justify-content: space-between; gap: 8px; align-items: baseline; }
+    .pcard .name { font-weight: 600; font-size: 13px; overflow-wrap: anywhere; }
+    .pcard .sub { font-size: 11px; color: var(--text-sub); white-space: nowrap; }
+    .pcard .busytxt { font-size: 12px; color: #fca5a5; }
+    .strip { display: flex; gap: 3px; flex-wrap: wrap; }
+    .strip .c {
+      min-width: 24px; height: 22px; padding: 0 4px; border-radius: 4px; font-size: 11px; font-weight: 600;
+      display: inline-flex; align-items: center; justify-content: center;
+    }
+    .strip .c.free { background: rgba(34, 197, 94, 0.22); color: var(--success); }
+    .strip .c.busy { background: rgba(239, 68, 68, 0.22); color: #fca5a5; }
+    button.more {
+      margin-top: 10px; background: var(--card-bg); color: var(--text); border: 1px solid var(--border);
+      border-radius: 8px; padding: 8px 14px; font-size: 14px; cursor: pointer;
+    }
+    button.more:hover { border-color: var(--accent); }
+
     @media (max-width: 600px) {
       .container { padding: 10px 12px 20px; }
       header { padding: 10px 12px; font-size: 18px; }
       .statsbar { padding: 6px 12px; }
       .grid { grid-template-columns: repeat(3, 1fr); gap: 5px; }
+      .grid.wide { grid-template-columns: repeat(2, 1fr); }
       .card { padding: 5px 6px; gap: 5px; min-height: 32px; }
       .card::before { width: 6px; height: 6px; }
       .room-title { font-size: 11.5px; }
+      .plist { grid-template-columns: 1fr; }
+      select, input[type=text] { padding: 8px 10px; font-size: 14px; max-width: 100%; }
     }
-    .empty { color: var(--text-sub); }
 
     /* --- Find a slot --- */
     .search { position: relative; max-width: 520px; margin-bottom: 14px; }
@@ -151,6 +183,24 @@
     td.busy { background: rgba(239, 68, 68, 0.10); color: #fca5a5; font-size: 12px; }
     td.busy small { display: block; color: var(--text-sub); font-size: 11px; line-height: 1.3; }
     .legend { margin-top: 12px; font-size: 13px; color: var(--text-sub); }
+
+    /* --- Changes --- */
+    details.rec { border: 1px solid var(--border); border-radius: 8px; background: var(--card-bg); margin-bottom: 8px; }
+    details.rec summary { cursor: pointer; padding: 10px 14px; font-size: 14px; display: flex; gap: 8px 14px; flex-wrap: wrap; align-items: baseline; }
+    details.rec summary .when { font-weight: 600; }
+    .tag { font-size: 12px; font-weight: 600; }
+    .tag.busy { color: #fca5a5; }
+    .tag.free { color: var(--success); }
+    .tag.other { color: var(--text-sub); }
+    .recbody { padding: 0 14px 12px; }
+    .recnote { font-size: 12px; color: #f59e0b; margin: 4px 0 8px; }
+    .grp { margin: 8px 0; font-size: 13px; }
+    .grp .nm { font-weight: 600; margin-left: 6px; }
+    .grp ul { margin: 4px 0 0 18px; padding: 0; color: var(--text-sub); }
+    .grp li { margin: 2px 0; }
+    .grp li .busy { color: #fca5a5; }
+    .grp li .free { color: var(--success); }
+
     .statsbar {
       display: flex; gap: 6px 18px; flex-wrap: wrap; padding: 8px 20px;
       max-width: 1100px; margin: 0 auto; font-size: 13px; color: var(--text-sub);
@@ -168,7 +218,9 @@
 
 <nav>
   <a href="#/empty" id="tabEmpty">Empty rooms</a>
+  <a href="#/teachers" id="tabTeachers">Free teachers</a>
   <a href="#/free" id="tabFree">Find a slot</a>
+  <a href="#/changes" id="tabChanges">Changes</a>
 </nav>
 
 <div class="statsbar" id="statsbar"></div>
@@ -178,11 +230,42 @@
   <!-- Empty rooms -->
   <section id="viewEmpty">
     <div class="controls">
-      <select id="daySelect"></select>
-      <select id="periodSelect"></select>
+      <select id="roomDay"></select>
+      <select id="roomFrom"></select>
+      <span class="to">–</span>
+      <select id="roomTo"></select>
     </div>
-    <div class="status" id="statusMsg">Загрузка…</div>
-    <div class="grid" id="output"></div>
+    <p class="hint">Выберите один период или диапазон «с … по …». Если комнаты, свободной весь диапазон, нет, ниже показаны ближайшие варианты: там занята только часть периодов, занятые отмечены красным. Их стоит проверить вручную.</p>
+    <div class="status" id="roomStatus">Загрузка…</div>
+    <div id="roomFullWrap"><div class="grid" id="roomFull"></div></div>
+    <div id="roomPartialWrap" class="hidden">
+      <h3 class="sect" id="roomPartialTitle"></h3>
+      <div class="plist" id="roomPartial"></div>
+      <button class="more hidden" id="roomMore" type="button"></button>
+    </div>
+  </section>
+
+  <!-- Free teachers -->
+  <section id="viewTeachers" class="hidden">
+    <div class="controls">
+      <select id="teacherDay"></select>
+      <select id="teacherFrom"></select>
+      <span class="to">–</span>
+      <select id="teacherTo"></select>
+      <input type="text" id="teacherQ" placeholder="Фильтр по имени…" autocomplete="off" spellcheck="false">
+      <select id="teacherSort">
+        <option value="az">Сортировка: А–Я</option>
+        <option value="load">Сортировка: меньше уроков в этот день</option>
+      </select>
+    </div>
+    <p class="hint">«Свободен» значит, что на сайте у учителя в это время нет урока. Присутствие в школе не проверяется. Справа в карточке: сколько уроков у учителя в выбранный день.</p>
+    <div class="status" id="teacherStatus"></div>
+    <div id="teacherFullWrap"><div class="grid" id="teacherFull"></div></div>
+    <div id="teacherPartialWrap" class="hidden">
+      <h3 class="sect" id="teacherPartialTitle"></h3>
+      <div class="plist" id="teacherPartial"></div>
+      <button class="more hidden" id="teacherMore" type="button"></button>
+    </div>
   </section>
 
   <!-- Find a slot -->
@@ -198,28 +281,43 @@
     <div class="legend hidden" id="legend">Красные ячейки: под днём и периодом показано, кто из выбранных занят.</div>
   </section>
 
+  <!-- Changes -->
+  <section id="viewChanges" class="hidden">
+    <div class="controls">
+      <select id="chgKind">
+        <option value="">Всё</option>
+        <option value="room">Только кабинеты</option>
+        <option value="teacher">Только учителя</option>
+        <option value="class">Только классы</option>
+      </select>
+    </div>
+    <p class="hint">Что изменилось в расписании на сайте школы между двумя обновлениями. Журнал ведёт бот: при каждом обновлении он сравнивает новое расписание с прошлым.</p>
+    <div id="chgList"></div>
+  </section>
+
 </div>
 
 <script>
   let data = null;
-  let busy = new Set();           // занятость кабинетов для вкладки Empty rooms
-  let entities = [];              // {name, kind, slots:Set("d.p")}
-  let selected = [];              // выбранные сущности
+  let entities = [];              // {name, kind, slots:Set("d.p"), full, words}
+  let selected = [];              // выбранные для Find a slot
+  const expanded = { room: false, teacher: false };
 
-  const key = (d, p, r) => d + '\u0001' + p + '\u0001' + r;
   const $ = id => document.getElementById(id);
-  const daySel = $('daySelect'), perSel = $('periodSelect');
   const KIND_LABEL = { teacher: 'Teacher', class: 'Class', room: 'Room' };
+  const PARTIAL_LIMIT = 24;
 
-  function fill(select, items) {
-    select.replaceChildren(...items.map(v => {
+  function fill(select, items) {   // items: [[value, text], ...]
+    select.replaceChildren(...items.map(([v, t]) => {
       const o = document.createElement('option');
-      o.value = v; o.textContent = v;
+      o.value = v; o.textContent = t;
       return o;
     }));
   }
+  const shortP = p => p.split('|')[0].trim();                   // "6th (Lunch Break)"
+  const numP = p => (p.match(/^\d+/) || [shortP(p)])[0];        // "6"
 
-  /* ---------- Empty rooms ---------- */
+  /* ---------- Свободные кабинеты и учителя (с диапазоном периодов) ---------- */
 
   // Текущий день/период по времени Бишкека — только если совпадает с данными с сайта
   function pickDefaults() {
@@ -229,53 +327,153 @@
     const mins = s => { const [h, m] = s.split(':').map(Number); return h * 60 + m; };
     const nowM = mins(hm);
 
-    const day = data.days.find(d => d.toLowerCase().startsWith(wd));
-    if (day) daySel.value = day;
-
-    const per = data.periods.find(p => {
+    const di = data.days.findIndex(d => d.toLowerCase().startsWith(wd));
+    const pi = data.periods.findIndex(p => {
       const m = p.match(/(\d{1,2}:\d{2})\s*-\s*(\d{1,2}:\d{2})/);
       return m && nowM >= mins(m[1]) && nowM < mins(m[2]);
     });
-    if (per) perSel.value = per;
+    ['room', 'teacher'].forEach(pref => {
+      if (di >= 0) $(pref + 'Day').value = di;
+      if (pi >= 0) { $(pref + 'From').value = pi; $(pref + 'To').value = pi; }
+    });
   }
 
-  function renderEmpty() {
-    const day = daySel.value, period = perSel.value;
-    const free = data.rooms.filter(r => !busy.has(key(day, period, r)));
-    const out = $('output');
-    out.replaceChildren();
-    if (!free.length) {
+  function setupAvail(pref) {
+    fill($(pref + 'Day'), data.days.map((d, i) => [i, d]));
+    const pers = data.periods.map((p, i) => [i, p]);
+    fill($(pref + 'From'), pers);
+    fill($(pref + 'To'), pers);
+    const rerender = () => { expanded[pref] = false; renderAvail(pref); };
+    $(pref + 'Day').onchange = rerender;
+    $(pref + 'From').onchange = () => { if (+$(pref + 'To').value < +$(pref + 'From').value) $(pref + 'To').value = $(pref + 'From').value; rerender(); };
+    $(pref + 'To').onchange = () => { if (+$(pref + 'From').value > +$(pref + 'To').value) $(pref + 'From').value = $(pref + 'To').value; rerender(); };
+    $(pref + 'More').onclick = () => { expanded[pref] = true; renderAvail(pref); };
+    if (pref === 'teacher') {
+      $('teacherQ').oninput = rerender;
+      $('teacherSort').onchange = rerender;
+    }
+  }
+
+  function longestRun(range, busyIdx) {
+    let best = 0, cur = 0;
+    for (const pi of range) { if (busyIdx.includes(pi)) cur = 0; else { cur++; if (cur > best) best = cur; } }
+    return best;
+  }
+
+  function renderAvail(pref) {
+    const kind = pref;                                     // 'room' | 'teacher'
+    const di = +$(pref + 'Day').value;
+    let a = +$(pref + 'From').value, b = +$(pref + 'To').value;
+    if (a > b) [a, b] = [b, a];
+    const range = [];
+    for (let i = a; i <= b; i++) range.push(i);
+    const dayName = data.days[di];
+
+    let items = entities.filter(e => e.kind === kind);
+    if (kind === 'teacher') {
+      const toks = fold($('teacherQ').value).split(' ').filter(Boolean);
+      if (toks.length) items = items.filter(e => toks.every(t => tokenCost(t, e) !== Infinity));
+    }
+    const dayLoad = e => { let n = 0; e.slots.forEach(s => { if (s.startsWith(di + '.')) n++; }); return n; };
+
+    const full = [], partial = [];
+    let fullyBusy = 0;
+    for (const e of items) {
+      const busyIdx = range.filter(pi => e.slots.has(di + '.' + pi));
+      if (!busyIdx.length) full.push(e);
+      else if (busyIdx.length < range.length) partial.push({ e, busyIdx, run: longestRun(range, busyIdx) });
+      else fullyBusy++;
+    }
+    if (kind === 'teacher' && $('teacherSort').value === 'load') {
+      full.sort((x, y) => dayLoad(x) - dayLoad(y) || x.name.localeCompare(y.name));
+    }
+    partial.sort((x, y) => x.busyIdx.length - y.busyIdx.length || y.run - x.run || x.e.name.localeCompare(y.e.name));
+
+    // свободные весь диапазон
+    const grid = $(pref + 'Full');
+    grid.replaceChildren();
+    if (!full.length) {
       const d = document.createElement('div');
       d.className = 'empty';
-      d.textContent = 'Свободных кабинетов нет.';
-      out.append(d);
+      d.textContent = (kind === 'teacher' && !items.length)
+        ? 'По этому фильтру никого не найдено.'
+        : range.length > 1
+          ? 'Нет ' + (kind === 'room' ? 'комнаты' : 'учителя') + ', свободных весь выбранный диапазон.'
+          : 'Свободных нет.';
+      grid.className = '';
+      grid.append(d);
     } else {
-      free.forEach(room => {
+      grid.className = kind === 'teacher' ? 'grid wide' : 'grid';
+      full.forEach(e => {
         const card = document.createElement('div');
         card.className = 'card';
         const t = document.createElement('div');
-        t.className = 'room-title'; t.textContent = room;
+        t.className = 'room-title'; t.textContent = e.name;
         card.append(t);
-        out.append(card);
+        if (kind === 'teacher') {
+          const s = document.createElement('div');
+          s.className = 'sub'; s.textContent = dayLoad(e) + ' ур.';
+          s.title = 'Уроков у учителя в этот день: ' + dayLoad(e);
+          card.append(s);
+        }
+        grid.append(card);
       });
     }
-    $('statusMsg').textContent =
-      `${day}, ${period}: свободно ${free.length} из ${data.rooms.length}`;
-  }
 
-  function showStats() {
-    const items = [
-      ['room', data.rooms.length, 'Rooms'],
-      ['teacher', Object.keys(data.teachers || {}).length, 'Teachers'],
-      ['class', Object.keys(data.classes || {}).length, 'Classes'],
-    ];
-    $('statsbar').replaceChildren(...items.map(([kind, n, label]) => {
-      const el = document.createElement('span');
-      el.className = kind;
-      const b = document.createElement('b'); b.textContent = n;
-      el.append(b, ' ' + label);
-      return el;
-    }));
+    // ближайшие варианты (только для диапазона из нескольких периодов)
+    const pw = $(pref + 'PartialWrap');
+    const more = $(pref + 'More');
+    const plist = $(pref + 'Partial');
+    plist.replaceChildren();
+    if (range.length > 1 && partial.length) {
+      pw.classList.remove('hidden');
+      const noun = kind === 'room' ? 'Ближайшие варианты' : 'Ближайшие варианты';
+      const title = $(pref + 'PartialTitle');
+      title.textContent = noun;
+      const sm = document.createElement('small');
+      sm.textContent = 'свободны не все периоды, лучшие сверху (' + partial.length + ')';
+      title.append(sm);
+      const shown = expanded[pref] ? partial : partial.slice(0, PARTIAL_LIMIT);
+      shown.forEach(({ e, busyIdx }) => {
+        const card = document.createElement('div'); card.className = 'pcard';
+        const top = document.createElement('div'); top.className = 'top';
+        const nm = document.createElement('div'); nm.className = 'name'; nm.textContent = e.name;
+        const sub = document.createElement('div'); sub.className = 'sub';
+        sub.textContent = 'свободно ' + (range.length - busyIdx.length) + ' из ' + range.length;
+        top.append(nm, sub);
+        const strip = document.createElement('div'); strip.className = 'strip';
+        range.forEach(pi => {
+          const c = document.createElement('span');
+          c.className = 'c ' + (busyIdx.includes(pi) ? 'busy' : 'free');
+          c.textContent = numP(data.periods[pi]);
+          c.title = data.periods[pi] + (busyIdx.includes(pi) ? ' — занято' : ' — свободно');
+          strip.append(c);
+        });
+        const bt = document.createElement('div'); bt.className = 'busytxt';
+        bt.textContent = 'занято: ' + busyIdx.map(pi => shortP(data.periods[pi])).join(', ');
+        card.append(top, strip, bt);
+        plist.append(card);
+      });
+      if (!expanded[pref] && partial.length > PARTIAL_LIMIT) {
+        more.textContent = 'Показать все (' + partial.length + ')';
+        more.classList.remove('hidden');
+      } else more.classList.add('hidden');
+    } else {
+      pw.classList.add('hidden');
+      more.classList.add('hidden');
+    }
+
+    // статус
+    const lab = range.length > 1
+      ? shortP(data.periods[a]) + ' – ' + shortP(data.periods[b])
+      : data.periods[a];
+    const total = items.length;
+    let msg = dayName + ', ' + lab + ': ';
+    msg += range.length > 1
+      ? 'свободно весь диапазон ' + full.length + ' из ' + total + (partial.length ? ', частично ' + partial.length : '')
+      : 'свободно ' + full.length + ' из ' + total;
+    if (range.length > 1 && fullyBusy) msg += ', полностью занято ' + fullyBusy;
+    $(pref + 'Status').textContent = msg;
   }
 
   function showUpdated() {
@@ -293,7 +491,111 @@
     }
   }
 
-  /* ---------- Поиск ---------- */
+  function showStats() {
+    const items = [
+      ['room', data.rooms.length, 'Rooms'],
+      ['teacher', Object.keys(data.teachers || {}).length, 'Teachers'],
+      ['class', Object.keys(data.classes || {}).length, 'Classes'],
+    ];
+    $('statsbar').replaceChildren(...items.map(([kind, n, label]) => {
+      const el = document.createElement('span');
+      el.className = kind;
+      const b = document.createElement('b'); b.textContent = n;
+      el.append(b, ' ' + label);
+      return el;
+    }));
+  }
+
+  /* ---------- Журнал изменений ---------- */
+
+  const CHG_TEXT = {
+    busy: ['теперь занят', 'busy'],
+    free: ['теперь свободен', 'free'],
+    new: ['появился в расписании', 'other'],
+    gone: ['пропал из расписания', 'other'],
+  };
+
+  function renderChanges() {
+    const kindFilter = $('chgKind').value;
+    const list = (data.changes || []).slice().reverse();
+    const box = $('chgList');
+    box.replaceChildren();
+    if (!list.length) {
+      const d = document.createElement('div');
+      d.className = 'empty';
+      d.textContent = 'Изменений пока не зафиксировано. Если расписание на сайте школы изменится, это появится здесь после следующего обновления.';
+      box.append(d);
+      return;
+    }
+    let shownAny = false;
+    list.forEach((rec, idx) => {
+      const items = (rec.items || []).filter(it => !kindFilter || it[0] === kindFilter);
+      if (kindFilter && !items.length) return;
+      shownAny = true;
+      const det = document.createElement('details'); det.className = 'rec';
+      if (idx === 0) det.open = true;
+      const sum = document.createElement('summary');
+      const when = document.createElement('span'); when.className = 'when';
+      when.textContent = new Date(rec.at).toLocaleString('ru-RU', {
+        timeZone: 'Asia/Bishkek', day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit'
+      });
+      sum.append(when);
+      const counts = {};
+      items.forEach(it => { counts[it[4]] = (counts[it[4]] || 0) + 1; });
+      Object.entries(counts).forEach(([k, n]) => {
+        const t = document.createElement('span');
+        t.className = 'tag ' + CHG_TEXT[k][1];
+        t.textContent = n + ' ' + CHG_TEXT[k][0];
+        sum.append(t);
+      });
+      det.append(sum);
+
+      const body = document.createElement('div'); body.className = 'recbody';
+      if (rec.structure) {
+        const n = document.createElement('div'); n.className = 'recnote';
+        n.textContent = 'В этот раз изменился список дней или периодов на сайте.';
+        body.append(n);
+      }
+      if (!kindFilter && rec.total > (rec.items || []).length) {
+        const n = document.createElement('div'); n.className = 'recnote';
+        n.textContent = 'Показаны первые ' + rec.items.length + ' из ' + rec.total + ' изменений.';
+        body.append(n);
+      }
+      // группируем по сущности
+      const groups = new Map();
+      items.forEach(it => {
+        const k = it[0] + '\u0001' + it[1];
+        if (!groups.has(k)) groups.set(k, []);
+        groups.get(k).push(it);
+      });
+      groups.forEach(its => {
+        const g = document.createElement('div'); g.className = 'grp';
+        const kd = document.createElement('span'); kd.className = 'kind ' + its[0][0]; kd.textContent = KIND_LABEL[its[0][0]];
+        const nm = document.createElement('span'); nm.className = 'nm'; nm.textContent = its[0][1];
+        g.append(kd, nm);
+        const ul = document.createElement('ul');
+        its.forEach(it => {
+          const li = document.createElement('li');
+          if (it[2]) li.append(it[2] + ', ' + it[3] + ' — ');
+          const sp = document.createElement('span');
+          sp.className = CHG_TEXT[it[4]][1]; sp.textContent = CHG_TEXT[it[4]][0];
+          li.append(sp);
+          ul.append(li);
+        });
+        g.append(ul);
+        body.append(g);
+      });
+      det.append(body);
+      box.append(det);
+    });
+    if (!shownAny) {
+      const d = document.createElement('div'); d.className = 'empty';
+      d.textContent = 'По этому фильтру изменений нет.';
+      box.append(d);
+    }
+  }
+
+  /* ---------- Поиск (Find a slot) ---------- */
 
   const TRANSLIT = { а:'a',б:'b',в:'v',г:'g',д:'d',е:'e',ё:'e',ж:'zh',з:'z',и:'i',й:'i',к:'k',л:'l',м:'m',
     н:'n',о:'o',п:'p',р:'r',с:'s',т:'t',у:'u',ф:'f',х:'h',ц:'ts',ч:'ch',ш:'sh',щ:'sch',ъ:'',ы:'i',ь:'',
@@ -469,22 +771,33 @@
     if (location.hash !== h) history.replaceState(null, '', h);
   }
 
+  const PAGES = {
+    empty: ['viewEmpty', 'tabEmpty', 'Empty Rooms'],
+    teachers: ['viewTeachers', 'tabTeachers', 'Free Teachers'],
+    free: ['viewFree', 'tabFree', 'Find a slot'],
+    changes: ['viewChanges', 'tabChanges', 'Changes'],
+  };
+
   function route() {
     if (!data) return;
     const parts = (location.hash || '#/empty').split('/');   // ['#', 'free', 'A+B']
-    const page = parts[1] === 'free' ? 'free' : 'empty';
-    $('viewEmpty').classList.toggle('hidden', page !== 'empty');
-    $('viewFree').classList.toggle('hidden', page !== 'free');
-    $('tabEmpty').classList.toggle('active', page === 'empty');
-    $('tabFree').classList.toggle('active', page === 'free');
-    document.title = 'BIS Timetable - ' + (page === 'free' ? 'Find a slot' : 'Empty Rooms');
+    const page = PAGES[parts[1]] ? parts[1] : 'empty';
+    Object.entries(PAGES).forEach(([name, [view, tab]]) => {
+      $(view).classList.toggle('hidden', name !== page);
+      $(tab).classList.toggle('active', name === page);
+    });
+    document.title = 'BIS Timetable - ' + PAGES[page][2];
     if (page === 'free') {
       const raw = parts.slice(2).join('/');
       selected = raw ? raw.split('+').map(s => { try { return findByName(decodeURIComponent(s)); } catch (e) { return null; } })
                           .filter(Boolean) : [];
       renderFree();
+    } else if (page === 'empty') {
+      renderAvail('room');
+    } else if (page === 'teachers') {
+      renderAvail('teacher');
     } else {
-      renderEmpty();
+      renderChanges();
     }
   }
 
@@ -498,15 +811,10 @@
       if (!resp.ok) throw new Error(resp.status);
       data = await resp.json();
 
-      busy = new Set(data.busy.map(([d, p, r]) => key(d, p, r)));
-      fill(daySel, data.days);
-      fill(perSel, data.periods);
-      pickDefaults();
-      daySel.onchange = perSel.onchange = renderEmpty;
       showUpdated();
       showStats();
 
-      // сущности для поиска слотов
+      // сущности: учителя, классы, кабинеты
       const dayIdx = Object.fromEntries(data.days.map((d, i) => [d, i]));
       const perIdx = Object.fromEntries(data.periods.map((p, i) => [p, i]));
       const roomSlots = {};
@@ -517,6 +825,11 @@
         ...Object.entries(data.classes || {}).map(([n, s]) => make(n, 'class', slotSet(s))),
         ...data.rooms.map(n => make(n, 'room', roomSlots[n] || new Set())),
       ];
+
+      setupAvail('room');
+      setupAvail('teacher');
+      pickDefaults();
+      $('chgKind').onchange = renderChanges;
 
       const q = $('q');
       q.addEventListener('input', renderSuggest);
@@ -533,7 +846,7 @@
       window.addEventListener('hashchange', route);
       route();
     } catch (e) {
-      $('statusMsg').textContent = 'Не удалось загрузить data.json: ' + e.message;
+      $('roomStatus').textContent = 'Не удалось загрузить data.json: ' + e.message;
     }
   }
   init();
