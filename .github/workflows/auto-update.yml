@@ -30,7 +30,7 @@ jobs:
           pip install beautifulsoup4
 
       - name: Run scraper
-        run: python update.py
+        run: python update.py || (echo 'Повтор через 2 минуты' && sleep 120 && python update.py)
 
       - name: Commit and push changes
         if: always()          # сохраняем raw/ даже если парсер упал (для отладки)
