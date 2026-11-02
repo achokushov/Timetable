@@ -9,6 +9,7 @@ import datetime
 import json
 import pathlib
 import re
+import socket
 import sys
 import time
 import urllib.request
@@ -25,9 +26,19 @@ DAY_RE = re.compile(r"^(mon|tue|wed|thu|fri|sat|sun)[a-z]*\b", re.I)
 PAREN_RE = re.compile(r"\(([^()]*)\)")
 
 
+_getaddrinfo = socket.getaddrinfo
+
+
+def _ipv4_only(*args, **kwargs):
+    return [r for r in _getaddrinfo(*args, **kwargs) if r[0] == socket.AF_INET]
+
+
 def fetch(view):
+    """Скачивает страницу. Чётные попытки — обычным способом, нечётные — только по IPv4
+    (на раннерах GitHub иногда бывает 'Network is unreachable' из-за IPv6)."""
     last = None
-    for attempt in range(4):
+    for attempt in range(6):
+        socket.getaddrinfo = _ipv4_only if attempt % 2 else _getaddrinfo
         try:
             req = urllib.request.Request(BASE + view, headers=HEADERS)
             with urllib.request.urlopen(req, timeout=60) as resp:
@@ -40,7 +51,14 @@ def fetch(view):
         except Exception as e:  # noqa: BLE001
             last = e
             time.sleep(5 * (attempt + 1))
-    raise RuntimeError(f"Не удалось скачать view={view}: {last}")
+        finally:
+            socket.getaddrinfo = _getaddrinfo
+    try:
+        addrs = sorted({(("IPv6" if r[0] == socket.AF_INET6 else "IPv4"), r[4][0])
+                        for r in _getaddrinfo("www.bis.kg", 443)})
+    except Exception as e:  # noqa: BLE001
+        addrs = f"DNS не ответил: {e}"
+    raise RuntimeError(f"Не удалось скачать view={view}: {last}. Адреса www.bis.kg: {addrs}")
 
 
 def is_empty(text):
