@@ -2,7 +2,7 @@ name: Auto Update BIS Timetable
 
 on:
   schedule:
-    - cron: '0 */6 * * *'   # каждые 6 часов (время UTC)
+    - cron: '7,37 * * * *'  # проверка каждые 30 минут (сайт школы отвечает не всегда; данные обновляются, как только он ответил)
   workflow_dispatch:         # кнопка "Run workflow" для ручного запуска
 
 permissions:
@@ -30,7 +30,7 @@ jobs:
           pip install beautifulsoup4
 
       - name: Run scraper
-        run: python update.py || (echo 'Повтор через 2 минуты' && sleep 120 && python update.py)
+        run: python update.py
 
       - name: Commit and push changes
         if: always()          # сохраняем raw/ даже если парсер упал (для отладки)
