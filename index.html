@@ -258,7 +258,7 @@
       :root { --bg: #fff; --card-bg: #fff; --text: #000; --text-sub: #444; --border: #999; --accent: #0369a1; --success: #15803d; }
       html, body { background: #fff; color: #000; }
       body, table, .card, .pcard { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
-      nav, .statsbar, .note, .actions, .controls, .hint, .search, button.more, .chip button, .suggest, .legend { display: none !important; }
+      nav, details.about, p.lead, .statsbar, .note, .actions, .controls, .hint, .search, button.more, .chip button, .suggest, .legend { display: none !important; }
       header { padding: 0 0 6px; border-bottom: 1px solid #999; font-size: 16px; background: #fff; }
       header span { color: #0369a1; }
       #updated, #updated.stale { color: #444; }
@@ -292,6 +292,16 @@
       table.heat td[style] { color: #000 !important; }
     }
 
+    details.about { max-width: 1100px; margin: 8px auto 0; padding: 0 20px; font-size: 13px; color: var(--text-sub); }
+    details.about summary { cursor: pointer; color: var(--accent); font-weight: 600; width: fit-content; }
+    details.about .abody { margin-top: 8px; padding: 10px 14px; border: 1px solid var(--border); border-radius: 8px; background: var(--card-bg); line-height: 1.55; }
+    details.about p { margin: 0 0 6px; }
+    details.about ul { margin: 4px 0 8px 18px; padding: 0; }
+    details.about li b { color: var(--text); }
+    @media (max-width: 600px) { details.about { padding: 0 12px; } }
+
+    p.lead { margin: 0 0 8px; font-size: 15px; font-weight: 600; color: var(--text); }
+
     .hidden { display: none; }
   </style>
 </head>
@@ -308,6 +318,23 @@
   <a href="#/changes" id="tabChanges">Changes</a>
 </nav>
 
+<details class="about" id="about">
+  <summary>What is this site?</summary>
+  <div class="abody">
+    <p>This site shows which rooms and teachers are free at BIS. It copies the school timetable automatically about every 30 minutes, so nothing here is typed in by hand. The time of the last update is in the top right corner.</p>
+    <ul>
+      <li><b>Empty rooms</b>: pick a day and a period (or several periods) to see which rooms are free.</li>
+      <li><b>Free teachers</b>: the same for teachers.</li>
+      <li><b>Find a slot</b>: pick several teachers, classes or rooms to see when all of them are free.</li>
+      <li><b>Best time</b>: like Find a slot, but for “at least 4 of 5 are free”, for example for meetings.</li>
+      <li><b>Room usage</b>: how busy each room is, and which times of the week are busiest.</li>
+      <li><b>Changes</b>: what changed in the timetable since the previous update.</li>
+    </ul>
+    <p><b>Print / PDF</b> and <b>Download Excel</b> save what is on the screen so you can send it to colleagues.</p>
+    <p>“Free” only means the school timetable shows no lesson. Meetings, events, duties and absences are not included, so please confirm important bookings with the people involved.</p>
+  </div>
+</details>
+
 <div class="statsbar">
   <div class="statsitems" id="statsbar"></div>
   <div class="usefulness hidden" id="usefulness"></div>
@@ -323,6 +350,7 @@
 
   <!-- Empty rooms -->
   <section id="viewEmpty">
+    <p class="lead">Which rooms are free? Pick a day and a time to see every room with no lesson then.</p>
     <div class="controls">
       <select id="roomDay"></select>
       <select id="roomFrom"></select>
@@ -341,6 +369,7 @@
 
   <!-- Free teachers -->
   <section id="viewTeachers" class="hidden">
+    <p class="lead">Which teachers have no lesson? Pick a day and a time to see who is free.</p>
     <div class="controls">
       <select id="teacherDay"></select>
       <select id="teacherFrom"></select>
@@ -364,6 +393,7 @@
 
   <!-- Find a slot -->
   <section id="viewFree" class="hidden">
+    <p class="lead">When are several people or rooms free together? Add teachers, classes or rooms to see the times when all of them are free.</p>
     <p class="hint">Add two or more teachers, classes or rooms. Green means every one of them has nothing timetabled then.</p>
     <div class="search">
       <input type="text" id="q" placeholder="Search a teacher, class or room…" autocomplete="off" spellcheck="false">
@@ -377,6 +407,7 @@
 
   <!-- Best time -->
   <section id="viewBest" class="hidden">
+    <p class="lead">When can most of a group meet? Add the people, choose how many must be free (for example 4 of 5) and get the best times.</p>
     <p class="hint">Add the teachers, classes or rooms that need to meet, then choose how many of them must be free at the same time (for example, at least 4 of 5). Times are ranked by how many are free, and anyone who is busy is named so you can check with them manually.</p>
     <div class="search">
       <input type="text" id="bq" placeholder="Search a teacher, class or room…" autocomplete="off" spellcheck="false">
@@ -400,6 +431,7 @@
 
   <!-- Room usage -->
   <section id="viewUsage" class="hidden">
+    <p class="lead">How busy are the rooms? A heatmap of the whole school for the week, and a ranking of rooms from busiest to least busy.</p>
     <div class="controls">
       <select id="usageScope"></select>
       <select id="usageSort">
@@ -420,6 +452,7 @@
 
   <!-- Changes -->
   <section id="viewChanges" class="hidden">
+    <p class="lead">What changed in the school timetable since the previous update.</p>
     <div class="controls">
       <select id="chgKind">
         <option value="">All</option>
@@ -1618,6 +1651,11 @@
         document.querySelectorAll('details.rec').forEach(d => { d.open = true; });
       });
       window.addEventListener('afterprint', () => { printing = false; renderPage(); });
+
+      // при первом визите блок «What is this site?» раскрыт, потом запоминаем, что его уже видели
+      try {
+        if (!localStorage.getItem('bis-about-seen')) { $('about').open = true; localStorage.setItem('bis-about-seen', '1'); }
+      } catch (e) { /* без localStorage блок просто закрыт */ }
 
       window.addEventListener('hashchange', route);
       route();
