@@ -235,8 +235,8 @@
       <span class="to">–</span>
       <select id="roomTo"></select>
     </div>
-    <p class="hint">Выберите один период или диапазон «с … по …». Если комнаты, свободной весь диапазон, нет, ниже показаны ближайшие варианты: там занята только часть периодов, занятые отмечены красным. Их стоит проверить вручную.</p>
-    <div class="status" id="roomStatus">Загрузка…</div>
+    <p class="hint">Pick a single period or a range (“from … to …”). If no room is free for the whole range, the closest options are shown below: rooms where only some of the periods are busy. Busy periods are marked in red, so please check them manually.</p>
+    <div class="status" id="roomStatus">Loading…</div>
     <div id="roomFullWrap"><div class="grid" id="roomFull"></div></div>
     <div id="roomPartialWrap" class="hidden">
       <h3 class="sect" id="roomPartialTitle"></h3>
@@ -252,13 +252,13 @@
       <select id="teacherFrom"></select>
       <span class="to">–</span>
       <select id="teacherTo"></select>
-      <input type="text" id="teacherQ" placeholder="Фильтр по имени…" autocomplete="off" spellcheck="false">
+      <input type="text" id="teacherQ" placeholder="Filter by name…" autocomplete="off" spellcheck="false">
       <select id="teacherSort">
-        <option value="az">Сортировка: А–Я</option>
-        <option value="load">Сортировка: меньше уроков в этот день</option>
+        <option value="az">Sort: A–Z</option>
+        <option value="load">Sort: fewest lessons that day</option>
       </select>
     </div>
-    <p class="hint">«Свободен» значит, что на сайте у учителя в это время нет урока. Присутствие в школе не проверяется. Справа в карточке: сколько уроков у учителя в выбранный день.</p>
+    <p class="hint">“Free” means the school timetable shows no lesson for that teacher at that time. Presence in school is not checked. The number on each card is how many lessons the teacher has on the selected day.</p>
     <div class="status" id="teacherStatus"></div>
     <div id="teacherFullWrap"><div class="grid" id="teacherFull"></div></div>
     <div id="teacherPartialWrap" class="hidden">
@@ -278,20 +278,20 @@
     <div class="chips" id="chips"></div>
     <div class="status" id="freeStatus"></div>
     <div class="tablewrap hidden" id="tableWrap"><table class="slots" id="slotsTable"></table></div>
-    <div class="legend hidden" id="legend">Красные ячейки: под днём и периодом показано, кто из выбранных занят.</div>
+    <div class="legend hidden" id="legend">Red cells show how many of the selected are busy, with their names underneath.</div>
   </section>
 
   <!-- Changes -->
   <section id="viewChanges" class="hidden">
     <div class="controls">
       <select id="chgKind">
-        <option value="">Всё</option>
-        <option value="room">Только кабинеты</option>
-        <option value="teacher">Только учителя</option>
-        <option value="class">Только классы</option>
+        <option value="">All</option>
+        <option value="room">Rooms only</option>
+        <option value="teacher">Teachers only</option>
+        <option value="class">Classes only</option>
       </select>
     </div>
-    <p class="hint">Что изменилось в расписании на сайте школы между двумя обновлениями. Журнал ведёт бот: при каждом обновлении он сравнивает новое расписание с прошлым.</p>
+    <p class="hint">What changed in the school timetable between two updates. The log is kept by the bot: on every update it compares the new timetable with the previous one.</p>
     <div id="chgList"></div>
   </section>
 
@@ -396,10 +396,10 @@
       const d = document.createElement('div');
       d.className = 'empty';
       d.textContent = (kind === 'teacher' && !items.length)
-        ? 'По этому фильтру никого не найдено.'
+        ? 'No one matches this filter.'
         : range.length > 1
-          ? 'Нет ' + (kind === 'room' ? 'комнаты' : 'учителя') + ', свободных весь выбранный диапазон.'
-          : 'Свободных нет.';
+          ? 'No ' + (kind === 'room' ? 'room' : 'teacher') + ' is free for the whole selected range.'
+          : 'No free ' + (kind === 'room' ? 'rooms' : 'teachers') + '.';
       grid.className = '';
       grid.append(d);
     } else {
@@ -412,8 +412,8 @@
         card.append(t);
         if (kind === 'teacher') {
           const s = document.createElement('div');
-          s.className = 'sub'; s.textContent = dayLoad(e) + ' ур.';
-          s.title = 'Уроков у учителя в этот день: ' + dayLoad(e);
+          s.className = 'sub'; s.textContent = dayLoad(e) + (dayLoad(e) === 1 ? ' lesson' : ' lessons');
+          s.title = 'Lessons on this day: ' + dayLoad(e);
           card.append(s);
         }
         grid.append(card);
@@ -427,11 +427,11 @@
     plist.replaceChildren();
     if (range.length > 1 && partial.length) {
       pw.classList.remove('hidden');
-      const noun = kind === 'room' ? 'Ближайшие варианты' : 'Ближайшие варианты';
+      const noun = 'Closest options';
       const title = $(pref + 'PartialTitle');
       title.textContent = noun;
       const sm = document.createElement('small');
-      sm.textContent = 'свободны не все периоды, лучшие сверху (' + partial.length + ')';
+      sm.textContent = 'not free in every period, best first (' + partial.length + ')';
       title.append(sm);
       const shown = expanded[pref] ? partial : partial.slice(0, PARTIAL_LIMIT);
       shown.forEach(({ e, busyIdx }) => {
@@ -439,23 +439,23 @@
         const top = document.createElement('div'); top.className = 'top';
         const nm = document.createElement('div'); nm.className = 'name'; nm.textContent = e.name;
         const sub = document.createElement('div'); sub.className = 'sub';
-        sub.textContent = 'свободно ' + (range.length - busyIdx.length) + ' из ' + range.length;
+        sub.textContent = 'free ' + (range.length - busyIdx.length) + ' of ' + range.length;
         top.append(nm, sub);
         const strip = document.createElement('div'); strip.className = 'strip';
         range.forEach(pi => {
           const c = document.createElement('span');
           c.className = 'c ' + (busyIdx.includes(pi) ? 'busy' : 'free');
           c.textContent = numP(data.periods[pi]);
-          c.title = data.periods[pi] + (busyIdx.includes(pi) ? ' — занято' : ' — свободно');
+          c.title = data.periods[pi] + (busyIdx.includes(pi) ? ' — busy' : ' — free');
           strip.append(c);
         });
         const bt = document.createElement('div'); bt.className = 'busytxt';
-        bt.textContent = 'занято: ' + busyIdx.map(pi => shortP(data.periods[pi])).join(', ');
+        bt.textContent = 'busy: ' + busyIdx.map(pi => shortP(data.periods[pi])).join(', ');
         card.append(top, strip, bt);
         plist.append(card);
       });
       if (!expanded[pref] && partial.length > PARTIAL_LIMIT) {
-        more.textContent = 'Показать все (' + partial.length + ')';
+        more.textContent = 'Show all (' + partial.length + ')';
         more.classList.remove('hidden');
       } else more.classList.add('hidden');
     } else {
@@ -470,9 +470,9 @@
     const total = items.length;
     let msg = dayName + ', ' + lab + ': ';
     msg += range.length > 1
-      ? 'свободно весь диапазон ' + full.length + ' из ' + total + (partial.length ? ', частично ' + partial.length : '')
-      : 'свободно ' + full.length + ' из ' + total;
-    if (range.length > 1 && fullyBusy) msg += ', полностью занято ' + fullyBusy;
+      ? 'free for the whole range ' + full.length + ' of ' + total + (partial.length ? ', partly free ' + partial.length : '')
+      : 'free ' + full.length + ' of ' + total;
+    if (range.length > 1 && fullyBusy) msg += ', fully busy ' + fullyBusy;
     $(pref + 'Status').textContent = msg;
   }
 
@@ -480,14 +480,14 @@
     const el = $('updated');
     const t = new Date(data.updated);
     if (isNaN(t)) return;
-    el.textContent = 'Обновлено: ' + t.toLocaleString('ru-RU', {
-      timeZone: 'Asia/Bishkek', day: '2-digit', month: '2-digit', year: 'numeric',
+    el.textContent = 'Updated: ' + t.toLocaleString('en-GB', {
+      timeZone: 'Asia/Bishkek', day: 'numeric', month: 'short', year: 'numeric',
       hour: '2-digit', minute: '2-digit'
-    });
+    }) + ' (Bishkek)';
     // автообновление идёт каждые 6 часов; если данные старше 13 часов — что-то сломалось
     if (Date.now() - t.getTime() > 13 * 3600 * 1000) {
       el.classList.add('stale');
-      el.textContent += ' · данные могли устареть';
+      el.textContent += ' · data may be outdated';
     }
   }
 
@@ -509,10 +509,10 @@
   /* ---------- Журнал изменений ---------- */
 
   const CHG_TEXT = {
-    busy: ['теперь занят', 'busy'],
-    free: ['теперь свободен', 'free'],
-    new: ['появился в расписании', 'other'],
-    gone: ['пропал из расписания', 'other'],
+    busy: ['now busy', 'busy'],
+    free: ['now free', 'free'],
+    new: ['new in timetable', 'other'],
+    gone: ['removed from timetable', 'other'],
   };
 
   function renderChanges() {
@@ -523,7 +523,7 @@
     if (!list.length) {
       const d = document.createElement('div');
       d.className = 'empty';
-      d.textContent = 'Изменений пока не зафиксировано. Если расписание на сайте школы изменится, это появится здесь после следующего обновления.';
+      d.textContent = 'No changes recorded yet. If the school timetable changes, it will appear here after the next update.';
       box.append(d);
       return;
     }
@@ -536,9 +536,9 @@
       if (idx === 0) det.open = true;
       const sum = document.createElement('summary');
       const when = document.createElement('span'); when.className = 'when';
-      when.textContent = new Date(rec.at).toLocaleString('ru-RU', {
-        timeZone: 'Asia/Bishkek', day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit'
-      });
+      when.textContent = new Date(rec.at).toLocaleString('en-GB', {
+        timeZone: 'Asia/Bishkek', day: 'numeric', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit'
+      }) + ' (Bishkek)';
       sum.append(when);
       const counts = {};
       items.forEach(it => { counts[it[4]] = (counts[it[4]] || 0) + 1; });
@@ -553,12 +553,12 @@
       const body = document.createElement('div'); body.className = 'recbody';
       if (rec.structure) {
         const n = document.createElement('div'); n.className = 'recnote';
-        n.textContent = 'В этот раз изменился список дней или периодов на сайте.';
+        n.textContent = 'The list of days or periods on the school site changed this time.';
         body.append(n);
       }
       if (!kindFilter && rec.total > (rec.items || []).length) {
         const n = document.createElement('div'); n.className = 'recnote';
-        n.textContent = 'Показаны первые ' + rec.items.length + ' из ' + rec.total + ' изменений.';
+        n.textContent = 'Showing the first ' + rec.items.length + ' of ' + rec.total + ' changes.';
         body.append(n);
       }
       // группируем по сущности
@@ -590,7 +590,7 @@
     });
     if (!shownAny) {
       const d = document.createElement('div'); d.className = 'empty';
-      d.textContent = 'По этому фильтру изменений нет.';
+      d.textContent = 'No changes match this filter.';
       box.append(d);
     }
   }
@@ -665,7 +665,7 @@
     suggestIdx = suggestions.length ? 0 : -1;
     if (!suggestions.length) {
       const d = document.createElement('div');
-      d.className = 'none'; d.textContent = 'Ничего не найдено';
+      d.className = 'none'; d.textContent = 'No matches';
       box.append(d);
     }
     suggestions.forEach((ent, i) => {
@@ -720,7 +720,7 @@
     table.replaceChildren();
     if (selected.length < 1) {
       wrap.classList.add('hidden'); legend.classList.add('hidden');
-      st.textContent = 'Выберите хотя бы одного — лучше двух и больше.';
+      st.textContent = 'Pick at least one — ideally two or more.';
       return;
     }
 
@@ -755,8 +755,8 @@
     });
     table.append(thead, tbody);
     wrap.classList.remove('hidden'); legend.classList.remove('hidden');
-    st.textContent = `Свободно ${freeCount} слотов из ${data.days.length * data.periods.length}`
-      + (selected.length < 2 ? ' (добавьте ещё, чтобы найти общее время)' : '');
+    st.textContent = `${freeCount} free slots out of ${data.days.length * data.periods.length}`
+      + (selected.length < 2 ? ' (add more teachers, classes or rooms to find a common time)' : '');
   }
 
   /* ---------- Маршруты ---------- */
@@ -846,7 +846,7 @@
       window.addEventListener('hashchange', route);
       route();
     } catch (e) {
-      $('roomStatus').textContent = 'Не удалось загрузить data.json: ' + e.message;
+      $('roomStatus').textContent = 'Could not load data.json: ' + e.message;
     }
   }
   init();
