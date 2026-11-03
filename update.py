@@ -26,6 +26,10 @@ DAY_RE = re.compile(r"^(mon|tue|wed|thu|fri|sat|sun)[a-z]*\b", re.I)
 PAREN_RE = re.compile(r"\(([^()]*)\)")
 
 
+class SiteUnreachable(RuntimeError):
+    """Сайт школы не ответил (таймаут, нет маршрута). Это не поломка кода: data.json не трогаем."""
+
+
 _getaddrinfo = socket.getaddrinfo
 
 
@@ -34,14 +38,14 @@ def _ipv4_only(*args, **kwargs):
 
 
 def fetch(view):
-    """Скачивает страницу. Чётные попытки — обычным способом, нечётные — только по IPv4
-    (на раннерах GitHub иногда бывает 'Network is unreachable' из-за IPv6)."""
+    """Скачивает страницу: 3 попытки по 20 секунд. Чётные попытки — обычным способом,
+    нечётные — только по IPv4 (на раннерах GitHub IPv6 иногда недоступен)."""
     last = None
-    for attempt in range(6):
+    for attempt in range(3):
         socket.getaddrinfo = _ipv4_only if attempt % 2 else _getaddrinfo
         try:
             req = urllib.request.Request(BASE + view, headers=HEADERS)
-            with urllib.request.urlopen(req, timeout=60) as resp:
+            with urllib.request.urlopen(req, timeout=20) as resp:
                 html = resp.read().decode("utf-8", errors="ignore")
             if SAVE_RAW:
                 p = pathlib.Path("raw")
@@ -50,15 +54,16 @@ def fetch(view):
             return html
         except Exception as e:  # noqa: BLE001
             last = e
-            time.sleep(5 * (attempt + 1))
         finally:
             socket.getaddrinfo = _getaddrinfo
+        if attempt < 2:
+            time.sleep(3 * (attempt + 1))
     try:
         addrs = sorted({(("IPv6" if r[0] == socket.AF_INET6 else "IPv4"), r[4][0])
                         for r in _getaddrinfo("www.bis.kg", 443)})
     except Exception as e:  # noqa: BLE001
         addrs = f"DNS не ответил: {e}"
-    raise RuntimeError(f"Не удалось скачать view={view}: {last}. Адреса www.bis.kg: {addrs}")
+    raise SiteUnreachable(f"Не удалось скачать view={view}: {last}. Адреса www.bis.kg: {addrs}")
 
 
 def is_empty(text):
@@ -282,6 +287,10 @@ if __name__ == "__main__":
     try:
         main()
         err.unlink(missing_ok=True)
+    except SiteUnreachable as e:
+        # Сайт школы не ответил: оставляем прежний data.json, запуск считаем нормальным.
+        # Следующая проверка через полчаса. Если данные слишком старые, страница сама покажет предупреждение.
+        print("Сайт школы сейчас недоступен, data.json не изменён:", e)
     except BaseException:  # noqa: BLE001
         import traceback
         err.parent.mkdir(exist_ok=True)
