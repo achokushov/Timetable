@@ -313,7 +313,6 @@
   <a href="#/empty" id="tabEmpty">Empty rooms</a>
   <a href="#/teachers" id="tabTeachers">Free teachers</a>
   <a href="#/free" id="tabFree">Find a slot</a>
-  <a href="#/best" id="tabBest">Best time</a>
   <a href="#/usage" id="tabUsage">Room usage</a>
   <a href="#/changes" id="tabChanges">Changes</a>
 </nav>
@@ -325,8 +324,7 @@
     <ul>
       <li><b>Empty rooms</b>: pick a day and a period (or several periods) to see which rooms are free.</li>
       <li><b>Free teachers</b>: the same for teachers.</li>
-      <li><b>Find a slot</b>: pick several teachers, classes or rooms to see when all of them are free.</li>
-      <li><b>Best time</b>: like Find a slot, but for “at least 4 of 5 are free”, for example for meetings.</li>
+      <li><b>Find a slot</b>: pick several teachers, classes or rooms to see when all of them are free, or when at least 4 of 5 are free, for example for a meeting.</li>
       <li><b>Room usage</b>: how busy each room is, and which times of the week are busiest.</li>
       <li><b>Changes</b>: what changed in the timetable since the previous update.</li>
     </ul>
@@ -391,24 +389,10 @@
     </div>
   </section>
 
-  <!-- Find a slot -->
-  <section id="viewFree" class="hidden">
-    <p class="lead">When are several people or rooms free together? Add teachers, classes or rooms to see the times when all of them are free.</p>
-    <p class="hint">Add two or more teachers, classes or rooms. Green means every one of them has nothing timetabled then.</p>
-    <div class="search">
-      <input type="text" id="q" placeholder="Search a teacher, class or room…" autocomplete="off" spellcheck="false">
-      <div class="suggest hidden" id="suggest"></div>
-    </div>
-    <div class="chips" id="chips"></div>
-    <div class="status" id="freeStatus"></div>
-    <div class="tablewrap hidden" id="tableWrap"><table class="slots" id="slotsTable"></table></div>
-    <div class="legend hidden" id="legend">Red cells show how many of the selected are busy, with their names underneath.</div>
-  </section>
-
-  <!-- Best time -->
+  <!-- Find a slot (all free, or at least N of M) -->
   <section id="viewBest" class="hidden">
-    <p class="lead">When can most of a group meet? Add the people, choose how many must be free (for example 4 of 5) and get the best times.</p>
-    <p class="hint">Add the teachers, classes or rooms that need to meet, then choose how many of them must be free at the same time (for example, at least 4 of 5). Times are ranked by how many are free, and anyone who is busy is named so you can check with them manually.</p>
+    <p class="lead">When are several people or rooms free together? Add teachers, classes or rooms to see the times when all of them, or most of them, are free.</p>
+    <p class="hint">Add two or more teachers, classes or rooms. By default a time counts only when all of them are free. To find a time when most of them are free (for example, at least 4 of 5 for a meeting), change the first drop-down. Times are ranked by how many are free, and anyone who is busy is named so you can check with them manually.</p>
     <div class="search">
       <input type="text" id="bq" placeholder="Search a teacher, class or room…" autocomplete="off" spellcheck="false">
       <div class="suggest hidden" id="bsuggest"></div>
@@ -967,53 +951,6 @@
     return p;
   }
 
-  /* ---------- Find a slot ---------- */
-
-  function renderFree() {
-    const selected = pickers.free.sel;
-    const wrap = $('tableWrap'), legend = $('legend'), st = $('freeStatus'), table = $('slotsTable');
-    table.replaceChildren();
-    if (selected.length < 1) {
-      wrap.classList.add('hidden'); legend.classList.add('hidden');
-      st.textContent = 'Pick at least one — ideally two or more.';
-      return;
-    }
-
-    const thead = document.createElement('thead');
-    const hr = document.createElement('tr');
-    const corner = document.createElement('th'); corner.className = 'per'; corner.textContent = 'Period';
-    hr.append(corner);
-    data.days.forEach(d => { const th = document.createElement('th'); th.textContent = d; hr.append(th); });
-    thead.append(hr);
-    const tbody = document.createElement('tbody');
-
-    let freeCount = 0;
-    data.periods.forEach((p, pi) => {
-      const tr = document.createElement('tr');
-      const th = document.createElement('th'); th.className = 'per'; th.textContent = p;
-      tr.append(th);
-      data.days.forEach((d, di) => {
-        const td = document.createElement('td');
-        const who = selected.filter(e => e.slots.has(di + '.' + pi));
-        if (!who.length) {
-          td.className = 'free'; td.textContent = 'Free'; freeCount++;
-        } else {
-          td.className = 'busy';
-          td.textContent = `Busy ${who.length}/${selected.length}`;
-          const sm = document.createElement('small');
-          sm.textContent = who.map(e => e.name).join(', ');
-          td.append(sm);
-        }
-        tr.append(td);
-      });
-      tbody.append(tr);
-    });
-    table.append(thead, tbody);
-    wrap.classList.remove('hidden'); legend.classList.remove('hidden');
-    st.textContent = `${freeCount} free slots out of ${data.days.length * data.periods.length}`
-      + (selected.length < 2 ? ' (add more teachers, classes or rooms to find a common time)' : '');
-  }
-
   /* ---------- Periods scope (shared by Best time and Room usage) ---------- */
 
   const MAIN_PERIODS = 9;                                  // «основные» уроки: первые 9 периодов с сайта
@@ -1033,13 +970,13 @@
 
   /* ---------- Best time ---------- */
 
-  let bestMin = null;                                      // null = по умолчанию «все, кроме одного»
+  let bestMin = null;                                      // null = по умолчанию «все свободны»
   const BEST_LIMIT = 30;
   let bestExpanded = false;
 
   function bestMinEff(M) {
     if (!M) return 0;
-    if (bestMin == null || bestMin < 1 || bestMin > M) return M >= 2 ? M - 1 : M;
+    if (bestMin == null || bestMin < 1 || bestMin > M) return M;
     return bestMin;
   }
 
@@ -1071,7 +1008,7 @@
     $('bestList').replaceChildren(); $('bestTable').replaceChildren();
     if (!M) {
       show(ctr, false); show(listWrap, false); show(tw, false); show($('bestLegend'), false); show($('bestGridTitle'), false);
-      $('bestStatus').textContent = 'Pick at least two — then choose how many of them must be free.';
+      $('bestStatus').textContent = 'Pick at least two. By default a time counts when all of them are free; you can lower that to “at least N of M”.';
       return;
     }
     show(ctr, true);
@@ -1080,7 +1017,8 @@
 
     const allFree = good.filter(c => c.free === M).length;
     $('bestStatus').textContent = good.length
-      ? `${good.length} of ${cells.length} slots have at least ${min} of ${M} free` + (min < M ? ` (${allFree} with all ${M} free)` : '')
+      ? (min === M ? `${good.length} of ${cells.length} slots have all ${M} free`
+        : `${good.length} of ${cells.length} slots have at least ${min} of ${M} free (${allFree} with all ${M} free)`)
       : `No slot has at least ${min} of ${M} free. Try a lower number or all periods.`;
 
     // рейтинг
@@ -1447,27 +1385,11 @@
     return rows;
   }
 
-  function exportFree() {
-    const sel = pickers.free.sel, M = sel.length;
-    const ex = { title: 'Find a slot', slug: 'find-a-slot' };
-    const idx = data.periods.map((_, i) => i);
-    let freeCount = 0;
-    const rows = slotGridRows(sel, idx, (di, pi) => {
-      const who = sel.filter(e => e.slots.has(di + '.' + pi));
-      if (!who.length) { freeCount++; return { v: 'Free', st: 'free' }; }
-      return { v: `Busy ${who.length}/${M}: ${names(who)}`, st: 'busy' };
-    });
-    ex.lines = ['Selected: ' + (M ? sel.map(e => e.name + ' (' + KIND_LABEL[e.kind] + ')').join('; ') : 'nobody yet'),
-      M ? freeCount + ' free slots out of ' + data.days.length * idx.length : '', stampLine()].filter(Boolean);
-    ex.sheets = [withInfo(ex, M ? rows : [], [28, 24, 24, 24, 24, 24])];
-    return ex;
-  }
-
   function exportBest() {
     const b = computeBest();
-    const ex = { title: 'Best time', slug: 'best-time' };
+    const ex = { title: 'Find a slot', slug: 'find-a-slot' };
     ex.lines = ['Selected: ' + (b.M ? b.sel.map(e => e.name + ' (' + KIND_LABEL[e.kind] + ')').join('; ') : 'nobody yet'),
-      b.M ? 'Condition: at least ' + b.min + ' of ' + b.M + ' free · ' + $('bestScope').selectedOptions[0].textContent : '',
+      b.M ? 'Condition: ' + (b.min === b.M ? 'all ' + b.M : 'at least ' + b.min + ' of ' + b.M) + ' free · ' + $('bestScope').selectedOptions[0].textContent : '',
       b.M ? b.good.length + ' of ' + b.cells.length + ' slots match' : '', stampLine()].filter(Boolean);
     if (!b.M) { ex.sheets = [withInfo(ex, [], [30])]; return ex; }
     const list = [[head('Day'), head('Period'), head('Time'), head('Free'), head('Out of'), head('Busy')]];
@@ -1523,8 +1445,7 @@
   const EXPORT = {
     empty: () => exportAvail('room'),
     teachers: () => exportAvail('teacher'),
-    free: exportFree,
-    best: exportBest,
+    free: exportBest,
     usage: exportUsage,
     changes: exportChanges,
   };
@@ -1548,23 +1469,15 @@
   let currentPage = 'empty';
 
   function syncHash() {
-    const enc = sel => sel.map(e => encodeURIComponent(e.name)).join('+');
-    let h;
-    if (currentPage === 'best') {
-      const s = pickers.best.sel;
-      h = '#/best' + (s.length ? '/' + enc(s) + (bestMin != null ? '/' + bestMin : '') : '');
-    } else {
-      const s = pickers.free.sel;
-      h = '#/free' + (s.length ? '/' + enc(s) : '');
-    }
+    const s = pickers.best.sel;
+    const h = '#/free' + (s.length ? '/' + s.map(e => encodeURIComponent(e.name)).join('+') + (bestMin != null ? '/' + bestMin : '') : '');
     if (location.hash !== h) history.replaceState(null, '', h);
   }
 
   const PAGES = {
     empty: ['viewEmpty', 'tabEmpty', 'Empty Rooms'],
     teachers: ['viewTeachers', 'tabTeachers', 'Free Teachers'],
-    free: ['viewFree', 'tabFree', 'Find a slot'],
-    best: ['viewBest', 'tabBest', 'Best time'],
+    free: ['viewBest', 'tabFree', 'Find a slot'],
     usage: ['viewUsage', 'tabUsage', 'Room usage'],
     changes: ['viewChanges', 'tabChanges', 'Changes'],
   };
@@ -1573,8 +1486,7 @@
                                       .filter(Boolean) : [];
 
   function renderPage() {
-    if (currentPage === 'free') renderFree();
-    else if (currentPage === 'best') renderBest();
+    if (currentPage === 'free') renderBest();
     else if (currentPage === 'empty') renderAvail('room');
     else if (currentPage === 'teachers') renderAvail('teacher');
     else if (currentPage === 'usage') renderUsage();
@@ -1584,6 +1496,7 @@
   function route() {
     if (!data) return;
     const parts = (location.hash || '#/empty').split('/');   // ['#', 'best', 'A+B', '4']
+    if (parts[1] === 'best') parts[1] = 'free';              // старые ссылки #/best/... ведут на Find a slot
     const page = PAGES[parts[1]] ? parts[1] : 'empty';
     currentPage = page;
     Object.entries(PAGES).forEach(([name, [view, tab]]) => {
@@ -1592,8 +1505,6 @@
     });
     document.title = 'BIS Timetable - ' + PAGES[page][2];
     if (page === 'free') {
-      pickers.free.set(parseNames(parts.slice(2).join('/')));
-    } else if (page === 'best') {
       pickers.best.set(parseNames(parts[2]));
       const m = parseInt(parts[3], 10);
       bestMin = Number.isFinite(m) ? m : null;
@@ -1633,8 +1544,6 @@
       pickDefaults();
       $('chgKind').onchange = renderChanges;
 
-      pickers.free = createPicker({ input: $('q'), suggest: $('suggest'), chips: $('chips'),
-        onChange: () => { syncHash(); renderFree(); } });
       pickers.best = createPicker({ input: $('bq'), suggest: $('bsuggest'), chips: $('bchips'),
         onChange: () => { bestMin = null; bestExpanded = false; syncHash(); renderBest(); } });
       setupBest();
