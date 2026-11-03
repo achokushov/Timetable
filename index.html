@@ -128,6 +128,8 @@
       .container { padding: 10px 12px 20px; }
       header { padding: 10px 12px; font-size: 18px; }
       .statsbar { padding: 6px 12px; }
+      .usefulness { margin-left: 0; }
+      .note { padding: 0 12px 20px; }
       .grid { grid-template-columns: repeat(3, 1fr); gap: 5px; }
       .grid.wide { grid-template-columns: repeat(2, 1fr); }
       .card { padding: 5px 6px; gap: 5px; min-height: 32px; }
@@ -202,13 +204,94 @@
     .grp li .free { color: var(--success); }
 
     .statsbar {
-      display: flex; gap: 6px 18px; flex-wrap: wrap; padding: 8px 20px;
+      display: flex; gap: 6px 24px; flex-wrap: wrap; align-items: baseline; padding: 8px 20px;
       max-width: 1100px; margin: 0 auto; font-size: 13px; color: var(--text-sub);
     }
+    .statsitems { display: flex; gap: 6px 18px; flex-wrap: wrap; }
+    .usefulness { margin-left: auto; display: flex; gap: 4px 14px; flex-wrap: wrap; align-items: baseline; }
+    .usefulness .lbl { color: var(--accent); font-weight: 600; }
+    .usefulness b { color: var(--text); font-weight: 700; font-size: 14px; }
+    .note { max-width: 1100px; margin: 0 auto; padding: 0 20px 24px; font-size: 12px; color: var(--text-sub); }
     .statsbar b { font-weight: 700; font-size: 14px; }
     .statsbar .room b { color: var(--room); }
     .statsbar .teacher b { color: var(--teacher); }
     .statsbar .class b { color: var(--class); }
+
+    /* --- Actions / Best time / Room usage --- */
+    .actions { display: flex; gap: 8px; justify-content: flex-end; margin: 0 0 10px; }
+    .actions button {
+      background: var(--card-bg); color: var(--text); border: 1px solid var(--border);
+      border-radius: 8px; padding: 7px 12px; font-size: 13px; cursor: pointer; font-family: inherit;
+    }
+    .actions button:hover { border-color: var(--accent); }
+    #printInfo { display: none; }
+    td.ok { background: rgba(245, 158, 11, 0.16); color: #fbbf24; font-size: 12px; font-weight: 600; }
+    td.ok small, td.busy small { display: block; color: var(--text-sub); font-size: 11px; font-weight: 400; line-height: 1.3; }
+    .pcard .okline { font-size: 12px; color: var(--success); }
+    .usagegrid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 16px; }
+    .toplist { border: 1px solid var(--border); border-radius: 8px; background: var(--card-bg); padding: 8px 12px 10px; }
+    .toplist h4 { margin: 0 0 6px; font-size: 13px; }
+    .toprow { display: grid; grid-template-columns: 22px 1fr 90px 40px; gap: 8px; align-items: center; font-size: 12.5px; padding: 2px 0; }
+    .toprow .rk { color: var(--text-sub); text-align: right; }
+    .toprow .pc { text-align: right; font-weight: 600; }
+    .bar { height: 7px; background: rgba(148, 163, 184, 0.22); border-radius: 4px; overflow: hidden; }
+    .bar i { display: block; height: 100%; background: var(--accent); }
+    table.slots td.nm { text-align: left; font-weight: 600; white-space: nowrap; }
+    table.slots td.num { font-variant-numeric: tabular-nums; }
+    table.slots td.occ { min-width: 150px; }
+    .occ .occrow { display: flex; align-items: center; gap: 8px; }
+    .occ .bar { flex: 1; }
+    .occ b { min-width: 34px; text-align: right; font-weight: 600; }
+    table.heat td { line-height: 1.25; }
+    table.heat td small { display: block; font-size: 11px; opacity: .85; }
+    table.heat tfoot th, table.heat tfoot td { border-top: 2px solid var(--border); }
+    table.slots tfoot th.per { background: var(--card-bg); }
+
+    @media (max-width: 600px) {
+      .usagegrid { grid-template-columns: 1fr; }
+      .actions { justify-content: stretch; }
+      .actions button { flex: 1; }
+    }
+
+    @media print {
+      @page { size: A4 landscape; margin: 10mm; }
+      :root { --bg: #fff; --card-bg: #fff; --text: #000; --text-sub: #444; --border: #999; --accent: #0369a1; --success: #15803d; }
+      html, body { background: #fff; color: #000; }
+      body, table, .card, .pcard { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+      nav, .statsbar, .note, .actions, .controls, .hint, .search, button.more, .chip button, .suggest, .legend { display: none !important; }
+      header { padding: 0 0 6px; border-bottom: 1px solid #999; font-size: 16px; background: #fff; }
+      header span { color: #0369a1; }
+      #updated, #updated.stale { color: #444; }
+      .container { padding: 6px 0 0; max-width: none; }
+      #printInfo { display: block; margin-bottom: 8px; }
+      #printInfo h2 { margin: 0 0 4px; font-size: 16px; }
+      #printInfo p { margin: 2px 0; font-size: 12px; color: #333; }
+      .card, .pcard, .toplist, details.rec { break-inside: avoid; background: #fff; }
+      .tablewrap { overflow: visible; border-color: #999; }
+      table.slots { min-width: 0; }
+      table.slots th, table.slots td { padding: 4px; font-size: 11px; }
+      table.slots th, table.slots th.per { background: #e5e7eb; color: #000; position: static; }
+      td.free { background: #bbf7d0; color: #14532d; }
+      td.busy { background: #fecaca; color: #7f1d1d; }
+      td.ok { background: #fde68a; color: #78350f; }
+      td.busy small, td.ok small { color: #444; }
+      .strip .c.free { background: #bbf7d0; color: #14532d; }
+      .strip .c.busy { background: #fecaca; color: #7f1d1d; }
+      .busytxt, .pcard .busytxt { color: #7f1d1d; }
+      .pcard .okline { color: #14532d; }
+      .card { border-color: #86efac; background: #f0fdf4; }
+      .tag.busy, .grp li .busy { color: #7f1d1d; }
+      .tag.free, .grp li .free { color: #14532d; }
+      .kind.teacher { color: #5b21b6; } .kind.class { color: #075985; } .kind.room { color: #92400e; }
+      .chip { background: #fff; }
+      .bar { background: #e5e7eb; }
+      .usagegrid { grid-template-columns: 1fr 1fr; }
+      .plist { grid-template-columns: repeat(3, 1fr); }
+      .grid { grid-template-columns: repeat(auto-fill, minmax(110px, 1fr)); }
+      .grid.wide { grid-template-columns: repeat(auto-fill, minmax(170px, 1fr)); }
+      table.heat td[style] { color: #000 !important; }
+    }
+
     .hidden { display: none; }
   </style>
 </head>
@@ -220,12 +303,23 @@
   <a href="#/empty" id="tabEmpty">Empty rooms</a>
   <a href="#/teachers" id="tabTeachers">Free teachers</a>
   <a href="#/free" id="tabFree">Find a slot</a>
+  <a href="#/best" id="tabBest">Best time</a>
+  <a href="#/usage" id="tabUsage">Room usage</a>
   <a href="#/changes" id="tabChanges">Changes</a>
 </nav>
 
-<div class="statsbar" id="statsbar"></div>
+<div class="statsbar">
+  <div class="statsitems" id="statsbar"></div>
+  <div class="usefulness hidden" id="usefulness"></div>
+</div>
 
 <div class="container">
+
+  <div class="actions">
+    <button type="button" id="btnPrint" title="Opens the print dialog; choose “Save as PDF” there to get a PDF file">Print / PDF</button>
+    <button type="button" id="btnXlsx" title="Downloads what is on screen as an Excel file">Download Excel</button>
+  </div>
+  <div id="printInfo"></div>
 
   <!-- Empty rooms -->
   <section id="viewEmpty">
@@ -281,6 +375,49 @@
     <div class="legend hidden" id="legend">Red cells show how many of the selected are busy, with their names underneath.</div>
   </section>
 
+  <!-- Best time -->
+  <section id="viewBest" class="hidden">
+    <p class="hint">Add the teachers, classes or rooms that need to meet, then choose how many of them must be free at the same time (for example, at least 4 of 5). Times are ranked by how many are free, and anyone who is busy is named so you can check with them manually.</p>
+    <div class="search">
+      <input type="text" id="bq" placeholder="Search a teacher, class or room…" autocomplete="off" spellcheck="false">
+      <div class="suggest hidden" id="bsuggest"></div>
+    </div>
+    <div class="chips" id="bchips"></div>
+    <div class="controls hidden" id="bestControls">
+      <select id="bestMin"></select>
+      <select id="bestScope"></select>
+    </div>
+    <div class="status" id="bestStatus"></div>
+    <div id="bestListWrap" class="hidden">
+      <h3 class="sect" id="bestListTitle"></h3>
+      <div class="plist" id="bestList"></div>
+      <button class="more hidden" id="bestMore" type="button"></button>
+    </div>
+    <h3 class="sect hidden" id="bestGridTitle">Full week</h3>
+    <div class="tablewrap hidden" id="bestTableWrap"><table class="slots" id="bestTable"></table></div>
+    <div class="legend hidden" id="bestLegend">Green: everyone is free. Amber: enough people are free. Red: too many are busy. Under each cell: who is busy.</div>
+  </section>
+
+  <!-- Room usage -->
+  <section id="viewUsage" class="hidden">
+    <div class="controls">
+      <select id="usageScope"></select>
+      <select id="usageSort">
+        <option value="busy">Sort: busiest first</option>
+        <option value="free">Sort: least busy first</option>
+        <option value="az">Sort: A–Z</option>
+      </select>
+    </div>
+    <p class="hint">How much the rooms are used according to the school timetable. A room counts as busy in a period when the timetable shows a lesson in it. Occupancy is busy periods out of all periods in the selected range, Monday to Friday.</p>
+    <div class="status" id="usageStatus"></div>
+    <h3 class="sect">School heatmap <small>rooms in use at each time</small></h3>
+    <div class="tablewrap"><table class="slots heat" id="heatTable"></table></div>
+    <div class="legend">Each cell shows how many rooms have a lesson, and the share of all rooms. Darker means busier.</div>
+    <div class="usagegrid" id="usageTop"></div>
+    <h3 class="sect">All rooms <small>busy periods per day, and total occupancy</small></h3>
+    <div class="tablewrap"><table class="slots" id="rankTable"></table></div>
+  </section>
+
   <!-- Changes -->
   <section id="viewChanges" class="hidden">
     <div class="controls">
@@ -297,10 +434,12 @@
 
 </div>
 
+<div class="note hidden" id="gcNote">Visits are counted anonymously with GoatCounter: no cookies, no personal data.</div>
+
 <script>
   let data = null;
   let entities = [];              // {name, kind, slots:Set("d.p"), full, words}
-  let selected = [];              // выбранные для Find a slot
+  let printing = false;           // true на время печати: показываем списки целиком
   const expanded = { room: false, teacher: false };
 
   const $ = id => document.getElementById(id);
@@ -360,7 +499,11 @@
     return best;
   }
 
-  function renderAvail(pref) {
+  function periodRangeLabel(a, b) {
+    return a === b ? data.periods[a] : shortP(data.periods[a]) + ' – ' + shortP(data.periods[b]);
+  }
+
+  function computeAvail(pref) {
     const kind = pref;                                     // 'room' | 'teacher'
     const di = +$(pref + 'Day').value;
     let a = +$(pref + 'From').value, b = +$(pref + 'To').value;
@@ -388,6 +531,11 @@
       full.sort((x, y) => dayLoad(x) - dayLoad(y) || x.name.localeCompare(y.name));
     }
     partial.sort((x, y) => x.busyIdx.length - y.busyIdx.length || y.run - x.run || x.e.name.localeCompare(y.e.name));
+    return { kind, di, a, b, range, dayName, items, full, partial, fullyBusy, dayLoad };
+  }
+
+  function renderAvail(pref) {
+    const { kind, di, a, b, range, dayName, items, full, partial, fullyBusy, dayLoad } = computeAvail(pref);
 
     // свободные весь диапазон
     const grid = $(pref + 'Full');
@@ -433,7 +581,7 @@
       const sm = document.createElement('small');
       sm.textContent = 'not free in every period, best first (' + partial.length + ')';
       title.append(sm);
-      const shown = expanded[pref] ? partial : partial.slice(0, PARTIAL_LIMIT);
+      const shown = (expanded[pref] || printing) ? partial : partial.slice(0, PARTIAL_LIMIT);
       shown.forEach(({ e, busyIdx }) => {
         const card = document.createElement('div'); card.className = 'pcard';
         const top = document.createElement('div'); top.className = 'top';
@@ -454,7 +602,7 @@
         card.append(top, strip, bt);
         plist.append(card);
       });
-      if (!expanded[pref] && partial.length > PARTIAL_LIMIT) {
+      if (!(expanded[pref] || printing) && partial.length > PARTIAL_LIMIT) {
         more.textContent = 'Show all (' + partial.length + ')';
         more.classList.remove('hidden');
       } else more.classList.add('hidden');
@@ -484,8 +632,8 @@
       timeZone: 'Asia/Bishkek', day: 'numeric', month: 'short', year: 'numeric',
       hour: '2-digit', minute: '2-digit'
     }) + ' (Bishkek)';
-    // автообновление идёт каждые 6 часов; если данные старше 13 часов — что-то сломалось
-    if (Date.now() - t.getTime() > 13 * 3600 * 1000) {
+    // автообновление идёт каждые 30 минут (сайт школы отвечает не всегда); старше 6 часов — что-то не так
+    if (Date.now() - t.getTime() > 6 * 3600 * 1000) {
       el.classList.add('stale');
       el.textContent += ' · data may be outdated';
     }
@@ -504,6 +652,63 @@
       el.append(b, ' ' + label);
       return el;
     }));
+  }
+
+  /* ---------- Usefulness counter (GoatCounter) ---------- */
+
+  // Один раз зарегистрируйтесь на https://www.goatcounter.com и впишите сюда ваш код (часть адреса
+  // перед .goatcounter.com), например 'bis-timetable'. Пока строка пустая, счётчик скрыт.
+  const GOATCOUNTER_CODE = '';
+
+  function setupUsefulness() {
+    const code = (GOATCOUNTER_CODE || '').trim();
+    if (!/^[a-z0-9-]+$/i.test(code)) return;                 // не настроено: счётчик скрыт
+    const base = 'https://' + code + '.goatcounter.com';
+
+    // Свои визиты можно не считать: откройте сайт с ?nocount=1 (вернуть: ?nocount=0)
+    let skip = false;
+    try {
+      const q = new URLSearchParams(location.search);
+      if (q.get('nocount') === '1') localStorage.setItem('bis-no-count', '1');
+      if (q.get('nocount') === '0') localStorage.removeItem('bis-no-count');
+      skip = localStorage.getItem('bis-no-count') === '1';
+    } catch (e) { /* без localStorage считаем как обычный визит */ }
+
+    if (!skip) {
+      const sc = document.createElement('script');
+      sc.async = true;
+      sc.dataset.goatcounter = base + '/count';
+      sc.src = 'https://gc.zgo.at/count.js';
+      document.head.append(sc);
+    }
+
+    // Числа: сегодня / последние 7 дней / всего (даты по времени Бишкека)
+    const ymd = d => new Intl.DateTimeFormat('en-CA', { timeZone: 'Asia/Bishkek' }).format(d);
+    const today = ymd(new Date());
+    const weekAgo = ymd(new Date(Date.now() - 6 * 86400000));
+    const get = qs => fetch(base + '/counter/TOTAL.json' + qs, { cache: 'no-store' })
+      .then(r => { if (!r.ok) throw new Error(r.status); return r.json(); })
+      .then(j => String(j.count));
+    Promise.allSettled([
+      get('?start=' + today), get('?start=' + weekAgo), get(''),
+    ]).then(res => {
+      const labels = ['today', 'last 7 days', 'all time'];
+      const box = $('usefulness');
+      const nodes = [];
+      res.forEach((r, i) => {
+        if (r.status !== 'fulfilled') return;
+        const sp = document.createElement('span');
+        const b = document.createElement('b'); b.textContent = r.value;
+        sp.append(b, ' ' + labels[i]);
+        nodes.push(sp);
+      });
+      if (!nodes.length) return;                              // сервис недоступен: счётчик остаётся скрытым
+      const lbl = document.createElement('span'); lbl.className = 'lbl'; lbl.textContent = 'Usefulness counter';
+      box.title = 'Number of visits to this site. Counted anonymously by GoatCounter; the numbers refresh every few hours.';
+      box.replaceChildren(lbl, ...nodes);
+      box.classList.remove('hidden');
+      $('gcNote').classList.remove('hidden');
+    });
   }
 
   /* ---------- Журнал изменений ---------- */
@@ -636,10 +841,10 @@
     return best <= limit ? best + 1 : Infinity;
   }
 
-  function search(query) {
+  function search(query, chosenList) {
     const toks = fold(query).split(' ').filter(Boolean);
     if (!toks.length) return [];
-    const chosen = new Set(selected.map(e => e.kind + e.name));
+    const chosen = new Set(chosenList.map(e => e.kind + e.name));
     const res = [];
     for (const ent of entities) {
       if (chosen.has(ent.kind + ent.name)) continue;
@@ -655,67 +860,84 @@
     return res.slice(0, 12).map(r => r.ent);
   }
 
-  let suggestions = [], suggestIdx = -1;
+  const pickers = {};
 
-  function renderSuggest() {
-    const box = $('suggest'), q = $('q').value.trim();
-    box.replaceChildren();
-    if (!q) { box.classList.add('hidden'); return; }
-    suggestions = search(q);
-    suggestIdx = suggestions.length ? 0 : -1;
-    if (!suggestions.length) {
-      const d = document.createElement('div');
-      d.className = 'none'; d.textContent = 'No matches';
-      box.append(d);
-    }
-    suggestions.forEach((ent, i) => {
-      const d = document.createElement('div');
-      if (i === suggestIdx) d.classList.add('sel');
-      const n = document.createElement('span'); n.textContent = ent.name;
-      const k = document.createElement('span'); k.className = 'kind ' + ent.kind; k.textContent = KIND_LABEL[ent.kind];
-      d.append(n, k);
-      d.onmousedown = e => { e.preventDefault(); addEntity(ent); };
-      box.append(d);
+  // Поле поиска с подсказками и чипами; sel — выбранные сущности
+  function createPicker({ input, suggest, chips, onChange }) {
+    const p = { sel: [] };
+    let list = [], idx = -1;
+
+    p.renderChips = () => {
+      chips.replaceChildren();
+      p.sel.forEach(ent => {
+        const c = document.createElement('span');
+        c.className = 'chip ' + ent.kind;
+        const t = document.createElement('span'); t.textContent = ent.name;
+        const k = document.createElement('span'); k.className = 'kind ' + ent.kind; k.textContent = KIND_LABEL[ent.kind];
+        const x = document.createElement('button'); x.type = 'button'; x.textContent = '×'; x.title = 'Remove';
+        x.onclick = () => p.remove(ent);
+        c.append(t, k, x);
+        chips.append(c);
+      });
+    };
+    p.renderSuggest = () => {
+      const q = input.value.trim();
+      suggest.replaceChildren();
+      if (!q) { suggest.classList.add('hidden'); return; }
+      list = search(q, p.sel);
+      idx = list.length ? 0 : -1;
+      if (!list.length) {
+        const d = document.createElement('div');
+        d.className = 'none'; d.textContent = 'No matches';
+        suggest.append(d);
+      }
+      list.forEach((ent, i) => {
+        const d = document.createElement('div');
+        if (i === idx) d.classList.add('sel');
+        const n = document.createElement('span'); n.textContent = ent.name;
+        const k = document.createElement('span'); k.className = 'kind ' + ent.kind; k.textContent = KIND_LABEL[ent.kind];
+        d.append(n, k);
+        d.onmousedown = e => { e.preventDefault(); p.add(ent); };
+        suggest.append(d);
+      });
+      suggest.classList.remove('hidden');
+    };
+    p.add = ent => {
+      if (!p.sel.includes(ent)) p.sel.push(ent);
+      input.value = '';
+      suggest.classList.add('hidden');
+      p.renderChips();
+      onChange();
+    };
+    p.remove = ent => {
+      p.sel = p.sel.filter(e => e !== ent);
+      p.renderChips();
+      onChange();
+    };
+    p.set = arr => { p.sel = arr; p.renderChips(); };
+
+    const move = delta => {
+      if (!list.length) return;
+      idx = (idx + delta + list.length) % list.length;
+      [...suggest.children].forEach((c, i) => c.classList.toggle('sel', i === idx));
+    };
+    input.addEventListener('input', p.renderSuggest);
+    input.addEventListener('focus', p.renderSuggest);
+    input.addEventListener('blur', () => suggest.classList.add('hidden'));
+    input.addEventListener('keydown', e => {
+      if (e.key === 'ArrowDown') { e.preventDefault(); move(1); }
+      else if (e.key === 'ArrowUp') { e.preventDefault(); move(-1); }
+      else if (e.key === 'Enter') { e.preventDefault(); if (list[idx]) p.add(list[idx]); }
+      else if (e.key === 'Escape') { suggest.classList.add('hidden'); }
+      else if (e.key === 'Backspace' && !input.value && p.sel.length) { p.remove(p.sel[p.sel.length - 1]); }
     });
-    box.classList.remove('hidden');
-  }
-
-  function moveSel(delta) {
-    if (!suggestions.length) return;
-    suggestIdx = (suggestIdx + delta + suggestions.length) % suggestions.length;
-    [...$('suggest').children].forEach((c, i) => c.classList.toggle('sel', i === suggestIdx));
-  }
-
-  function addEntity(ent) {
-    if (!selected.includes(ent)) selected.push(ent);
-    $('q').value = '';
-    $('suggest').classList.add('hidden');
-    syncHash();
-    renderFree();
-  }
-
-  function removeEntity(ent) {
-    selected = selected.filter(e => e !== ent);
-    syncHash();
-    renderFree();
+    return p;
   }
 
   /* ---------- Find a slot ---------- */
 
   function renderFree() {
-    const chips = $('chips');
-    chips.replaceChildren();
-    selected.forEach(ent => {
-      const c = document.createElement('span');
-      c.className = 'chip ' + ent.kind;
-      const t = document.createElement('span'); t.textContent = ent.name;
-      const k = document.createElement('span'); k.className = 'kind ' + ent.kind; k.textContent = KIND_LABEL[ent.kind];
-      const x = document.createElement('button'); x.type = 'button'; x.textContent = '×'; x.title = 'Remove';
-      x.onclick = () => removeEntity(ent);
-      c.append(t, k, x);
-      chips.append(c);
-    });
-
+    const selected = pickers.free.sel;
     const wrap = $('tableWrap'), legend = $('legend'), st = $('freeStatus'), table = $('slotsTable');
     table.replaceChildren();
     if (selected.length < 1) {
@@ -759,6 +981,530 @@
       + (selected.length < 2 ? ' (add more teachers, classes or rooms to find a common time)' : '');
   }
 
+  /* ---------- Periods scope (shared by Best time and Room usage) ---------- */
+
+  const MAIN_PERIODS = 9;                                  // «основные» уроки: первые 9 периодов с сайта
+  const scopeIdx = v => data.periods.map((_, i) => i).filter(i => v === 'all' || i < MAIN_PERIODS);
+  function fillScope(select, def) {
+    const n = data.periods.length;
+    const items = [];
+    if (n > MAIN_PERIODS) items.push(['main', 'Periods ' + shortP(data.periods[0]) + ' – ' + shortP(data.periods[MAIN_PERIODS - 1])]);
+    items.push(['all', 'All periods (' + n + ')']);
+    fill(select, items);
+    select.value = items.some(i => i[0] === def) ? def : 'all';
+  }
+  const pctText = x => Math.round(x * 100) + '%';
+  const heatBg = r => `rgba(56, 189, 248, ${(0.06 + 0.8 * r).toFixed(2)})`;
+  const heatLevel = r => Math.min(4, Math.floor(r * 5));
+  const names = arr => arr.map(e => e.name).join(', ');
+
+  /* ---------- Best time ---------- */
+
+  let bestMin = null;                                      // null = по умолчанию «все, кроме одного»
+  const BEST_LIMIT = 30;
+  let bestExpanded = false;
+
+  function bestMinEff(M) {
+    if (!M) return 0;
+    if (bestMin == null || bestMin < 1 || bestMin > M) return M >= 2 ? M - 1 : M;
+    return bestMin;
+  }
+
+  function setupBest() {
+    fillScope($('bestScope'), 'all');
+    $('bestScope').onchange = () => { bestExpanded = false; renderBest(); };
+    $('bestMin').onchange = () => { bestMin = +$('bestMin').value; bestExpanded = false; syncHash(); renderBest(); };
+    $('bestMore').onclick = () => { bestExpanded = true; renderBest(); };
+  }
+
+  function computeBest() {
+    const sel = pickers.best.sel, M = sel.length;
+    const idx = scopeIdx($('bestScope').value);
+    const min = bestMinEff(M);
+    const cells = [];
+    data.days.forEach((d, di) => idx.forEach(pi => {
+      const busy = sel.filter(e => e.slots.has(di + '.' + pi));
+      cells.push({ di, pi, busy, free: M - busy.length });
+    }));
+    const good = cells.filter(c => c.free >= min).sort((x, y) => y.free - x.free || x.di - y.di || x.pi - y.pi);
+    return { sel, M, idx, min, cells, good };
+  }
+
+  function renderBest() {
+    const { sel, M, idx, min, cells, good } = computeBest();
+    const ctr = $('bestControls');
+    const listWrap = $('bestListWrap'), tw = $('bestTableWrap');
+    const show = (el, on) => el.classList.toggle('hidden', !on);
+    $('bestList').replaceChildren(); $('bestTable').replaceChildren();
+    if (!M) {
+      show(ctr, false); show(listWrap, false); show(tw, false); show($('bestLegend'), false); show($('bestGridTitle'), false);
+      $('bestStatus').textContent = 'Pick at least two — then choose how many of them must be free.';
+      return;
+    }
+    show(ctr, true);
+    fill($('bestMin'), Array.from({ length: M }, (_, k) => M - k).map(i => [i, i === M ? `All ${M} free` : `At least ${i} of ${M} free`]));
+    $('bestMin').value = min;
+
+    const allFree = good.filter(c => c.free === M).length;
+    $('bestStatus').textContent = good.length
+      ? `${good.length} of ${cells.length} slots have at least ${min} of ${M} free` + (min < M ? ` (${allFree} with all ${M} free)` : '')
+      : `No slot has at least ${min} of ${M} free. Try a lower number or all periods.`;
+
+    // рейтинг
+    show(listWrap, good.length > 0);
+    if (good.length) {
+      const title = $('bestListTitle');
+      title.textContent = 'Best times';
+      const sm = document.createElement('small');
+      sm.textContent = 'most people free first (' + good.length + ')';
+      title.append(sm);
+      const shown = (bestExpanded || printing) ? good : good.slice(0, BEST_LIMIT);
+      shown.forEach(c => {
+        const card = document.createElement('div'); card.className = 'pcard';
+        const top = document.createElement('div'); top.className = 'top';
+        const nm = document.createElement('div'); nm.className = 'name'; nm.textContent = data.days[c.di] + ', ' + shortP(data.periods[c.pi]);
+        const sub = document.createElement('div'); sub.className = 'sub'; sub.textContent = c.free + ' of ' + M + ' free';
+        top.append(nm, sub);
+        const tm = document.createElement('div'); tm.className = 'sub'; tm.textContent = data.periods[c.pi];
+        const line = document.createElement('div');
+        if (c.busy.length) { line.className = 'busytxt'; line.textContent = 'busy: ' + names(c.busy); }
+        else { line.className = 'okline'; line.textContent = 'everyone is free'; }
+        card.append(top, tm, line);
+        $('bestList').append(card);
+      });
+      const more = $('bestMore');
+      if (!(bestExpanded || printing) && good.length > BEST_LIMIT) {
+        more.textContent = 'Show all (' + good.length + ')'; show(more, true);
+      } else show(more, false);
+    }
+
+    // таблица недели
+    const byKey = new Map(cells.map(c => [c.di + '.' + c.pi, c]));
+    const thead = document.createElement('thead'); const hr = document.createElement('tr');
+    const corner = document.createElement('th'); corner.className = 'per'; corner.textContent = 'Period'; hr.append(corner);
+    data.days.forEach(d => { const th = document.createElement('th'); th.textContent = d; hr.append(th); });
+    thead.append(hr);
+    const tbody = document.createElement('tbody');
+    idx.forEach(pi => {
+      const tr = document.createElement('tr');
+      const th = document.createElement('th'); th.className = 'per'; th.textContent = data.periods[pi]; tr.append(th);
+      data.days.forEach((d, di) => {
+        const c = byKey.get(di + '.' + pi);
+        const td = document.createElement('td');
+        if (c.free === M) { td.className = 'free'; td.textContent = 'Free'; }
+        else {
+          td.className = c.free >= min ? 'ok' : 'busy';
+          td.textContent = c.free + '/' + M + ' free';
+          const sm = document.createElement('small'); sm.textContent = names(c.busy); td.append(sm);
+        }
+        tr.append(td);
+      });
+      tbody.append(tr);
+    });
+    $('bestTable').append(thead, tbody);
+    show($('bestGridTitle'), true); show(tw, true); show($('bestLegend'), true);
+  }
+
+  /* ---------- Room usage ---------- */
+
+  function setupUsage() {
+    fillScope($('usageScope'), 'main');
+    $('usageScope').onchange = renderUsage;
+    $('usageSort').onchange = renderUsage;
+  }
+
+  function computeUsage() {
+    const idx = scopeIdx($('usageScope').value);
+    const rooms = entities.filter(e => e.kind === 'room');
+    const N = rooms.length, D = data.days.length, K = idx.length;
+    const cell = data.days.map((_, di) => idx.map(pi => rooms.reduce((n, r) => n + (r.slots.has(di + '.' + pi) ? 1 : 0), 0)));
+    const dayTot = cell.map(col => col.reduce((x, y) => x + y, 0));
+    const perRoom = rooms.map(r => {
+      const byDay = data.days.map((_, di) => idx.filter(pi => r.slots.has(di + '.' + pi)).length);
+      const busy = byDay.reduce((x, y) => x + y, 0);
+      return { e: r, byDay, busy, total: D * K, pct: D * K ? busy / (D * K) : 0 };
+    });
+    const overall = N * D * K ? perRoom.reduce((x, r) => x + r.busy, 0) / (N * D * K) : 0;
+    let hi = null, lo = null;
+    data.days.forEach((d, di) => idx.forEach((pi, k) => {
+      const n = cell[di][k];
+      if (!hi || n > hi.n) hi = { di, pi, n };
+      if (!lo || n < lo.n) lo = { di, pi, n };
+    }));
+    const byName = (x, y) => x.e.name.localeCompare(y.e.name, undefined, { numeric: true });
+    const sort = $('usageSort').value;
+    const sorted = perRoom.slice().sort(sort === 'az' ? byName
+      : sort === 'free' ? (x, y) => x.busy - y.busy || byName(x, y)
+      : (x, y) => y.busy - x.busy || byName(x, y));
+    const topBusy = perRoom.slice().sort((x, y) => y.busy - x.busy || byName(x, y)).slice(0, 10);
+    const topFree = perRoom.slice().sort((x, y) => x.busy - y.busy || byName(x, y)).slice(0, 10);
+    const never = perRoom.filter(r => !r.busy).length;
+    return { idx, N, D, K, cell, dayTot, perRoom, sorted, overall, hi, lo, topBusy, topFree, never };
+  }
+
+  function usageScopeText() {
+    const o = $('usageScope').selectedOptions[0];
+    return o ? o.textContent : '';
+  }
+
+  function renderUsage() {
+    const u = computeUsage();
+    const slotText = s => data.days[s.di] + ', ' + shortP(data.periods[s.pi]) + ' (' + s.n + ' of ' + u.N + ' rooms)';
+    $('usageStatus').textContent = `${usageScopeText()}: ${u.N} rooms, average occupancy ${pctText(u.overall)}. `
+      + `Busiest time: ${slotText(u.hi)}. Quietest time: ${slotText(u.lo)}. `
+      + `Rooms with no lessons at all: ${u.never}.`;
+
+    // тепловая карта
+    const tbl = $('heatTable'); tbl.replaceChildren();
+    const thead = document.createElement('thead'); const hr = document.createElement('tr');
+    const corner = document.createElement('th'); corner.className = 'per'; corner.textContent = 'Period'; hr.append(corner);
+    data.days.forEach(d => { const th = document.createElement('th'); th.textContent = d; hr.append(th); });
+    thead.append(hr);
+    const tbody = document.createElement('tbody');
+    const heatCell = (n, tot) => {
+      const r = tot ? n / tot : 0;
+      const td = document.createElement('td');
+      td.style.background = heatBg(r);
+      td.style.color = r > 0.55 ? '#0b1220' : '';
+      const b = document.createElement('b'); b.textContent = n;
+      const sm = document.createElement('small'); sm.textContent = pctText(r);
+      td.append(b, sm);
+      td.title = n + ' of ' + tot + ' rooms in use';
+      return td;
+    };
+    u.idx.forEach((pi, k) => {
+      const tr = document.createElement('tr');
+      const th = document.createElement('th'); th.className = 'per'; th.textContent = data.periods[pi]; tr.append(th);
+      data.days.forEach((d, di) => tr.append(heatCell(u.cell[di][k], u.N)));
+      tbody.append(tr);
+    });
+    const tfoot = document.createElement('tfoot'); const fr = document.createElement('tr');
+    const fth = document.createElement('th'); fth.className = 'per'; fth.textContent = 'Whole day (average)'; fr.append(fth);
+    data.days.forEach((d, di) => {
+      const td = heatCell(0, 1);
+      td.replaceChildren(Object.assign(document.createElement('b'), { textContent: pctText(u.N * u.K ? u.dayTot[di] / (u.N * u.K) : 0) }));
+      const r = u.N * u.K ? u.dayTot[di] / (u.N * u.K) : 0;
+      td.style.background = heatBg(r); td.style.color = r > 0.55 ? '#0b1220' : '';
+      td.title = 'Average share of rooms in use on ' + d;
+      fr.append(td);
+    });
+    tfoot.append(fr);
+    tbl.append(thead, tbody, tfoot);
+
+    // рейтинги
+    const mkTop = (title, list) => {
+      const box = document.createElement('div'); box.className = 'toplist';
+      const h = document.createElement('h4'); h.textContent = title; box.append(h);
+      list.forEach((r, i) => {
+        const row = document.createElement('div'); row.className = 'toprow';
+        const rk = document.createElement('span'); rk.className = 'rk'; rk.textContent = i + 1;
+        const nm = document.createElement('span'); nm.textContent = r.e.name;
+        const bar = document.createElement('div'); bar.className = 'bar';
+        const fillEl = document.createElement('i'); fillEl.style.width = Math.round(r.pct * 100) + '%'; bar.append(fillEl);
+        const pc = document.createElement('span'); pc.className = 'pc'; pc.textContent = pctText(r.pct);
+        row.title = r.busy + ' busy of ' + r.total + ' periods';
+        row.append(rk, nm, bar, pc);
+        box.append(row);
+      });
+      return box;
+    };
+    $('usageTop').replaceChildren(mkTop('Busiest rooms (top 10)', u.topBusy), mkTop('Least busy rooms (top 10)', u.topFree));
+
+    // полная таблица
+    const rt = $('rankTable'); rt.replaceChildren();
+    const rh = document.createElement('thead'); const rr = document.createElement('tr');
+    ['#', 'Room', ...data.days, 'Busy', 'Free', 'Occupancy'].forEach(t => { const th = document.createElement('th'); th.textContent = t; rr.append(th); });
+    rh.append(rr);
+    const rb = document.createElement('tbody');
+    u.sorted.forEach((r, i) => {
+      const tr = document.createElement('tr');
+      const add = (txt, cls) => { const td = document.createElement('td'); td.textContent = txt; if (cls) td.className = cls; tr.append(td); return td; };
+      add(i + 1, 'num'); add(r.e.name, 'nm');
+      r.byDay.forEach(n => { const td = add(n, 'num'); const x = u.K ? n / u.K : 0; td.style.background = heatBg(x); td.style.color = x > 0.55 ? '#0b1220' : ''; });
+      add(r.busy, 'num'); add(r.total - r.busy, 'num');
+      const oc = document.createElement('td'); oc.className = 'occ';
+      const row = document.createElement('div'); row.className = 'occrow';
+      const bar = document.createElement('div'); bar.className = 'bar';
+      const fl = document.createElement('i'); fl.style.width = Math.round(r.pct * 100) + '%'; bar.append(fl);
+      const b = document.createElement('b'); b.textContent = pctText(r.pct);
+      row.append(bar, b); oc.append(row); tr.append(oc);
+      rb.append(tr);
+    });
+    rt.append(rh, rb);
+  }
+
+  /* ---------- Export: Excel (.xlsx) ---------- */
+
+  const XL = { head: 1, free: 2, busy: 3, ok: 4, title: 5, pct: 6, heat0: 7, heat1: 8, heat2: 9, heat3: 10, heat4: 11, cell: 12, bold: 13 };
+
+  const fmtWhen = v => new Date(v).toLocaleString('en-GB', {
+    timeZone: 'Asia/Bishkek', day: 'numeric', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit'
+  }) + ' (Bishkek)';
+  const stampLine = () => 'School timetable data updated: ' + fmtWhen(data.updated);
+
+  function colName(i) {
+    let s = ''; i++;
+    while (i > 0) { const m = (i - 1) % 26; s = String.fromCharCode(65 + m) + s; i = Math.floor((i - 1) / 26); }
+    return s;
+  }
+  const xmlEsc = s => String(s).replace(/[\u0000-\u0008\u000B\u000C\u000E-\u001F]/g, '')
+    .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+
+  function sheetXml(rows, widths) {
+    let x = '<?xml version="1.0" encoding="UTF-8" standalone="yes"?><worksheet xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main">';
+    if (widths) x += '<cols>' + widths.map((w, i) => `<col min="${i + 1}" max="${i + 1}" width="${w}" customWidth="1"/>`).join('') + '</cols>';
+    x += '<sheetData>';
+    rows.forEach((row, r) => {
+      x += `<row r="${r + 1}">`;
+      row.forEach((cell, c) => {
+        if (cell == null) return;
+        const o = typeof cell === 'object' ? cell : { v: cell };
+        const s = o.st ? XL[o.st] : 0;
+        const ref = colName(c) + (r + 1);
+        if (o.v === '' || o.v == null) { if (s) x += `<c r="${ref}" s="${s}"/>`; return; }
+        if (typeof o.v === 'number') x += `<c r="${ref}" s="${s}"><v>${o.v}</v></c>`;
+        else x += `<c r="${ref}" s="${s}" t="inlineStr"><is><t xml:space="preserve">${xmlEsc(o.v)}</t></is></c>`;
+      });
+      x += '</row>';
+    });
+    return x + '</sheetData></worksheet>';
+  }
+
+  function stylesXml() {
+    const solid = rgb => `<fill><patternFill patternType="solid"><fgColor rgb="FF${rgb}"/><bgColor indexed="64"/></patternFill></fill>`;
+    const fills = ['<fill><patternFill patternType="none"/></fill>', '<fill><patternFill patternType="gray125"/></fill>',
+      ...['D9E2EC', 'C6EFCE', 'FFC7CE', 'FFEB9C', 'E0F2FE', 'BAE6FD', '7DD3FC', '38BDF8', '0EA5E9'].map(solid)];
+    const xf = (font, fill, border, numFmt, h, wrap) =>
+      `<xf numFmtId="${numFmt}" fontId="${font}" fillId="${fill}" borderId="${border}" xfId="0" applyFont="1" applyFill="1" applyBorder="1" applyNumberFormat="1" applyAlignment="1">`
+      + `<alignment horizontal="${h}" vertical="center"${wrap ? ' wrapText="1"' : ''}/></xf>`;
+    const xfs = [
+      xf(0, 0, 0, 0, 'general', false),   // 0 default
+      xf(1, 2, 1, 0, 'center', true),     // 1 head
+      xf(0, 3, 1, 0, 'center', true),     // 2 free
+      xf(0, 4, 1, 0, 'center', true),     // 3 busy
+      xf(0, 5, 1, 0, 'center', true),     // 4 ok
+      xf(2, 0, 0, 0, 'general', false),   // 5 title
+      xf(0, 0, 1, 9, 'center', false),    // 6 pct
+      ...[6, 7, 8, 9, 10].map(f => xf(0, f, 1, 0, 'center', false)),  // 7..11 heat
+      xf(0, 0, 1, 0, 'left', true),       // 12 cell
+      xf(1, 0, 0, 0, 'general', false),   // 13 bold
+    ];
+    const font = (b, sz) => `<font>${b ? '<b/>' : ''}<sz val="${sz}"/><name val="Calibri"/></font>`;
+    const side = n => `<${n} style="thin"><color rgb="FFBFBFBF"/></${n}>`;
+    return '<?xml version="1.0" encoding="UTF-8" standalone="yes"?><styleSheet xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main">'
+      + `<fonts count="3">${font(0, 11)}${font(1, 11)}${font(1, 14)}</fonts>`
+      + `<fills count="${fills.length}">${fills.join('')}</fills>`
+      + `<borders count="2"><border><left/><right/><top/><bottom/><diagonal/></border><border>${side('left')}${side('right')}${side('top')}${side('bottom')}<diagonal/></border></borders>`
+      + '<cellStyleXfs count="1"><xf numFmtId="0" fontId="0" fillId="0" borderId="0"/></cellStyleXfs>'
+      + `<cellXfs count="${xfs.length}">${xfs.join('')}</cellXfs>`
+      + '<cellStyles count="1"><cellStyle name="Normal" xfId="0" builtinId="0"/></cellStyles></styleSheet>';
+  }
+
+  const CRC_TABLE = (() => {
+    const t = new Uint32Array(256);
+    for (let n = 0; n < 256; n++) { let c = n; for (let k = 0; k < 8; k++) c = c & 1 ? 0xEDB88320 ^ (c >>> 1) : c >>> 1; t[n] = c >>> 0; }
+    return t;
+  })();
+  function crc32(buf) {
+    let c = 0xFFFFFFFF;
+    for (let i = 0; i < buf.length; i++) c = CRC_TABLE[(c ^ buf[i]) & 0xFF] ^ (c >>> 8);
+    return (c ^ 0xFFFFFFFF) >>> 0;
+  }
+
+  // Простейший ZIP без сжатия (достаточно для .xlsx)
+  function zipStore(files) {                                 // files: [[path, string]]
+    const enc = new TextEncoder();
+    const now = new Date();
+    const dosTime = (now.getHours() << 11) | (now.getMinutes() << 5) | (now.getSeconds() >> 1);
+    const dosDate = ((now.getFullYear() - 1980) << 9) | ((now.getMonth() + 1) << 5) | now.getDate();
+    const parts = [], central = [];
+    let offset = 0;
+    files.forEach(([path, content]) => {
+      const name = enc.encode(path), body = enc.encode(content), crc = crc32(body);
+      const lh = new DataView(new ArrayBuffer(30));
+      lh.setUint32(0, 0x04034b50, true); lh.setUint16(4, 20, true); lh.setUint16(6, 0x0800, true); lh.setUint16(8, 0, true);
+      lh.setUint16(10, dosTime, true); lh.setUint16(12, dosDate, true); lh.setUint32(14, crc, true);
+      lh.setUint32(18, body.length, true); lh.setUint32(22, body.length, true); lh.setUint16(26, name.length, true); lh.setUint16(28, 0, true);
+      parts.push(new Uint8Array(lh.buffer), name, body);
+      const ch = new DataView(new ArrayBuffer(46));
+      ch.setUint32(0, 0x02014b50, true); ch.setUint16(4, 20, true); ch.setUint16(6, 20, true); ch.setUint16(8, 0x0800, true); ch.setUint16(10, 0, true);
+      ch.setUint16(12, dosTime, true); ch.setUint16(14, dosDate, true); ch.setUint32(16, crc, true);
+      ch.setUint32(20, body.length, true); ch.setUint32(24, body.length, true); ch.setUint16(28, name.length, true);
+      ch.setUint16(30, 0, true); ch.setUint16(32, 0, true); ch.setUint16(34, 0, true); ch.setUint16(36, 0, true);
+      ch.setUint32(38, 0, true); ch.setUint32(42, offset, true);
+      central.push(new Uint8Array(ch.buffer), name);
+      offset += 30 + name.length + body.length;
+    });
+    const csize = central.reduce((n, a) => n + a.length, 0);
+    const end = new DataView(new ArrayBuffer(22));
+    end.setUint32(0, 0x06054b50, true); end.setUint16(8, files.length, true); end.setUint16(10, files.length, true);
+    end.setUint32(12, csize, true); end.setUint32(16, offset, true);
+    return new Blob([...parts, ...central, new Uint8Array(end.buffer)],
+      { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+  }
+
+  function buildXlsx(sheets) {                               // sheets: [{name, rows, widths}]
+    const used = new Set();
+    const safe = sheets.map((s, i) => {
+      let n = String(s.name).replace(/[\[\]:*?\/\\]/g, ' ').trim().slice(0, 31) || 'Sheet' + (i + 1);
+      while (used.has(n.toLowerCase())) n = n.slice(0, 28) + ' ' + (i + 1);
+      used.add(n.toLowerCase());
+      return n;
+    });
+    const R = 'http://schemas.openxmlformats.org/officeDocument/2006/relationships';
+    const files = [
+      ['[Content_Types].xml', '<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types">'
+        + '<Default Extension="rels" ContentType="application/vnd.openxmlformats-package.relationships+xml"/><Default Extension="xml" ContentType="application/xml"/>'
+        + '<Override PartName="/xl/workbook.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet.main+xml"/>'
+        + sheets.map((_, i) => `<Override PartName="/xl/worksheets/sheet${i + 1}.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.worksheet+xml"/>`).join('')
+        + '<Override PartName="/xl/styles.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.styles+xml"/></Types>'],
+      ['_rels/.rels', `<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"><Relationship Id="rId1" Type="${R}/officeDocument" Target="xl/workbook.xml"/></Relationships>`],
+      ['xl/workbook.xml', `<?xml version="1.0" encoding="UTF-8" standalone="yes"?><workbook xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main" xmlns:r="${R}"><sheets>`
+        + safe.map((n, i) => `<sheet name="${xmlEsc(n)}" sheetId="${i + 1}" r:id="rId${i + 1}"/>`).join('') + '</sheets></workbook>'],
+      ['xl/_rels/workbook.xml.rels', '<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships">'
+        + sheets.map((_, i) => `<Relationship Id="rId${i + 1}" Type="${R}/worksheet" Target="worksheets/sheet${i + 1}.xml"/>`).join('')
+        + `<Relationship Id="rId${sheets.length + 1}" Type="${R}/styles" Target="styles.xml"/></Relationships>`],
+      ['xl/styles.xml', stylesXml()],
+      ...sheets.map((s, i) => [`xl/worksheets/sheet${i + 1}.xml`, sheetXml(s.rows, s.widths)]),
+    ];
+    return zipStore(files);
+  }
+
+  function downloadXlsx(ex) {
+    const blob = buildXlsx(ex.sheets);
+    const day = new Intl.DateTimeFormat('en-CA', { timeZone: 'Asia/Bishkek' }).format(new Date());
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = 'BIS-Timetable-' + ex.slug + '-' + day + '.xlsx';
+    document.body.append(a); a.click(); a.remove();
+    setTimeout(() => URL.revokeObjectURL(a.href), 5000);
+  }
+
+  /* ---------- Export: что показано на экране ---------- */
+
+  const head = t => ({ v: t, st: 'head' });
+  function withInfo(ex, table, widths, name) {
+    return { name: name || ex.title, widths, rows: [[{ v: ex.title, st: 'title' }], ...ex.lines.map(l => [l]), [], ...table] };
+  }
+
+  function exportAvail(pref) {
+    const c = computeAvail(pref);
+    const isRoom = c.kind === 'room';
+    const ex = { title: isRoom ? 'Empty rooms' : 'Free teachers', slug: isRoom ? 'empty-rooms' : 'free-teachers' };
+    const multi = c.range.length > 1;
+    ex.lines = [c.dayName + ', ' + periodRangeLabel(c.a, c.b),
+      (multi ? 'Free for the whole range: ' : 'Free: ') + c.full.length + ' of ' + c.items.length
+        + (multi ? ' · partly free: ' + c.partial.length + ' · fully busy: ' + c.fullyBusy : '')];
+    if (!isRoom && $('teacherQ').value.trim()) ex.lines.push('Filter: ' + $('teacherQ').value.trim());
+    ex.lines.push(stampLine());
+    const hdr = [isRoom ? 'Room' : 'Teacher', 'Status', 'Free periods', 'Busy periods', ...(isRoom ? [] : ['Lessons that day'])].map(head);
+    const rows = [];
+    c.full.forEach(e => rows.push([{ v: e.name, st: 'cell' }, { v: multi ? 'Free for the whole range' : 'Free', st: 'free' },
+      { v: c.range.length, st: 'cell' }, { v: '', st: 'cell' }, ...(isRoom ? [] : [{ v: c.dayLoad(e), st: 'cell' }])]));
+    c.partial.forEach(({ e, busyIdx }) => rows.push([{ v: e.name, st: 'cell' }, { v: 'Partly free', st: 'ok' },
+      { v: c.range.length - busyIdx.length, st: 'cell' }, { v: busyIdx.map(pi => shortP(data.periods[pi])).join(', '), st: 'cell' },
+      ...(isRoom ? [] : [{ v: c.dayLoad(e), st: 'cell' }])]));
+    ex.sheets = [withInfo(ex, [hdr, ...rows], [30, 26, 14, 40, 16])];
+    return ex;
+  }
+
+  function slotGridRows(sel, idx, cellFn) {
+    const rows = [[head('Period'), ...data.days.map(head)]];
+    idx.forEach(pi => rows.push([{ v: data.periods[pi], st: 'head' }, ...data.days.map((d, di) => cellFn(di, pi))]));
+    return rows;
+  }
+
+  function exportFree() {
+    const sel = pickers.free.sel, M = sel.length;
+    const ex = { title: 'Find a slot', slug: 'find-a-slot' };
+    const idx = data.periods.map((_, i) => i);
+    let freeCount = 0;
+    const rows = slotGridRows(sel, idx, (di, pi) => {
+      const who = sel.filter(e => e.slots.has(di + '.' + pi));
+      if (!who.length) { freeCount++; return { v: 'Free', st: 'free' }; }
+      return { v: `Busy ${who.length}/${M}: ${names(who)}`, st: 'busy' };
+    });
+    ex.lines = ['Selected: ' + (M ? sel.map(e => e.name + ' (' + KIND_LABEL[e.kind] + ')').join('; ') : 'nobody yet'),
+      M ? freeCount + ' free slots out of ' + data.days.length * idx.length : '', stampLine()].filter(Boolean);
+    ex.sheets = [withInfo(ex, M ? rows : [], [28, 24, 24, 24, 24, 24])];
+    return ex;
+  }
+
+  function exportBest() {
+    const b = computeBest();
+    const ex = { title: 'Best time', slug: 'best-time' };
+    ex.lines = ['Selected: ' + (b.M ? b.sel.map(e => e.name + ' (' + KIND_LABEL[e.kind] + ')').join('; ') : 'nobody yet'),
+      b.M ? 'Condition: at least ' + b.min + ' of ' + b.M + ' free · ' + $('bestScope').selectedOptions[0].textContent : '',
+      b.M ? b.good.length + ' of ' + b.cells.length + ' slots match' : '', stampLine()].filter(Boolean);
+    if (!b.M) { ex.sheets = [withInfo(ex, [], [30])]; return ex; }
+    const list = [[head('Day'), head('Period'), head('Time'), head('Free'), head('Out of'), head('Busy')]];
+    b.good.forEach(c => list.push([{ v: data.days[c.di], st: 'cell' }, { v: shortP(data.periods[c.pi]), st: 'cell' },
+      { v: (data.periods[c.pi].split('|')[1] || '').trim(), st: 'cell' },
+      { v: c.free, st: c.free === b.M ? 'free' : 'ok' }, { v: b.M, st: 'cell' }, { v: names(c.busy), st: 'cell' }]));
+    const byKey = new Map(b.cells.map(c => [c.di + '.' + c.pi, c]));
+    const grid = slotGridRows(b.sel, b.idx, (di, pi) => {
+      const c = byKey.get(di + '.' + pi);
+      if (c.free === b.M) return { v: 'Free', st: 'free' };
+      return { v: `${c.free}/${b.M} free: busy ${names(c.busy)}`, st: c.free >= b.min ? 'ok' : 'busy' };
+    });
+    ex.sheets = [withInfo(ex, list, [14, 22, 14, 8, 8, 60], 'Best times'), withInfo(ex, grid, [28, 26, 26, 26, 26, 26], 'Full week')];
+    return ex;
+  }
+
+  function exportUsage() {
+    const u = computeUsage();
+    const ex = { title: 'Room usage', slug: 'room-usage' };
+    ex.lines = [usageScopeText() + ' · ' + u.N + ' rooms · average occupancy ' + pctText(u.overall),
+      'A room is busy when the school timetable shows a lesson in it.', stampLine()];
+    const heat = [[head('Period'), ...data.days.map(head)]];
+    u.idx.forEach((pi, k) => heat.push([{ v: data.periods[pi], st: 'head' },
+      ...data.days.map((d, di) => ({ v: u.cell[di][k], st: 'heat' + heatLevel(u.N ? u.cell[di][k] / u.N : 0) }))]));
+    heat.push([{ v: 'Whole day (rooms in use, total)', st: 'head' }, ...u.dayTot.map(n => ({ v: n, st: 'bold' }))]);
+    heat.push([], [{ v: 'Share of all rooms in use', st: 'bold' }]);
+    heat.push([head('Period'), ...data.days.map(head)]);
+    u.idx.forEach((pi, k) => heat.push([{ v: data.periods[pi], st: 'head' },
+      ...data.days.map((d, di) => ({ v: u.N ? u.cell[di][k] / u.N : 0, st: 'pct' }))]));
+    heat.push([{ v: 'Whole day (average)', st: 'head' }, ...u.dayTot.map(n => ({ v: u.N * u.K ? n / (u.N * u.K) : 0, st: 'pct' }))]);
+    const rank = [[head('#'), head('Room'), ...data.days.map(head), head('Busy periods'), head('Free periods'), head('Occupancy')]];
+    u.sorted.forEach((r, i) => rank.push([{ v: i + 1, st: 'cell' }, { v: r.e.name, st: 'cell' },
+      ...r.byDay.map(n => ({ v: n, st: 'heat' + heatLevel(u.K ? n / u.K : 0) })),
+      { v: r.busy, st: 'cell' }, { v: r.total - r.busy, st: 'cell' }, { v: r.pct, st: 'pct' }]));
+    ex.sheets = [withInfo(ex, heat, [32, 16, 16, 16, 16, 16], 'Heatmap'), withInfo(ex, rank, [6, 18, 12, 12, 12, 12, 12, 14, 14, 14], 'Rooms')];
+    return ex;
+  }
+
+  function exportChanges() {
+    const kindFilter = $('chgKind').value;
+    const ex = { title: 'Changes', slug: 'changes' };
+    ex.lines = ['What changed in the school timetable between updates' + (kindFilter ? ' (filter: ' + kindFilter + ' only)' : ''), stampLine()];
+    const rows = [[head('When'), head('Type'), head('Name'), head('Day'), head('Period'), head('Change')]];
+    (data.changes || []).slice().reverse().forEach(rec => {
+      (rec.items || []).filter(it => !kindFilter || it[0] === kindFilter).forEach(it => {
+        rows.push([fmtWhen(rec.at), KIND_LABEL[it[0]], it[1], it[2] || '', it[3] || '', CHG_TEXT[it[4]][0]]);
+      });
+    });
+    ex.sheets = [withInfo(ex, rows, [30, 10, 30, 14, 26, 24])];
+    return ex;
+  }
+
+  const EXPORT = {
+    empty: () => exportAvail('room'),
+    teachers: () => exportAvail('teacher'),
+    free: exportFree,
+    best: exportBest,
+    usage: exportUsage,
+    changes: exportChanges,
+  };
+
+  function fillPrintInfo() {
+    let ex;
+    try { ex = EXPORT[currentPage](); } catch (e) { return; }
+    const h = document.createElement('h2'); h.textContent = ex.title;
+    const ps = ex.lines.map(l => { const p = document.createElement('p'); p.textContent = l; return p; });
+    const p = document.createElement('p'); p.textContent = 'Printed: ' + fmtWhen(new Date());
+    $('printInfo').replaceChildren(h, ...ps, p);
+  }
+
   /* ---------- Маршруты ---------- */
 
   function findByName(name) {
@@ -766,8 +1512,18 @@
     return entities.find(e => e.name.toLowerCase() === n);
   }
 
+  let currentPage = 'empty';
+
   function syncHash() {
-    const h = '#/free' + (selected.length ? '/' + selected.map(e => encodeURIComponent(e.name)).join('+') : '');
+    const enc = sel => sel.map(e => encodeURIComponent(e.name)).join('+');
+    let h;
+    if (currentPage === 'best') {
+      const s = pickers.best.sel;
+      h = '#/best' + (s.length ? '/' + enc(s) + (bestMin != null ? '/' + bestMin : '') : '');
+    } else {
+      const s = pickers.free.sel;
+      h = '#/free' + (s.length ? '/' + enc(s) : '');
+    }
     if (location.hash !== h) history.replaceState(null, '', h);
   }
 
@@ -775,30 +1531,42 @@
     empty: ['viewEmpty', 'tabEmpty', 'Empty Rooms'],
     teachers: ['viewTeachers', 'tabTeachers', 'Free Teachers'],
     free: ['viewFree', 'tabFree', 'Find a slot'],
+    best: ['viewBest', 'tabBest', 'Best time'],
+    usage: ['viewUsage', 'tabUsage', 'Room usage'],
     changes: ['viewChanges', 'tabChanges', 'Changes'],
   };
 
+  const parseNames = raw => raw ? raw.split('+').map(s => { try { return findByName(decodeURIComponent(s)); } catch (e) { return null; } })
+                                      .filter(Boolean) : [];
+
+  function renderPage() {
+    if (currentPage === 'free') renderFree();
+    else if (currentPage === 'best') renderBest();
+    else if (currentPage === 'empty') renderAvail('room');
+    else if (currentPage === 'teachers') renderAvail('teacher');
+    else if (currentPage === 'usage') renderUsage();
+    else renderChanges();
+  }
+
   function route() {
     if (!data) return;
-    const parts = (location.hash || '#/empty').split('/');   // ['#', 'free', 'A+B']
+    const parts = (location.hash || '#/empty').split('/');   // ['#', 'best', 'A+B', '4']
     const page = PAGES[parts[1]] ? parts[1] : 'empty';
+    currentPage = page;
     Object.entries(PAGES).forEach(([name, [view, tab]]) => {
       $(view).classList.toggle('hidden', name !== page);
       $(tab).classList.toggle('active', name === page);
     });
     document.title = 'BIS Timetable - ' + PAGES[page][2];
     if (page === 'free') {
-      const raw = parts.slice(2).join('/');
-      selected = raw ? raw.split('+').map(s => { try { return findByName(decodeURIComponent(s)); } catch (e) { return null; } })
-                          .filter(Boolean) : [];
-      renderFree();
-    } else if (page === 'empty') {
-      renderAvail('room');
-    } else if (page === 'teachers') {
-      renderAvail('teacher');
-    } else {
-      renderChanges();
+      pickers.free.set(parseNames(parts.slice(2).join('/')));
+    } else if (page === 'best') {
+      pickers.best.set(parseNames(parts[2]));
+      const m = parseInt(parts[3], 10);
+      bestMin = Number.isFinite(m) ? m : null;
+      bestExpanded = false;
     }
+    renderPage();
   }
 
   /* ---------- Старт ---------- */
@@ -813,6 +1581,7 @@
 
       showUpdated();
       showStats();
+      setupUsefulness();
 
       // сущности: учителя, классы, кабинеты
       const dayIdx = Object.fromEntries(data.days.map((d, i) => [d, i]));
@@ -831,17 +1600,24 @@
       pickDefaults();
       $('chgKind').onchange = renderChanges;
 
-      const q = $('q');
-      q.addEventListener('input', renderSuggest);
-      q.addEventListener('focus', renderSuggest);
-      q.addEventListener('blur', () => $('suggest').classList.add('hidden'));
-      q.addEventListener('keydown', e => {
-        if (e.key === 'ArrowDown') { e.preventDefault(); moveSel(1); }
-        else if (e.key === 'ArrowUp') { e.preventDefault(); moveSel(-1); }
-        else if (e.key === 'Enter') { e.preventDefault(); if (suggestions[suggestIdx]) addEntity(suggestions[suggestIdx]); }
-        else if (e.key === 'Escape') { $('suggest').classList.add('hidden'); }
-        else if (e.key === 'Backspace' && !q.value && selected.length) { removeEntity(selected[selected.length - 1]); }
+      pickers.free = createPicker({ input: $('q'), suggest: $('suggest'), chips: $('chips'),
+        onChange: () => { syncHash(); renderFree(); } });
+      pickers.best = createPicker({ input: $('bq'), suggest: $('bsuggest'), chips: $('bchips'),
+        onChange: () => { bestMin = null; bestExpanded = false; syncHash(); renderBest(); } });
+      setupBest();
+      setupUsage();
+
+      $('btnPrint').onclick = () => window.print();
+      $('btnXlsx').onclick = () => {
+        try { downloadXlsx(EXPORT[currentPage]()); }
+        catch (e) { alert('Could not create the Excel file: ' + e.message); }
+      };
+      // при печати показываем весь список, а не первые N, и раскрываем журнал изменений
+      window.addEventListener('beforeprint', () => {
+        printing = true; fillPrintInfo(); renderPage();
+        document.querySelectorAll('details.rec').forEach(d => { d.open = true; });
       });
+      window.addEventListener('afterprint', () => { printing = false; renderPage(); });
 
       window.addEventListener('hashchange', route);
       route();
