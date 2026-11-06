@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-05T22:49:21+00:00",
+ "updated": "2026-11-06T05:32:47+00:00",
  "warnings": [],
  "days": [
   "Monday",
@@ -583,6 +583,41 @@
      "Mark Adriaans",
      "Wednesday",
      "10th (ECA) | 15:30-16:30",
+     "busy"
+    ]
+   ]
+  },
+  {
+   "at": "2026-11-06T05:32:47+00:00",
+   "total": 4,
+   "structure": false,
+   "items": [
+    [
+     "room",
+     "E-Centre 3",
+     "Tuesday",
+     "1st | 08:00-08:45",
+     "busy"
+    ],
+    [
+     "room",
+     "E-Centre 3",
+     "Tuesday",
+     "2nd | 08:45-09:30",
+     "busy"
+    ],
+    [
+     "room",
+     "E-Centre 7",
+     "Wednesday",
+     "1st | 08:00-08:45",
+     "busy"
+    ],
+    [
+     "room",
+     "E-Centre 7",
+     "Wednesday",
+     "2nd | 08:45-09:30",
      "busy"
     ]
    ]
@@ -5417,6 +5452,11 @@
   [
    "Tuesday",
    "1st | 08:00-08:45",
+   "E-Centre 3"
+  ],
+  [
+   "Tuesday",
+   "1st | 08:00-08:45",
    "E-Centre 4"
   ],
   [
@@ -5598,6 +5638,11 @@
    "Tuesday",
    "2nd | 08:45-09:30",
    "E-Centre 2"
+  ],
+  [
+   "Tuesday",
+   "2nd | 08:45-09:30",
+   "E-Centre 3"
   ],
   [
    "Tuesday",
@@ -6992,6 +7037,11 @@
   [
    "Wednesday",
    "1st | 08:00-08:45",
+   "E-Centre 7"
+  ],
+  [
+   "Wednesday",
+   "1st | 08:00-08:45",
    "E-Centre Terrace 1"
   ],
   [
@@ -7178,6 +7228,11 @@
    "Wednesday",
    "2nd | 08:45-09:30",
    "E-Centre 5"
+  ],
+  [
+   "Wednesday",
+   "2nd | 08:45-09:30",
+   "E-Centre 7"
   ],
   [
    "Wednesday",
