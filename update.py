@@ -19,7 +19,7 @@ from bs4 import BeautifulSoup
 BASE = "https://www.bis.kg/timetable/timetable.php?access=wip&t=110&view="
 HEADERS = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"}
 
-SAVE_RAW = True  # сохранять сырой HTML в raw/ (для отладки парсера); потом поставить False
+SAVE_RAW = False  # сохранять сырой HTML в raw/ (для отладки парсера); потом поставить False
 
 PERIOD_RE = re.compile(r"^\d+(st|nd|rd|th)\b", re.I)          # "1st | 08:00-08:45"
 DAY_RE = re.compile(r"^(mon|tue|wed|thu|fri|sat|sun)[a-z]*\b", re.I)
