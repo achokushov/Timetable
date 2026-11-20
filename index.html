@@ -292,7 +292,7 @@
       .grid { grid-template-columns: repeat(auto-fill, minmax(110px, 1fr)); }
       .grid.wide { grid-template-columns: repeat(auto-fill, minmax(170px, 1fr)); }
       table.heat td[style] { color: #000 !important; }
-      .noteform, .ntools, #notesWarn, th.act, td.act { display: none !important; }
+      .noteform, .ntools, #notesWarn, #nFormWrap, #nDone, th.act, td.act, th.chk, td.chk { display: none !important; }
       table.notes tr.past td { opacity: 1; }
     }
 
@@ -304,7 +304,13 @@
     details.about li b { color: var(--text); }
     @media (max-width: 600px) { details.about { padding: 0 12px; } }
 
-    /* --- Notes --- */
+    /* --- Booking notes --- */
+    .donebox { margin-top: 20px; }
+    .donebox summary { cursor: pointer; color: var(--accent); font-weight: 600; font-size: 14px; margin-bottom: 10px; width: fit-content; }
+    table.notes th.chk, table.notes td.chk { width: 56px; text-align: center; }
+    table.notes input[type=checkbox] { width: 18px; height: 18px; accent-color: var(--accent); cursor: pointer; }
+    table.notes td.rooms { min-width: 150px; }
+    table.notes tr.finished td { opacity: .7; }
     #nRoomChips { margin: 0; min-height: 34px; align-items: center; }
     #nRoomChips:empty::before { content: 'No rooms added yet'; color: var(--text-sub); font-size: 12px; }
     input[type=date] { color-scheme: dark; }
@@ -357,7 +363,7 @@
   <a href="#/teachers" id="tabTeachers">Free teachers</a>
   <a href="#/free" id="tabFree">Find a slot</a>
   <a href="#/usage" id="tabUsage">Room usage</a>
-  <a href="#/notes" id="tabNotes">Notes</a>
+  <a href="#/notes" id="tabNotes">Booking notes</a>
   <a href="#/changes" id="tabChanges">Changes</a>
 </nav>
 
@@ -370,7 +376,7 @@
       <li><b>Free teachers</b>: the same for teachers.</li>
       <li><b>Find a slot</b>: pick several teachers, classes or rooms to see when all of them are free, or when at least 4 of 5 are free, for example for a meeting.</li>
       <li><b>Room usage</b>: how busy each room is, and which times of the week are busiest.</li>
-      <li><b>Notes</b>: your own record of which room is taken on which date and period, and by whom. Notes are private to your browser and do not change the other tabs.</li>
+      <li><b>Booking notes</b>: your own record of which rooms are taken on which date and period, and by whom. It is kept separately and does not change the other tabs.</li>
       <li><b>Changes</b>: what changed in the timetable since the previous update.</li>
     </ul>
     <p><b>Print / PDF</b> and <b>Download Excel</b> save what is on the screen so you can send it to colleagues.</p>
@@ -479,34 +485,37 @@
     <div class="tablewrap"><table class="slots" id="rankTable"></table></div>
   </section>
 
-  <!-- Notes -->
+  <!-- Booking notes -->
   <section id="viewNotes" class="hidden">
-    <p class="lead">Your own booking notes: which room is taken on which date and period, and by whom.</p>
-    <p class="hint">The school timetable repeats all year and has no dates, so this is a separate written record. Notes do <b>not</b> change “free” or “busy” on the other tabs. You can add several rooms at once: each room is saved as its own note. They are saved in this browser on this device only (they are not put on the website, so nobody else can see them). Use “Save backup” from time to time.</p>
+    <p class="lead">Booking notes: which rooms are taken on which date and period, and by whom.</p>
     <div class="warnbox hidden" id="notesWarn">This browser is not allowing notes to be saved (private window or blocked site data), so they will disappear when you close this page. Use “Save backup” before you leave.</div>
-    <form class="noteform" id="noteForm" autocomplete="off">
-      <div class="nf-row">
-        <label>Date <input type="date" id="nDate" required></label>
-        <label class="grow">Rooms <input type="text" id="nRoom" list="nRoomList" placeholder="Pick or type a room, press Enter to add more…"></label>
-        <datalist id="nRoomList"></datalist>
-      </div>
-      <div class="chips" id="nRoomChips"></div>
-      <div class="nf-periods">
-        <span>Periods:</span>
-        <div class="pchips" id="nPeriods"></div>
-        <button type="button" class="linkbtn" id="nMain"></button>
-        <button type="button" class="linkbtn" id="nClear">Clear</button>
-      </div>
-      <div class="nf-row">
-        <label class="grow">Booked by / purpose <input type="text" id="nWho" maxlength="300" placeholder="e.g. Ms Aigerim, parent meeting"></label>
-        <label class="grow">Note (optional) <input type="text" id="nNote" maxlength="1000" placeholder="anything you want to remember"></label>
-      </div>
-      <div class="nf-actions">
-        <button type="submit" id="nSave">Add note</button>
-        <button type="button" class="hidden" id="nCancel">Cancel edit</button>
-        <span class="nmsg" id="nMsg" role="status"></span>
-      </div>
-    </form>
+    <div class="ntools formbar"><button type="button" id="nToggle" aria-expanded="true">▲ Hide the form</button></div>
+    <div id="nFormWrap">
+      <p class="hint">The school timetable repeats all year and has no dates, so this is a separate written record. Booking notes do <b>not</b> change “free” or “busy” on the other tabs. Add several rooms and they stay together as one booking. Tick “Done” when a booking is over: it moves to the Completed list below. Notes are saved in this browser on this device only (they are not put on the website, so nobody else can see them). Use “Save backup” from time to time.</p>
+      <form class="noteform" id="noteForm" autocomplete="off">
+        <div class="nf-row">
+          <label>Date <input type="date" id="nDate" required></label>
+          <label class="grow">Rooms <input type="text" id="nRoom" list="nRoomList" placeholder="Pick or type a room, press Enter to add more…"></label>
+          <datalist id="nRoomList"></datalist>
+        </div>
+        <div class="chips" id="nRoomChips"></div>
+        <div class="nf-periods">
+          <span>Periods:</span>
+          <div class="pchips" id="nPeriods"></div>
+          <button type="button" class="linkbtn" id="nMain"></button>
+          <button type="button" class="linkbtn" id="nClear">Clear</button>
+        </div>
+        <div class="nf-row">
+          <label class="grow">Booked by / purpose <input type="text" id="nWho" maxlength="300" placeholder="e.g. Ms Aigerim, parent meeting"></label>
+          <label class="grow">Note (optional) <input type="text" id="nNote" maxlength="1000" placeholder="anything you want to remember"></label>
+        </div>
+        <div class="nf-actions">
+          <button type="submit" id="nSave">Add booking</button>
+          <button type="button" class="hidden" id="nCancel">Cancel edit</button>
+          <span class="nmsg" id="nMsg" role="status"></span>
+        </div>
+      </form>
+    </div>
     <div class="controls">
       <select id="nShow">
         <option value="upcoming">Today and later</option>
@@ -522,6 +531,10 @@
     </div>
     <div class="status" id="nStatus"></div>
     <div class="tablewrap"><table class="slots notes" id="nTable"></table></div>
+    <details class="donebox" id="nDone">
+      <summary id="nDoneSummary">Completed bookings (0)</summary>
+      <div class="tablewrap"><table class="slots notes" id="nDoneTable"></table></div>
+    </details>
   </section>
 
   <!-- Changes -->
@@ -1532,25 +1545,54 @@
     return ex;
   }
 
-  /* ---------- Notes: личные заметки о бронировании, хранятся только в браузере ---------- */
+  /* ---------- Booking notes: личные заметки о бронировании, хранятся только в браузере ---------- */
 
   const NOTES_KEY = 'bis-room-notes-v1';
-  let notes = [];
+  const FORM_KEY = 'bis-notes-form-open';
+  let notes = [];                    // {id, date, rooms[], periods[], who, note, done, updated}
   let notesPersist = true;
   let editingId = null;
+  let nRooms = [];
 
   const todayStr = () => new Intl.DateTimeFormat('en-CA', { timeZone: 'Asia/Bishkek' }).format(new Date());
   const fmtDay = d => new Date(d + 'T00:00:00Z').toLocaleDateString('en-GB',
     { weekday: 'short', day: 'numeric', month: 'short', year: 'numeric', timeZone: 'UTC' });
   const periodOrder = label => { const i = data.periods.findIndex(p => shortP(p) === label); return i < 0 ? 99 : i; };
+  const roomIdx = r => { const i = data.rooms.indexOf(r); return i < 0 ? 9999 : i; };
+  const sortRooms = arr => [...new Set(arr)].sort((a, b) => roomIdx(a) - roomIdx(b) || a.localeCompare(b));
+
+  // Старый формат: одна комната в заметке (room). Новый: список комнат (rooms).
+  // Старые заметки с одинаковыми датой, периодами, именем и текстом объединяем в одно бронирование.
+  function migrateNotes(arr) {
+    const out = [], groups = new Map();
+    arr.forEach(n => {
+      if (!n || !n.id || !/^\d{4}-\d{2}-\d{2}$/.test(String(n.date)) || !Array.isArray(n.periods)) return;
+      if (Array.isArray(n.rooms) && n.rooms.length) {
+        out.push({ id: String(n.id), date: n.date, rooms: n.rooms.map(String), periods: n.periods.map(String),
+          who: n.who || '', note: n.note || '', done: !!n.done, updated: n.updated || '' });
+        return;
+      }
+      if (!n.room) return;
+      const key = [n.date, n.periods.join('|'), n.who || '', n.note || '', n.done ? 1 : 0].join('\u0001');
+      const g = groups.get(key);
+      if (g) g.rooms.push(String(n.room));
+      else {
+        const rec = { id: String(n.id), date: n.date, rooms: [String(n.room)], periods: n.periods.map(String),
+          who: n.who || '', note: n.note || '', done: !!n.done, updated: n.updated || '' };
+        groups.set(key, rec); out.push(rec);
+      }
+    });
+    out.forEach(n => { n.rooms = sortRooms(n.rooms); });
+    return out;
+  }
 
   function loadNotes() {
-    let raw = null;
+    let raw = null, arr = [];
     try { raw = localStorage.getItem(NOTES_KEY); } catch (e) { notesPersist = false; }
-    try {
-      const arr = raw ? JSON.parse(raw) : [];
-      notes = Array.isArray(arr) ? arr.filter(n => n && n.id && n.date && n.room && Array.isArray(n.periods)) : [];
-    } catch (e) { notes = []; }
+    try { arr = raw ? JSON.parse(raw) : []; } catch (e) { arr = []; }
+    if (!Array.isArray(arr)) arr = [];
+    notes = migrateNotes(arr);
+    if (arr.some(n => n && !Array.isArray(n.rooms))) saveNotes();      // сохраняем в новом формате
   }
   function saveNotes() {
     try { localStorage.setItem(NOTES_KEY, JSON.stringify(notes)); notesPersist = true; }
@@ -1558,29 +1600,27 @@
     $('notesWarn').classList.toggle('hidden', notesPersist);
   }
 
-  function noteSay(text, cls) {
-    const m = $('nMsg'); m.textContent = text; m.className = 'nmsg ' + (cls || '');
-  }
+  function noteSay(text, cls) { const m = $('nMsg'); m.textContent = text; m.className = 'nmsg ' + (cls || ''); }
 
-  function visibleNotes() {
+  const matches = (n, q) => !q || [n.date, fmtDay(n.date), n.rooms.join(' '), n.who, n.note, n.periods.join(' ')].join(' ').toLowerCase().includes(q);
+  const byRooms = (a, b) => a.rooms[0].localeCompare(b.rooms[0], undefined, { numeric: true });
+  const firstPeriod = n => Math.min(...n.periods.map(periodOrder));
+
+  function visibleNotes() {                                   // активные брони
     const today = todayStr(), scope = $('nShow').value, q = $('nFilter').value.trim().toLowerCase();
-    const list = notes
-      .filter(n => scope === 'all' || (scope === 'past' ? n.date < today : n.date >= today))
-      .filter(n => !q || [n.date, fmtDay(n.date), n.room, n.who, n.note, n.periods.join(' ')].join(' ').toLowerCase().includes(q));
-    const byRoom = (a, b) => a.room.localeCompare(b.room, undefined, { numeric: true });
     const dir = scope === 'past' ? -1 : 1;
-    return list.sort((a, b) => dir * a.date.localeCompare(b.date) || byRoom(a, b)
-      || Math.min(...a.periods.map(periodOrder)) - Math.min(...b.periods.map(periodOrder)));
+    return notes.filter(n => !n.done)
+      .filter(n => scope === 'all' || (scope === 'past' ? n.date < today : n.date >= today))
+      .filter(n => matches(n, q))
+      .sort((a, b) => dir * a.date.localeCompare(b.date) || byRooms(a, b) || firstPeriod(a) - firstPeriod(b));
+  }
+  function doneNotes() {                                      // завершённые брони
+    const q = $('nFilter').value.trim().toLowerCase();
+    return notes.filter(n => n.done && matches(n, q))
+      .sort((a, b) => b.date.localeCompare(a.date) || byRooms(a, b) || firstPeriod(a) - firstPeriod(b));
   }
 
-  function setPressed(labels) {
-    document.querySelectorAll('#nPeriods .pchip').forEach(b => b.setAttribute('aria-pressed', labels.includes(b.dataset.p) ? 'true' : 'false'));
-  }
-  const pressedPeriods = () => [...document.querySelectorAll('#nPeriods .pchip[aria-pressed="true"]')].map(b => b.dataset.p);
-
-  /* несколько кабинетов в одной заметке: выбранные комнаты — чипы, при сохранении на каждую комнату создаётся своя заметка */
-  let nRooms = [];
-
+  /* --- выбор комнат (чипы) --- */
   function renderRoomChips() {
     const box = $('nRoomChips'); box.replaceChildren();
     nRooms.forEach(r => {
@@ -1591,8 +1631,6 @@
       c.append(t, x); box.append(c);
     });
   }
-
-  // добавляет комнаты из текста (одна или несколько через запятую); возвращает список нераспознанных
   function addRoomsFromText(text) {
     const bad = [];
     text.split(/[,;\n]+/).map(x => x.trim()).filter(Boolean).forEach(w => {
@@ -1603,8 +1641,6 @@
     renderRoomChips();
     return bad;
   }
-
-  // вызывается, когда комната выбрана из списка, введена с Enter, запятой или при уходе из поля
   function flushRoomInput(silent) {
     const inp = $('nRoom'); const v = inp.value.trim();
     if (!v) return true;
@@ -1618,9 +1654,22 @@
     return true;
   }
 
+  function setPressed(labels) {
+    document.querySelectorAll('#nPeriods .pchip').forEach(b => b.setAttribute('aria-pressed', labels.includes(b.dataset.p) ? 'true' : 'false'));
+  }
+  const pressedPeriods = () => [...document.querySelectorAll('#nPeriods .pchip[aria-pressed="true"]')].map(b => b.dataset.p);
+
+  /* --- скрыть/показать зону редактирования --- */
+  function setFormOpen(open, remember) {
+    $('nFormWrap').classList.toggle('hidden', !open);
+    $('nToggle').textContent = open ? '▲ Hide the form' : '▼ Add or edit a booking';
+    $('nToggle').setAttribute('aria-expanded', open ? 'true' : 'false');
+    if (remember) { try { localStorage.setItem(FORM_KEY, open ? '1' : '0'); } catch (e) { /* не страшно */ } }
+  }
+
   function cancelEdit() {
     editingId = null;
-    $('nSave').textContent = 'Add note';
+    $('nSave').textContent = 'Add booking';
     $('nCancel').classList.add('hidden');
     nRooms = []; renderRoomChips();
     $('nRoom').value = ''; $('nWho').value = ''; $('nNote').value = '';
@@ -1628,13 +1677,14 @@
   }
 
   function startEdit(n) {
+    setFormOpen(true, true);
     editingId = n.id;
-    nRooms = [n.room]; renderRoomChips(); $('nRoom').value = '';
+    nRooms = n.rooms.slice(); renderRoomChips(); $('nRoom').value = '';
     $('nDate').value = n.date; $('nWho').value = n.who || ''; $('nNote').value = n.note || '';
     setPressed(n.periods);
     $('nSave').textContent = 'Save changes';
     $('nCancel').classList.remove('hidden');
-    noteSay(editingId ? 'You can add more rooms: they will be saved as extra notes with the same details.' : '');
+    noteSay('');
     $('noteForm').scrollIntoView({ behavior: 'smooth', block: 'center' });
   }
 
@@ -1646,65 +1696,86 @@
     if (!date) return noteSay('Choose a date.', 'err');
     if (!nRooms.length) return noteSay('Add at least one room from the list: room names come from the school timetable.', 'err');
     if (!periods.length) return noteSay('Select at least one period.', 'err');
-    const newId = () => 'n' + Date.now().toString(36) + Math.random().toString(36).slice(2, 6);
-    const who = $('nWho').value.trim(), note = $('nNote').value.trim(), stamp = new Date().toISOString();
-    const recs = nRooms.map((room, i) => ({
-      id: (i === 0 && editingId) ? editingId : newId(), date, room, periods, who, note, updated: stamp,
-    }));
-    const ids = new Set(recs.map(r => r.id));
-    const clashes = recs.map(r => ({ room: r.room, hits: notes.filter(n => !ids.has(n.id) && n.date === date && n.room === r.room && n.periods.some(p => periods.includes(p))) }))
-      .filter(c => c.hits.length);
-    if (editingId) notes = notes.map(n => n.id === editingId ? recs[0] : n).concat(recs.slice(1));
-    else notes = notes.concat(recs);
+    const old = editingId ? notes.find(n => n.id === editingId) : null;
+    const rooms = sortRooms(nRooms);
+    const rec = {
+      id: editingId || 'n' + Date.now().toString(36) + Math.random().toString(36).slice(2, 6),
+      date, rooms, periods, who: $('nWho').value.trim(), note: $('nNote').value.trim(),
+      done: old ? !!old.done : false, updated: new Date().toISOString(),
+    };
+    // предупреждение: у этих комнат на эти дату и периоды уже есть активная бронь
+    const clashes = notes.filter(n => n.id !== rec.id && !n.done && n.date === date
+      && n.rooms.some(r => rooms.includes(r)) && n.periods.some(p => periods.includes(p)));
+    notes = old ? notes.map(n => n.id === rec.id ? rec : n) : [...notes, rec];
     saveNotes();
     cancelEdit();
-    const saved = recs.length > 1 ? 'Saved ' + recs.length + ' notes (one per room).' : 'Saved.';
     if (clashes.length) {
-      noteSay(saved + ' Heads up: ' + clashes.map(c => {
-        const both = [...new Set(c.hits.flatMap(n => n.periods.filter(p => periods.includes(p))))].join(', ');
-        return c.room + ' on ' + fmtDay(date) + ' already has a note for ' + both + ' (' + c.hits.map(n => n.who || 'no name').join('; ') + ')';
+      noteSay('Saved. Heads up: ' + clashes.map(n => {
+        const rs = n.rooms.filter(r => rooms.includes(r)).join(', ');
+        const ps = n.periods.filter(p => periods.includes(p)).join(', ');
+        return rs + ' on ' + fmtDay(date) + ' already has a booking for ' + ps + ' (' + (n.who || 'no name') + ')';
       }).join('; ') + '.', 'warn');
-    } else noteSay(saved, 'ok');
-    if ($('nShow').value === 'upcoming' && date < todayStr()) $('nShow').value = 'all';
+    } else noteSay('Saved.', 'ok');
+    if (!rec.done && $('nShow').value === 'upcoming' && date < todayStr()) $('nShow').value = 'all';
     renderNotes();
   }
 
-  function renderNotes() {
-    const list = visibleNotes();
-    const today = todayStr();
-    $('nStatus').textContent = notes.length
-      ? list.length + ' of ' + notes.length + ' notes shown'
-      : 'No notes yet. Add the first one above.';
-    const tbl = $('nTable'); tbl.replaceChildren();
+  function toggleDone(n, done) {
+    n.done = done; n.updated = new Date().toISOString();
+    saveNotes();
+    if (done && editingId === n.id) cancelEdit();
+    renderNotes();
+  }
+  function deleteNote(n) {
+    if (!confirm('Delete this booking?\n' + fmtDay(n.date) + ', ' + n.rooms.join(', ') + ', ' + n.periods.join(', '))) return;
+    notes = notes.filter(x => x.id !== n.id); saveNotes();
+    if (editingId === n.id) cancelEdit();
+    renderNotes();
+  }
+
+  function fillNotesTable(tbl, list, finished, emptyText) {
+    tbl.replaceChildren();
     if (!list.length) {
-      const d = document.createElement('div'); d.className = 'empty';
-      d.textContent = notes.length ? 'No notes match this filter.' : 'Nothing here yet.';
-      tbl.append(d); return;
+      const d = document.createElement('div'); d.className = 'empty'; d.textContent = emptyText; tbl.append(d); return;
     }
+    const today = todayStr();
     const thead = document.createElement('thead'); const hr = document.createElement('tr');
-    ['Date', 'Room', 'Periods', 'Booked by / purpose', 'Note', ''].forEach((t, i) => {
-      const th = document.createElement('th'); th.textContent = t; if (i === 5) th.className = 'act'; hr.append(th);
+    ['Done', 'Date', 'Rooms', 'Periods', 'Booked by / purpose', 'Note', ''].forEach((t, i) => {
+      const th = document.createElement('th'); th.textContent = t;
+      if (i === 0) th.className = 'chk'; if (i === 6) th.className = 'act'; hr.append(th);
     });
     thead.append(hr);
     const tb = document.createElement('tbody');
     list.forEach(n => {
       const tr = document.createElement('tr');
-      if (n.date < today) tr.className = 'past'; else if (n.date === today) tr.className = 'today';
+      if (finished) tr.className = 'finished';
+      else if (n.date < today) tr.className = 'past'; else if (n.date === today) tr.className = 'today';
       const add = (txt, cls) => { const td = document.createElement('td'); td.textContent = txt; if (cls) td.className = cls; tr.append(td); return td; };
-      add(fmtDay(n.date), 'when'); add(n.room); add(n.periods.join(', ')); add(n.who || ''); add(n.note || '');
+      const cb = add('', 'chk');
+      const box = document.createElement('input'); box.type = 'checkbox'; box.checked = !!n.done;
+      box.title = finished ? 'Move back to active bookings' : 'Mark as done (moves to Completed)';
+      box.setAttribute('aria-label', box.title);
+      box.onchange = () => toggleDone(n, box.checked);
+      cb.append(box);
+      add(fmtDay(n.date), 'when'); add(n.rooms.join(', '), 'rooms'); add(n.periods.join(', ')); add(n.who || ''); add(n.note || '');
       const act = add('', 'act');
       const ed = document.createElement('button'); ed.type = 'button'; ed.textContent = 'Edit'; ed.onclick = () => startEdit(n);
-      const del = document.createElement('button'); del.type = 'button'; del.textContent = 'Delete';
-      del.onclick = () => {
-        if (!confirm('Delete this note?\n' + fmtDay(n.date) + ', ' + n.room + ', ' + n.periods.join(', '))) return;
-        notes = notes.filter(x => x.id !== n.id); saveNotes();
-        if (editingId === n.id) cancelEdit();
-        renderNotes();
-      };
+      const del = document.createElement('button'); del.type = 'button'; del.textContent = 'Delete'; del.onclick = () => deleteNote(n);
       act.append(ed, del);
       tb.append(tr);
     });
     tbl.append(thead, tb);
+  }
+
+  function renderNotes() {
+    const list = visibleNotes(), done = doneNotes();
+    const active = notes.filter(n => !n.done).length, doneAll = notes.length - active;
+    $('nStatus').textContent = active
+      ? list.length + ' of ' + active + ' active bookings shown' + (doneAll ? ' · ' + doneAll + ' completed' : '')
+      : (doneAll ? 'No active bookings · ' + doneAll + ' completed' : 'No bookings yet. Add the first one above.');
+    fillNotesTable($('nTable'), list, false, active ? 'No bookings match this filter.' : 'Nothing here yet.');
+    $('nDoneSummary').textContent = 'Completed bookings (' + doneAll + ')';
+    fillNotesTable($('nDoneTable'), done, true, doneAll ? 'No completed bookings match this filter.' : 'No completed bookings yet. Tick “Done” on a booking to move it here.');
   }
 
   function downloadText(name, text, type) {
@@ -1720,18 +1791,17 @@
       const obj = JSON.parse(await file.text());
       const arr = Array.isArray(obj) ? obj : obj.notes;
       if (!Array.isArray(arr)) throw new Error('no notes');
-      const clean = arr.filter(n => n && typeof n.id === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(n.date)
-        && typeof n.room === 'string' && Array.isArray(n.periods)).map(n => ({
-          id: n.id.slice(0, 40), date: n.date, room: String(n.room).slice(0, 60),
-          periods: n.periods.map(p => String(p).slice(0, 60)), who: String(n.who || '').slice(0, 300),
-          note: String(n.note || '').slice(0, 1000), updated: n.updated || '',
-        }));
+      const clean = migrateNotes(arr.filter(n => n && typeof n.id === 'string')).map(n => ({
+        id: n.id.slice(0, 40), date: n.date, rooms: n.rooms.map(r => r.slice(0, 60)).slice(0, 200),
+        periods: n.periods.map(p => p.slice(0, 60)), who: String(n.who).slice(0, 300),
+        note: String(n.note).slice(0, 1000), done: !!n.done, updated: n.updated || '',
+      }));
       if (!clean.length) throw new Error('empty');
       const byId = new Map(notes.map(n => [n.id, n]));
       clean.forEach(n => byId.set(n.id, n));
       notes = [...byId.values()];
       saveNotes(); renderNotes();
-      noteSay('Restored ' + clean.length + ' notes from the backup.', 'ok');
+      noteSay('Restored ' + clean.length + ' bookings from the backup.', 'ok');
     } catch (e) {
       alert('This file is not a notes backup made by this site.');
     }
@@ -1740,6 +1810,11 @@
   function setupNotes() {
     loadNotes();
     $('notesWarn').classList.toggle('hidden', notesPersist);
+    let open = true;
+    try { open = localStorage.getItem(FORM_KEY) !== '0'; } catch (e) { /* по умолчанию открыта */ }
+    setFormOpen(open, false);
+    $('nToggle').onclick = () => setFormOpen($('nFormWrap').classList.contains('hidden'), true);
+
     $('nRoomList').replaceChildren(...data.rooms.map(r => Object.assign(document.createElement('option'), { value: r })));
     const box = $('nPeriods');
     data.periods.forEach(p => {
@@ -1757,7 +1832,7 @@
     $('noteForm').addEventListener('submit', submitNote);
     const roomInp = $('nRoom');
     roomInp.addEventListener('input', e => {
-      // не добавляем при обычном наборе (T1 может быть началом T10): только выбор из списка подсказок, вставка или запятая
+      // не добавляем при обычном наборе (E-Centre 1 — начало E-Centre 10): только выбор из подсказок, вставка или запятая
       const typed = e.inputType === 'insertText' || e.inputType === 'deleteContentBackward' || e.inputType === 'deleteContentForward';
       const v = roomInp.value;
       const exact = data.rooms.some(r => r.toLowerCase() === v.trim().toLowerCase());
@@ -1771,21 +1846,23 @@
     $('nShow').onchange = renderNotes;
     $('nFilter').addEventListener('input', renderNotes);
     $('nBackup').onclick = () => downloadText('BIS-notes-backup-' + todayStr() + '.json',
-      JSON.stringify({ app: 'bis-timetable-notes', version: 1, saved: new Date().toISOString(), notes }, null, 2), 'application/json');
+      JSON.stringify({ app: 'bis-timetable-notes', version: 2, saved: new Date().toISOString(), notes }, null, 2), 'application/json');
     $('nRestore').onclick = () => $('nFile').click();
     $('nFile').onchange = () => { const f = $('nFile').files[0]; if (f) restoreNotes(f); $('nFile').value = ''; };
   }
 
   function exportNotes() {
-    const list = visibleNotes();
-    const ex = { title: 'Booking notes', slug: 'notes' };
+    const list = visibleNotes(), done = doneNotes();
+    const ex = { title: 'Booking notes', slug: 'booking-notes' };
     const f = $('nFilter').value.trim();
-    ex.lines = ['Personal notes, not part of the school timetable',
-      'Showing: ' + $('nShow').selectedOptions[0].textContent + (f ? ' · filter: ' + f : '') + ' · ' + list.length + ' notes'];
-    const rows = [[head('Date'), head('Room'), head('Periods'), head('Booked by / purpose'), head('Note')]];
-    list.forEach(n => rows.push([{ v: fmtDay(n.date), st: 'cell' }, { v: n.room, st: 'cell' }, { v: n.periods.join(', '), st: 'cell' },
-      { v: n.who || '', st: 'cell' }, { v: n.note || '', st: 'cell' }]));
-    ex.sheets = [withInfo(ex, rows, [18, 14, 26, 34, 40], 'Notes')];
+    ex.lines = ['Personal booking notes, not part of the school timetable',
+      'Showing: ' + $('nShow').selectedOptions[0].textContent + (f ? ' · filter: ' + f : '') + ' · ' + list.length + ' active bookings'
+        + (done.length ? ' · ' + done.length + ' completed (second sheet)' : '')];
+    const table = l => [[head('Date'), head('Rooms'), head('Periods'), head('Booked by / purpose'), head('Note')],
+      ...l.map(n => [{ v: fmtDay(n.date), st: 'cell' }, { v: n.rooms.join(', '), st: 'cell' }, { v: n.periods.join(', '), st: 'cell' },
+        { v: n.who || '', st: 'cell' }, { v: n.note || '', st: 'cell' }])];
+    ex.sheets = [withInfo(ex, table(list), [18, 36, 26, 34, 40], 'Bookings')];
+    if (done.length) ex.sheets.push(withInfo(ex, table(done), [18, 36, 26, 34, 40], 'Completed'));
     return ex;
   }
 
@@ -1827,7 +1904,7 @@
     teachers: ['viewTeachers', 'tabTeachers', 'Free Teachers'],
     free: ['viewBest', 'tabFree', 'Find a slot'],
     usage: ['viewUsage', 'tabUsage', 'Room usage'],
-    notes: ['viewNotes', 'tabNotes', 'Notes'],
+    notes: ['viewNotes', 'tabNotes', 'Booking notes'],
     changes: ['viewChanges', 'tabChanges', 'Changes'],
   };
 
