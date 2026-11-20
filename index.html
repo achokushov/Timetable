@@ -63,7 +63,7 @@
     .container { padding: 14px 20px 24px; max-width: 1100px; margin: 0 auto; }
     .controls { display: flex; gap: 10px; margin-bottom: 10px; flex-wrap: wrap; align-items: center; }
     .controls .to { color: var(--text-sub); }
-    select, input[type=text] {
+    select, input[type=text], input[type=date] {
       background: var(--card-bg);
       color: var(--text);
       border: 1px solid var(--border);
@@ -73,7 +73,7 @@
       outline: none;
       font-family: inherit;
     }
-    select:focus, input[type=text]:focus { border-color: var(--accent); }
+    select:focus, input[type=text]:focus, input[type=date]:focus { border-color: var(--accent); }
     .status { margin-bottom: 10px; font-size: 14px; color: var(--text-sub); }
     .hint { margin: 0 0 12px; font-size: 13px; color: var(--text-sub); line-height: 1.5; }
     h3.sect { margin: 16px 0 8px; font-size: 14px; font-weight: 600; color: var(--text); }
@@ -137,7 +137,7 @@
       .card::before { width: 6px; height: 6px; }
       .room-title { font-size: 11.5px; }
       .plist { grid-template-columns: 1fr; }
-      select, input[type=text] { padding: 8px 10px; font-size: 14px; max-width: 100%; }
+      select, input[type=text], input[type=date] { padding: 8px 10px; font-size: 14px; max-width: 100%; }
     }
 
     /* --- Find a slot --- */
@@ -250,6 +250,7 @@
 
     @media (max-width: 600px) {
       .usagegrid { grid-template-columns: 1fr; }
+      .nf-row label { flex: 1 1 100%; }
       .actions { justify-content: stretch; }
       .actions button { flex: 1; }
     }
@@ -291,6 +292,8 @@
       .grid { grid-template-columns: repeat(auto-fill, minmax(110px, 1fr)); }
       .grid.wide { grid-template-columns: repeat(auto-fill, minmax(170px, 1fr)); }
       table.heat td[style] { color: #000 !important; }
+      .noteform, .ntools, #notesWarn, th.act, td.act { display: none !important; }
+      table.notes tr.past td { opacity: 1; }
     }
 
     details.about { max-width: 1100px; margin: 8px auto 0; padding: 0 20px; font-size: 13px; color: var(--text-sub); }
@@ -300,6 +303,43 @@
     details.about ul { margin: 4px 0 8px 18px; padding: 0; }
     details.about li b { color: var(--text); }
     @media (max-width: 600px) { details.about { padding: 0 12px; } }
+
+    /* --- Notes --- */
+    input[type=date] { color-scheme: dark; }
+    .noteform { background: var(--card-bg); border: 1px solid var(--border); border-radius: 10px; padding: 12px; margin-bottom: 14px; display: grid; gap: 10px; }
+    .nf-row { display: flex; gap: 10px; flex-wrap: wrap; }
+    .noteform label { display: flex; flex-direction: column; gap: 4px; font-size: 12px; color: var(--text-sub); }
+    .noteform label.grow { flex: 1 1 220px; }
+    .noteform input { width: 100%; background: var(--bg); }
+    .nf-periods { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; font-size: 12px; color: var(--text-sub); }
+    .pchips { display: flex; flex-wrap: wrap; gap: 6px; }
+    .pchip {
+      background: var(--bg); color: var(--text); border: 1px solid var(--border); border-radius: 999px;
+      padding: 5px 11px; font-size: 13px; cursor: pointer; font-family: inherit;
+    }
+    .pchip[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: #0b1220; font-weight: 600; }
+    .linkbtn { background: none; border: none; color: var(--accent); cursor: pointer; font-size: 12px; text-decoration: underline; font-family: inherit; padding: 2px 4px; }
+    .nf-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; }
+    .nf-actions button, .ntools button {
+      background: var(--card-bg); color: var(--text); border: 1px solid var(--border); border-radius: 8px;
+      padding: 8px 14px; font-size: 14px; cursor: pointer; font-family: inherit;
+    }
+    .nf-actions button[type=submit] { background: var(--accent); border-color: var(--accent); color: #0b1220; font-weight: 600; }
+    .nf-actions button:hover, .ntools button:hover { border-color: var(--accent); }
+    .nmsg { font-size: 13px; }
+    .nmsg.ok { color: var(--success); }
+    .nmsg.warn { color: #fbbf24; }
+    .nmsg.err { color: #f87171; }
+    .warnbox { border: 1px solid #f59e0b; color: #fbbf24; border-radius: 8px; padding: 8px 12px; margin-bottom: 12px; font-size: 13px; }
+    .ntools { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 10px; }
+    table.notes td { text-align: left; vertical-align: top; }
+    table.notes td.when { white-space: nowrap; font-weight: 600; }
+    table.notes td.act { white-space: nowrap; text-align: right; }
+    table.notes td.act button { background: none; border: 1px solid var(--border); color: var(--text); border-radius: 6px; padding: 3px 9px; font-size: 12px; cursor: pointer; font-family: inherit; margin-left: 4px; }
+    table.notes td.act button:hover { border-color: var(--accent); }
+    table.notes tr.past td { opacity: .55; }
+    table.notes tr.today td.when { color: var(--accent); }
+    .empty { padding: 18px; text-align: center; color: var(--text-sub); font-size: 14px; }
 
     p.lead { margin: 0 0 8px; font-size: 15px; font-weight: 600; color: var(--text); }
 
@@ -315,6 +355,7 @@
   <a href="#/teachers" id="tabTeachers">Free teachers</a>
   <a href="#/free" id="tabFree">Find a slot</a>
   <a href="#/usage" id="tabUsage">Room usage</a>
+  <a href="#/notes" id="tabNotes">Notes</a>
   <a href="#/changes" id="tabChanges">Changes</a>
 </nav>
 
@@ -327,6 +368,7 @@
       <li><b>Free teachers</b>: the same for teachers.</li>
       <li><b>Find a slot</b>: pick several teachers, classes or rooms to see when all of them are free, or when at least 4 of 5 are free, for example for a meeting.</li>
       <li><b>Room usage</b>: how busy each room is, and which times of the week are busiest.</li>
+      <li><b>Notes</b>: your own record of which room is taken on which date and period, and by whom. Notes are private to your browser and do not change the other tabs.</li>
       <li><b>Changes</b>: what changed in the timetable since the previous update.</li>
     </ul>
     <p><b>Print / PDF</b> and <b>Download Excel</b> save what is on the screen so you can send it to colleagues.</p>
@@ -433,6 +475,50 @@
     <div class="usagegrid" id="usageTop"></div>
     <h3 class="sect">All rooms <small>busy periods per day, and total occupancy</small></h3>
     <div class="tablewrap"><table class="slots" id="rankTable"></table></div>
+  </section>
+
+  <!-- Notes -->
+  <section id="viewNotes" class="hidden">
+    <p class="lead">Your own booking notes: which room is taken on which date and period, and by whom.</p>
+    <p class="hint">The school timetable repeats all year and has no dates, so this is a separate written record. Notes do <b>not</b> change “free” or “busy” on the other tabs. They are saved in this browser on this device only (they are not put on the website, so nobody else can see them). Use “Save backup” from time to time.</p>
+    <div class="warnbox hidden" id="notesWarn">This browser is not allowing notes to be saved (private window or blocked site data), so they will disappear when you close this page. Use “Save backup” before you leave.</div>
+    <form class="noteform" id="noteForm" autocomplete="off">
+      <div class="nf-row">
+        <label>Date <input type="date" id="nDate" required></label>
+        <label class="grow">Room <input type="text" id="nRoom" list="nRoomList" placeholder="Start typing a room…" required></label>
+        <datalist id="nRoomList"></datalist>
+      </div>
+      <div class="nf-periods">
+        <span>Periods:</span>
+        <div class="pchips" id="nPeriods"></div>
+        <button type="button" class="linkbtn" id="nMain"></button>
+        <button type="button" class="linkbtn" id="nClear">Clear</button>
+      </div>
+      <div class="nf-row">
+        <label class="grow">Booked by / purpose <input type="text" id="nWho" maxlength="300" placeholder="e.g. Ms Aigerim, parent meeting"></label>
+        <label class="grow">Note (optional) <input type="text" id="nNote" maxlength="1000" placeholder="anything you want to remember"></label>
+      </div>
+      <div class="nf-actions">
+        <button type="submit" id="nSave">Add note</button>
+        <button type="button" class="hidden" id="nCancel">Cancel edit</button>
+        <span class="nmsg" id="nMsg" role="status"></span>
+      </div>
+    </form>
+    <div class="controls">
+      <select id="nShow">
+        <option value="upcoming">Today and later</option>
+        <option value="past">Past</option>
+        <option value="all">All dates</option>
+      </select>
+      <input type="text" id="nFilter" placeholder="Filter by room, name, note or date…" autocomplete="off" spellcheck="false">
+    </div>
+    <div class="ntools">
+      <button type="button" id="nBackup">Save backup (.json)</button>
+      <button type="button" id="nRestore">Restore backup…</button>
+      <input type="file" id="nFile" accept=".json,application/json" class="hidden">
+    </div>
+    <div class="status" id="nStatus"></div>
+    <div class="tablewrap"><table class="slots notes" id="nTable"></table></div>
   </section>
 
   <!-- Changes -->
@@ -1443,11 +1529,210 @@
     return ex;
   }
 
+  /* ---------- Notes: личные заметки о бронировании, хранятся только в браузере ---------- */
+
+  const NOTES_KEY = 'bis-room-notes-v1';
+  let notes = [];
+  let notesPersist = true;
+  let editingId = null;
+
+  const todayStr = () => new Intl.DateTimeFormat('en-CA', { timeZone: 'Asia/Bishkek' }).format(new Date());
+  const fmtDay = d => new Date(d + 'T00:00:00Z').toLocaleDateString('en-GB',
+    { weekday: 'short', day: 'numeric', month: 'short', year: 'numeric', timeZone: 'UTC' });
+  const periodOrder = label => { const i = data.periods.findIndex(p => shortP(p) === label); return i < 0 ? 99 : i; };
+
+  function loadNotes() {
+    let raw = null;
+    try { raw = localStorage.getItem(NOTES_KEY); } catch (e) { notesPersist = false; }
+    try {
+      const arr = raw ? JSON.parse(raw) : [];
+      notes = Array.isArray(arr) ? arr.filter(n => n && n.id && n.date && n.room && Array.isArray(n.periods)) : [];
+    } catch (e) { notes = []; }
+  }
+  function saveNotes() {
+    try { localStorage.setItem(NOTES_KEY, JSON.stringify(notes)); notesPersist = true; }
+    catch (e) { notesPersist = false; }
+    $('notesWarn').classList.toggle('hidden', notesPersist);
+  }
+
+  function noteSay(text, cls) {
+    const m = $('nMsg'); m.textContent = text; m.className = 'nmsg ' + (cls || '');
+  }
+
+  function visibleNotes() {
+    const today = todayStr(), scope = $('nShow').value, q = $('nFilter').value.trim().toLowerCase();
+    const list = notes
+      .filter(n => scope === 'all' || (scope === 'past' ? n.date < today : n.date >= today))
+      .filter(n => !q || [n.date, fmtDay(n.date), n.room, n.who, n.note, n.periods.join(' ')].join(' ').toLowerCase().includes(q));
+    const byRoom = (a, b) => a.room.localeCompare(b.room, undefined, { numeric: true });
+    const dir = scope === 'past' ? -1 : 1;
+    return list.sort((a, b) => dir * a.date.localeCompare(b.date) || byRoom(a, b)
+      || Math.min(...a.periods.map(periodOrder)) - Math.min(...b.periods.map(periodOrder)));
+  }
+
+  function setPressed(labels) {
+    document.querySelectorAll('#nPeriods .pchip').forEach(b => b.setAttribute('aria-pressed', labels.includes(b.dataset.p) ? 'true' : 'false'));
+  }
+  const pressedPeriods = () => [...document.querySelectorAll('#nPeriods .pchip[aria-pressed="true"]')].map(b => b.dataset.p);
+
+  function cancelEdit() {
+    editingId = null;
+    $('nSave').textContent = 'Add note';
+    $('nCancel').classList.add('hidden');
+    $('nRoom').value = ''; $('nWho').value = ''; $('nNote').value = '';
+    setPressed([]);
+  }
+
+  function startEdit(n) {
+    editingId = n.id;
+    $('nDate').value = n.date; $('nRoom').value = n.room; $('nWho').value = n.who || ''; $('nNote').value = n.note || '';
+    setPressed(n.periods);
+    $('nSave').textContent = 'Save changes';
+    $('nCancel').classList.remove('hidden');
+    noteSay('');
+    $('noteForm').scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }
+
+  function submitNote(ev) {
+    ev.preventDefault();
+    const date = $('nDate').value;
+    const typed = $('nRoom').value.trim().toLowerCase();
+    const room = data.rooms.find(r => r.toLowerCase() === typed);
+    const periods = pressedPeriods().sort((a, b) => periodOrder(a) - periodOrder(b));
+    if (!date) return noteSay('Choose a date.', 'err');
+    if (!room) return noteSay('Pick a room from the list: room names come from the school timetable.', 'err');
+    if (!periods.length) return noteSay('Select at least one period.', 'err');
+    const rec = {
+      id: editingId || 'n' + Date.now().toString(36) + Math.random().toString(36).slice(2, 6),
+      date, room, periods, who: $('nWho').value.trim(), note: $('nNote').value.trim(), updated: new Date().toISOString(),
+    };
+    const clash = notes.filter(n => n.id !== rec.id && n.date === date && n.room === room && n.periods.some(p => periods.includes(p)));
+    if (editingId) notes = notes.map(n => n.id === editingId ? rec : n); else notes.push(rec);
+    saveNotes();
+    cancelEdit();
+    if (clash.length) {
+      const both = [...new Set(clash.flatMap(n => n.periods.filter(p => periods.includes(p))))].join(', ');
+      noteSay('Saved. Heads up: ' + room + ' on ' + fmtDay(date) + ' already has a note for ' + both + ' ('
+        + clash.map(n => n.who || 'no name').join('; ') + ').', 'warn');
+    } else noteSay('Saved.', 'ok');
+    if ($('nShow').value === 'upcoming' && date < todayStr()) $('nShow').value = 'all';
+    renderNotes();
+  }
+
+  function renderNotes() {
+    const list = visibleNotes();
+    const today = todayStr();
+    $('nStatus').textContent = notes.length
+      ? list.length + ' of ' + notes.length + ' notes shown'
+      : 'No notes yet. Add the first one above.';
+    const tbl = $('nTable'); tbl.replaceChildren();
+    if (!list.length) {
+      const d = document.createElement('div'); d.className = 'empty';
+      d.textContent = notes.length ? 'No notes match this filter.' : 'Nothing here yet.';
+      tbl.append(d); return;
+    }
+    const thead = document.createElement('thead'); const hr = document.createElement('tr');
+    ['Date', 'Room', 'Periods', 'Booked by / purpose', 'Note', ''].forEach((t, i) => {
+      const th = document.createElement('th'); th.textContent = t; if (i === 5) th.className = 'act'; hr.append(th);
+    });
+    thead.append(hr);
+    const tb = document.createElement('tbody');
+    list.forEach(n => {
+      const tr = document.createElement('tr');
+      if (n.date < today) tr.className = 'past'; else if (n.date === today) tr.className = 'today';
+      const add = (txt, cls) => { const td = document.createElement('td'); td.textContent = txt; if (cls) td.className = cls; tr.append(td); return td; };
+      add(fmtDay(n.date), 'when'); add(n.room); add(n.periods.join(', ')); add(n.who || ''); add(n.note || '');
+      const act = add('', 'act');
+      const ed = document.createElement('button'); ed.type = 'button'; ed.textContent = 'Edit'; ed.onclick = () => startEdit(n);
+      const del = document.createElement('button'); del.type = 'button'; del.textContent = 'Delete';
+      del.onclick = () => {
+        if (!confirm('Delete this note?\n' + fmtDay(n.date) + ', ' + n.room + ', ' + n.periods.join(', '))) return;
+        notes = notes.filter(x => x.id !== n.id); saveNotes();
+        if (editingId === n.id) cancelEdit();
+        renderNotes();
+      };
+      act.append(ed, del);
+      tb.append(tr);
+    });
+    tbl.append(thead, tb);
+  }
+
+  function downloadText(name, text, type) {
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(new Blob([text], { type }));
+    a.download = name;
+    document.body.append(a); a.click(); a.remove();
+    setTimeout(() => URL.revokeObjectURL(a.href), 5000);
+  }
+
+  async function restoreNotes(file) {
+    try {
+      const obj = JSON.parse(await file.text());
+      const arr = Array.isArray(obj) ? obj : obj.notes;
+      if (!Array.isArray(arr)) throw new Error('no notes');
+      const clean = arr.filter(n => n && typeof n.id === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(n.date)
+        && typeof n.room === 'string' && Array.isArray(n.periods)).map(n => ({
+          id: n.id.slice(0, 40), date: n.date, room: String(n.room).slice(0, 60),
+          periods: n.periods.map(p => String(p).slice(0, 60)), who: String(n.who || '').slice(0, 300),
+          note: String(n.note || '').slice(0, 1000), updated: n.updated || '',
+        }));
+      if (!clean.length) throw new Error('empty');
+      const byId = new Map(notes.map(n => [n.id, n]));
+      clean.forEach(n => byId.set(n.id, n));
+      notes = [...byId.values()];
+      saveNotes(); renderNotes();
+      noteSay('Restored ' + clean.length + ' notes from the backup.', 'ok');
+    } catch (e) {
+      alert('This file is not a notes backup made by this site.');
+    }
+  }
+
+  function setupNotes() {
+    loadNotes();
+    $('notesWarn').classList.toggle('hidden', notesPersist);
+    $('nRoomList').replaceChildren(...data.rooms.map(r => Object.assign(document.createElement('option'), { value: r })));
+    const box = $('nPeriods');
+    data.periods.forEach(p => {
+      const b = document.createElement('button');
+      b.type = 'button'; b.className = 'pchip'; b.dataset.p = shortP(p); b.title = p; b.textContent = shortP(p);
+      b.setAttribute('aria-pressed', 'false');
+      b.onclick = () => b.setAttribute('aria-pressed', b.getAttribute('aria-pressed') === 'true' ? 'false' : 'true');
+      box.append(b);
+    });
+    const main = data.periods.slice(0, MAIN_PERIODS).map(shortP);
+    $('nMain').textContent = 'Select ' + shortP(data.periods[0]) + ' – ' + main[main.length - 1];
+    $('nMain').onclick = () => setPressed(main);
+    $('nClear').onclick = () => setPressed([]);
+    $('nDate').value = todayStr();
+    $('noteForm').addEventListener('submit', submitNote);
+    $('nCancel').onclick = () => { cancelEdit(); noteSay(''); };
+    $('nShow').onchange = renderNotes;
+    $('nFilter').addEventListener('input', renderNotes);
+    $('nBackup').onclick = () => downloadText('BIS-notes-backup-' + todayStr() + '.json',
+      JSON.stringify({ app: 'bis-timetable-notes', version: 1, saved: new Date().toISOString(), notes }, null, 2), 'application/json');
+    $('nRestore').onclick = () => $('nFile').click();
+    $('nFile').onchange = () => { const f = $('nFile').files[0]; if (f) restoreNotes(f); $('nFile').value = ''; };
+  }
+
+  function exportNotes() {
+    const list = visibleNotes();
+    const ex = { title: 'Booking notes', slug: 'notes' };
+    const f = $('nFilter').value.trim();
+    ex.lines = ['Personal notes, not part of the school timetable',
+      'Showing: ' + $('nShow').selectedOptions[0].textContent + (f ? ' · filter: ' + f : '') + ' · ' + list.length + ' notes'];
+    const rows = [[head('Date'), head('Room'), head('Periods'), head('Booked by / purpose'), head('Note')]];
+    list.forEach(n => rows.push([{ v: fmtDay(n.date), st: 'cell' }, { v: n.room, st: 'cell' }, { v: n.periods.join(', '), st: 'cell' },
+      { v: n.who || '', st: 'cell' }, { v: n.note || '', st: 'cell' }]));
+    ex.sheets = [withInfo(ex, rows, [18, 14, 26, 34, 40], 'Notes')];
+    return ex;
+  }
+
   const EXPORT = {
     empty: () => exportAvail('room'),
     teachers: () => exportAvail('teacher'),
     free: exportBest,
     usage: exportUsage,
+    notes: exportNotes,
     changes: exportChanges,
   };
 
@@ -1480,6 +1765,7 @@
     teachers: ['viewTeachers', 'tabTeachers', 'Free Teachers'],
     free: ['viewBest', 'tabFree', 'Find a slot'],
     usage: ['viewUsage', 'tabUsage', 'Room usage'],
+    notes: ['viewNotes', 'tabNotes', 'Notes'],
     changes: ['viewChanges', 'tabChanges', 'Changes'],
   };
 
@@ -1491,6 +1777,7 @@
     else if (currentPage === 'empty') renderAvail('room');
     else if (currentPage === 'teachers') renderAvail('teacher');
     else if (currentPage === 'usage') renderUsage();
+    else if (currentPage === 'notes') renderNotes();
     else renderChanges();
   }
 
@@ -1549,6 +1836,7 @@
         onChange: () => { bestMin = null; bestExpanded = false; syncHash(); renderBest(); } });
       setupBest();
       setupUsage();
+      setupNotes();
 
       $('btnPrint').onclick = () => window.print();
       $('btnXlsx').onclick = () => {
