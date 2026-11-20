@@ -305,6 +305,8 @@
     @media (max-width: 600px) { details.about { padding: 0 12px; } }
 
     /* --- Notes --- */
+    #nRoomChips { margin: 0; min-height: 34px; align-items: center; }
+    #nRoomChips:empty::before { content: 'No rooms added yet'; color: var(--text-sub); font-size: 12px; }
     input[type=date] { color-scheme: dark; }
     .noteform { background: var(--card-bg); border: 1px solid var(--border); border-radius: 10px; padding: 12px; margin-bottom: 14px; display: grid; gap: 10px; }
     .nf-row { display: flex; gap: 10px; flex-wrap: wrap; }
@@ -480,14 +482,15 @@
   <!-- Notes -->
   <section id="viewNotes" class="hidden">
     <p class="lead">Your own booking notes: which room is taken on which date and period, and by whom.</p>
-    <p class="hint">The school timetable repeats all year and has no dates, so this is a separate written record. Notes do <b>not</b> change “free” or “busy” on the other tabs. They are saved in this browser on this device only (they are not put on the website, so nobody else can see them). Use “Save backup” from time to time.</p>
+    <p class="hint">The school timetable repeats all year and has no dates, so this is a separate written record. Notes do <b>not</b> change “free” or “busy” on the other tabs. You can add several rooms at once: each room is saved as its own note. They are saved in this browser on this device only (they are not put on the website, so nobody else can see them). Use “Save backup” from time to time.</p>
     <div class="warnbox hidden" id="notesWarn">This browser is not allowing notes to be saved (private window or blocked site data), so they will disappear when you close this page. Use “Save backup” before you leave.</div>
     <form class="noteform" id="noteForm" autocomplete="off">
       <div class="nf-row">
         <label>Date <input type="date" id="nDate" required></label>
-        <label class="grow">Room <input type="text" id="nRoom" list="nRoomList" placeholder="Start typing a room…" required></label>
+        <label class="grow">Rooms <input type="text" id="nRoom" list="nRoomList" placeholder="Pick or type a room, press Enter to add more…"></label>
         <datalist id="nRoomList"></datalist>
       </div>
+      <div class="chips" id="nRoomChips"></div>
       <div class="nf-periods">
         <span>Periods:</span>
         <div class="pchips" id="nPeriods"></div>
@@ -1575,46 +1578,93 @@
   }
   const pressedPeriods = () => [...document.querySelectorAll('#nPeriods .pchip[aria-pressed="true"]')].map(b => b.dataset.p);
 
+  /* несколько кабинетов в одной заметке: выбранные комнаты — чипы, при сохранении на каждую комнату создаётся своя заметка */
+  let nRooms = [];
+
+  function renderRoomChips() {
+    const box = $('nRoomChips'); box.replaceChildren();
+    nRooms.forEach(r => {
+      const c = document.createElement('span'); c.className = 'chip room';
+      const t = document.createElement('span'); t.textContent = r;
+      const x = document.createElement('button'); x.type = 'button'; x.textContent = '×'; x.title = 'Remove ' + r;
+      x.onclick = () => { nRooms = nRooms.filter(v => v !== r); renderRoomChips(); };
+      c.append(t, x); box.append(c);
+    });
+  }
+
+  // добавляет комнаты из текста (одна или несколько через запятую); возвращает список нераспознанных
+  function addRoomsFromText(text) {
+    const bad = [];
+    text.split(/[,;\n]+/).map(x => x.trim()).filter(Boolean).forEach(w => {
+      const room = data.rooms.find(r => r.toLowerCase() === w.toLowerCase());
+      if (!room) bad.push(w);
+      else if (!nRooms.includes(room)) nRooms.push(room);
+    });
+    renderRoomChips();
+    return bad;
+  }
+
+  // вызывается, когда комната выбрана из списка, введена с Enter, запятой или при уходе из поля
+  function flushRoomInput(silent) {
+    const inp = $('nRoom'); const v = inp.value.trim();
+    if (!v) return true;
+    const bad = addRoomsFromText(v);
+    if (bad.length) {
+      if (!silent) noteSay('Not a room from the school timetable: ' + bad.join(', ') + '. Pick rooms from the list.', 'err');
+      inp.value = bad.join(', ');
+      return false;
+    }
+    inp.value = ''; noteSay('');
+    return true;
+  }
+
   function cancelEdit() {
     editingId = null;
     $('nSave').textContent = 'Add note';
     $('nCancel').classList.add('hidden');
+    nRooms = []; renderRoomChips();
     $('nRoom').value = ''; $('nWho').value = ''; $('nNote').value = '';
     setPressed([]);
   }
 
   function startEdit(n) {
     editingId = n.id;
-    $('nDate').value = n.date; $('nRoom').value = n.room; $('nWho').value = n.who || ''; $('nNote').value = n.note || '';
+    nRooms = [n.room]; renderRoomChips(); $('nRoom').value = '';
+    $('nDate').value = n.date; $('nWho').value = n.who || ''; $('nNote').value = n.note || '';
     setPressed(n.periods);
     $('nSave').textContent = 'Save changes';
     $('nCancel').classList.remove('hidden');
-    noteSay('');
+    noteSay(editingId ? 'You can add more rooms: they will be saved as extra notes with the same details.' : '');
     $('noteForm').scrollIntoView({ behavior: 'smooth', block: 'center' });
   }
 
   function submitNote(ev) {
     ev.preventDefault();
     const date = $('nDate').value;
-    const typed = $('nRoom').value.trim().toLowerCase();
-    const room = data.rooms.find(r => r.toLowerCase() === typed);
+    if (!flushRoomInput()) return;
     const periods = pressedPeriods().sort((a, b) => periodOrder(a) - periodOrder(b));
     if (!date) return noteSay('Choose a date.', 'err');
-    if (!room) return noteSay('Pick a room from the list: room names come from the school timetable.', 'err');
+    if (!nRooms.length) return noteSay('Add at least one room from the list: room names come from the school timetable.', 'err');
     if (!periods.length) return noteSay('Select at least one period.', 'err');
-    const rec = {
-      id: editingId || 'n' + Date.now().toString(36) + Math.random().toString(36).slice(2, 6),
-      date, room, periods, who: $('nWho').value.trim(), note: $('nNote').value.trim(), updated: new Date().toISOString(),
-    };
-    const clash = notes.filter(n => n.id !== rec.id && n.date === date && n.room === room && n.periods.some(p => periods.includes(p)));
-    if (editingId) notes = notes.map(n => n.id === editingId ? rec : n); else notes.push(rec);
+    const newId = () => 'n' + Date.now().toString(36) + Math.random().toString(36).slice(2, 6);
+    const who = $('nWho').value.trim(), note = $('nNote').value.trim(), stamp = new Date().toISOString();
+    const recs = nRooms.map((room, i) => ({
+      id: (i === 0 && editingId) ? editingId : newId(), date, room, periods, who, note, updated: stamp,
+    }));
+    const ids = new Set(recs.map(r => r.id));
+    const clashes = recs.map(r => ({ room: r.room, hits: notes.filter(n => !ids.has(n.id) && n.date === date && n.room === r.room && n.periods.some(p => periods.includes(p))) }))
+      .filter(c => c.hits.length);
+    if (editingId) notes = notes.map(n => n.id === editingId ? recs[0] : n).concat(recs.slice(1));
+    else notes = notes.concat(recs);
     saveNotes();
     cancelEdit();
-    if (clash.length) {
-      const both = [...new Set(clash.flatMap(n => n.periods.filter(p => periods.includes(p))))].join(', ');
-      noteSay('Saved. Heads up: ' + room + ' on ' + fmtDay(date) + ' already has a note for ' + both + ' ('
-        + clash.map(n => n.who || 'no name').join('; ') + ').', 'warn');
-    } else noteSay('Saved.', 'ok');
+    const saved = recs.length > 1 ? 'Saved ' + recs.length + ' notes (one per room).' : 'Saved.';
+    if (clashes.length) {
+      noteSay(saved + ' Heads up: ' + clashes.map(c => {
+        const both = [...new Set(c.hits.flatMap(n => n.periods.filter(p => periods.includes(p))))].join(', ');
+        return c.room + ' on ' + fmtDay(date) + ' already has a note for ' + both + ' (' + c.hits.map(n => n.who || 'no name').join('; ') + ')';
+      }).join('; ') + '.', 'warn');
+    } else noteSay(saved, 'ok');
     if ($('nShow').value === 'upcoming' && date < todayStr()) $('nShow').value = 'all';
     renderNotes();
   }
@@ -1705,6 +1755,18 @@
     $('nClear').onclick = () => setPressed([]);
     $('nDate').value = todayStr();
     $('noteForm').addEventListener('submit', submitNote);
+    const roomInp = $('nRoom');
+    roomInp.addEventListener('input', e => {
+      // не добавляем при обычном наборе (T1 может быть началом T10): только выбор из списка подсказок, вставка или запятая
+      const typed = e.inputType === 'insertText' || e.inputType === 'deleteContentBackward' || e.inputType === 'deleteContentForward';
+      const v = roomInp.value;
+      const exact = data.rooms.some(r => r.toLowerCase() === v.trim().toLowerCase());
+      if (/[,;]/.test(v) || (!typed && exact)) flushRoomInput(true);
+    });
+    roomInp.addEventListener('keydown', e => {
+      if (e.key === 'Enter' && roomInp.value.trim()) { e.preventDefault(); flushRoomInput(); }
+      else if (e.key === 'Backspace' && !roomInp.value && nRooms.length) { nRooms.pop(); renderRoomChips(); }
+    });
     $('nCancel').onclick = () => { cancelEdit(); noteSay(''); };
     $('nShow').onchange = renderNotes;
     $('nFilter').addEventListener('input', renderNotes);
