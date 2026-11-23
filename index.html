@@ -1700,7 +1700,9 @@
   const todayStr = () => new Intl.DateTimeFormat('en-CA', { timeZone: 'Asia/Bishkek' }).format(new Date());
   const fmtDay = d => new Date(d + 'T00:00:00Z').toLocaleDateString('en-GB',
     { weekday: 'short', day: 'numeric', month: 'short', year: 'numeric', timeZone: 'UTC' });
-  const periodOrder = label => { const i = data.periods.findIndex(p => shortP(p) === label); return i < 0 ? 99 : i; };
+  const AFTER = 'After school';        // только для Booking notes: не период школьного расписания
+  const pLabel = pi => pi < data.periods.length ? shortP(data.periods[pi]) : AFTER;
+  const periodOrder = label => { if (label === AFTER) return data.periods.length; const i = data.periods.findIndex(p => shortP(p) === label); return i < 0 ? 99 : i; };
   const roomIdx = r => { const i = data.rooms.indexOf(r); return i < 0 ? 9999 : i; };
   const sortRooms = arr => [...new Set(arr)].sort((a, b) => roomIdx(a) - roomIdx(b) || a.localeCompare(b));
 
@@ -2040,11 +2042,11 @@
     });
     thead.append(hr);
     const tb = document.createElement('tbody');
-    data.periods.forEach((p, pi) => {
+    [...data.periods, null].forEach((p, pi) => {
       const tr = document.createElement('tr');
       const th = document.createElement('td'); th.className = 'nm';
-      th.textContent = shortP(p);
-      const tm = (p.split('|')[1] || '').trim();
+      th.textContent = pLabel(pi);
+      const tm = p ? (p.split('|')[1] || '').trim() : '';
       if (tm) { const s = document.createElement('small'); s.textContent = tm; s.style.display = 'block'; s.style.fontWeight = '400'; s.style.color = 'var(--text-sub)'; th.append(s); }
       tr.append(th);
       data.days.forEach((d, di) => {
@@ -2155,7 +2157,7 @@
     $('wStatus').textContent = active
       ? list.length + ' of ' + active + ' weekly bookings shown' + (endedAll ? ' · ' + endedAll + ' ended' : '')
       : (endedAll ? 'No active weekly bookings · ' + endedAll + ' ended' : 'No weekly bookings yet. Add the first one above.');
-    fillGrid($('wGrid'), (di, pi) => list.filter(w => w.days.includes(data.days[di]) && w.periods.includes(shortP(data.periods[pi])))
+    fillGrid($('wGrid'), (di, pi) => list.filter(w => w.days.includes(data.days[di]) && w.periods.includes(pLabel(pi)))
       .sort(wSorter).map(w => ({ kind: 'weekly', n: w, click: () => startWeeklyEdit(w) })));
     fillWeeklyTable($('wTable'), list, false, active ? 'No weekly bookings match this filter.' : 'Nothing here yet.');
     $('wDoneSummary').textContent = 'Ended weekly bookings (' + endedAll + ')';
@@ -2165,7 +2167,7 @@
   /* --- Week overview --- */
   function weekDates() { return data.days.map((d, i) => addDays(wkStart, i)); }
   function weekCellItems(dates, di, pi) {
-    const date = dates[di], p = shortP(data.periods[pi]);
+    const date = dates[di], p = pLabel(pi);
     const items = [];
     weekly.filter(w => weeklyAppliesOn(w, date) && w.periods.includes(p)).sort(wSorter)
       .forEach(w => items.push({ kind: 'weekly', n: w, click: () => startWeeklyEdit(w) }));
@@ -2205,6 +2207,11 @@
     if (nView === 'week') renderWeek(); else if (nView === 'weekly') renderWeekly(); else renderOneoff();
   }
 
+  function afterChip() {
+    const b = document.createElement('button'); b.type = 'button'; b.className = 'pchip'; b.dataset.p = AFTER; b.title = AFTER; b.textContent = AFTER;
+    b.setAttribute('aria-pressed', 'false'); b.onclick = () => b.setAttribute('aria-pressed', b.getAttribute('aria-pressed') === 'true' ? 'false' : 'true');
+    return b;
+  }
   function setupWeekly() {
     loadWeekly();
     let view = 'oneoff', open = true;
@@ -2224,6 +2231,7 @@
       b.setAttribute('aria-pressed', 'false'); b.onclick = () => b.setAttribute('aria-pressed', b.getAttribute('aria-pressed') === 'true' ? 'false' : 'true');
       pbox.append(b);
     });
+    pbox.append(afterChip());
     const main = data.periods.slice(0, MAIN_PERIODS).map(shortP);
     $('wMain').textContent = 'Select ' + main[0] + ' – ' + main[main.length - 1];
     $('wMain').onclick = () => wSetPressed('wPeriods', main);
@@ -2251,7 +2259,7 @@
 
   function gridRows(cellText, dates) {
     const hdr = [head('Period'), ...data.days.map((d, di) => head(dayShort(d) + (dates ? ' ' + fmtShortDate(dates[di]) : '')))];
-    const rows = data.periods.map((p, pi) => [{ v: shortP(p) + ((p.split('|')[1] || '').trim() ? ' ' + p.split('|')[1].trim() : ''), st: 'bold' },
+    const rows = [...data.periods, null].map((p, pi) => [{ v: p ? shortP(p) + ((p.split('|')[1] || '').trim() ? ' ' + p.split('|')[1].trim() : '') : AFTER, st: 'bold' },
       ...data.days.map((d, di) => ({ v: cellText(di, pi), st: 'cell' }))]);
     return [hdr, ...rows];
   }
@@ -2262,7 +2270,7 @@
     const f = $('wFilter').value.trim();
     ex.lines = ['Personal weekly booking notes, not part of the school timetable',
       list.length + ' active weekly bookings' + (f ? ' · filter: ' + f : '') + (ended.length ? ' · ' + ended.length + ' ended (third sheet)' : '')];
-    const grid = gridRows((di, pi) => list.filter(w => w.days.includes(data.days[di]) && w.periods.includes(shortP(data.periods[pi]))).sort(wSorter).map(itemText).join('\n'));
+    const grid = gridRows((di, pi) => list.filter(w => w.days.includes(data.days[di]) && w.periods.includes(pLabel(pi))).sort(wSorter).map(itemText).join('\n'));
     const tbl = l => [[head('Days'), head('Periods'), head('Rooms'), head('Booked by / purpose'), head('Note'), head('Dates')].map(x => x),
       ...[...l].sort(wSorter).map(w => [w.days.map(dayShort).join(', '), w.periods.join(', '), w.rooms.join(', '), w.who, w.note,
         rangeText(w) + (w.skip.length ? ' · skips: ' + w.skip.map(fmtShortDate).join(', ') : '')].map(v => (typeof v === 'object' ? v : { v, st: 'cell' })))];
@@ -2328,6 +2336,7 @@
       b.onclick = () => b.setAttribute('aria-pressed', b.getAttribute('aria-pressed') === 'true' ? 'false' : 'true');
       box.append(b);
     });
+    box.append(afterChip());
     const main = data.periods.slice(0, MAIN_PERIODS).map(shortP);
     $('nMain').textContent = 'Select ' + shortP(data.periods[0]) + ' – ' + main[main.length - 1];
     $('nMain').onclick = () => setPressed(main);
