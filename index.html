@@ -1700,6 +1700,7 @@
   const todayStr = () => new Intl.DateTimeFormat('en-CA', { timeZone: 'Asia/Bishkek' }).format(new Date());
   const fmtDay = d => new Date(d + 'T00:00:00Z').toLocaleDateString('en-GB',
     { weekday: 'short', day: 'numeric', month: 'short', year: 'numeric', timeZone: 'UTC' });
+  let NOTE_DAYS = [];                  // Mon–Fri с сайта + Saturday, Sunday (только для Booking notes)
   const AFTER = 'After school';        // только для Booking notes: не период школьного расписания
   const pLabel = pi => pi < data.periods.length ? shortP(data.periods[pi]) : AFTER;
   const periodOrder = label => { if (label === AFTER) return data.periods.length; const i = data.periods.findIndex(p => shortP(p) === label); return i < 0 ? 99 : i; };
@@ -1939,13 +1940,13 @@
   const dayShort = d => d.slice(0, 3);
   const fmtShortDate = s => new Date(s + 'T00:00:00Z').toLocaleDateString('en-GB', { day: 'numeric', month: 'short', timeZone: 'UTC' });
   const isDate = s => /^\d{4}-\d{2}-\d{2}$/.test(String(s));
-  const dayOrder = d => { const i = data.days.indexOf(d); return i < 0 ? 99 : i; };
+  const dayOrder = d => { const i = NOTE_DAYS.indexOf(d); return i < 0 ? 99 : i; };
 
   function migrateWeekly(arr) {
     const out = [];
     (Array.isArray(arr) ? arr : []).forEach(w => {
       if (!w || !w.id || !Array.isArray(w.days) || !Array.isArray(w.rooms) || !Array.isArray(w.periods)) return;
-      const days = w.days.map(String).filter(d => data.days.includes(d));
+      const days = w.days.map(String).filter(d => NOTE_DAYS.includes(d));
       if (!days.length || !w.rooms.length || !w.periods.length) return;
       out.push({
         id: String(w.id).slice(0, 40), days: [...new Set(days)].sort((a, b) => dayOrder(a) - dayOrder(b)),
@@ -1974,7 +1975,7 @@
 
   function weeklyAppliesOn(w, date) {
     const dow = dowIdx(date);
-    return !w.ended && dow < data.days.length && w.days.includes(data.days[dow])
+    return !w.ended && w.days.includes(NOTE_DAYS[dow])
       && (!w.from || date >= w.from) && (!w.until || date <= w.until) && !w.skip.includes(date);
   }
   const rangesOverlap = (a, b) => (!a.until || !b.from || b.from <= a.until) && (!b.until || !a.from || a.from <= b.until);
@@ -2035,7 +2036,7 @@
     const today = todayStr();
     const thead = document.createElement('thead'), hr = document.createElement('tr');
     const th0 = document.createElement('th'); th0.textContent = 'Period'; hr.append(th0);
-    data.days.forEach((d, di) => {
+    NOTE_DAYS.forEach((d, di) => {
       const th = document.createElement('th'); th.textContent = dayShort(d);
       if (dates) { const s = document.createElement('small'); s.textContent = fmtShortDate(dates[di]); th.append(s); if (dates[di] === today) th.className = 'today'; }
       hr.append(th);
@@ -2049,7 +2050,7 @@
       const tm = p ? (p.split('|')[1] || '').trim() : '';
       if (tm) { const s = document.createElement('small'); s.textContent = tm; s.style.display = 'block'; s.style.fontWeight = '400'; s.style.color = 'var(--text-sub)'; th.append(s); }
       tr.append(th);
-      data.days.forEach((d, di) => {
+      NOTE_DAYS.forEach((d, di) => {
         const td = document.createElement('td');
         if (dates && dates[di] === today) td.className = 'todaycol';
         const items = cellItems(di, pi);
@@ -2157,7 +2158,7 @@
     $('wStatus').textContent = active
       ? list.length + ' of ' + active + ' weekly bookings shown' + (endedAll ? ' · ' + endedAll + ' ended' : '')
       : (endedAll ? 'No active weekly bookings · ' + endedAll + ' ended' : 'No weekly bookings yet. Add the first one above.');
-    fillGrid($('wGrid'), (di, pi) => list.filter(w => w.days.includes(data.days[di]) && w.periods.includes(pLabel(pi)))
+    fillGrid($('wGrid'), (di, pi) => list.filter(w => w.days.includes(NOTE_DAYS[di]) && w.periods.includes(pLabel(pi)))
       .sort(wSorter).map(w => ({ kind: 'weekly', n: w, click: () => startWeeklyEdit(w) })));
     fillWeeklyTable($('wTable'), list, false, active ? 'No weekly bookings match this filter.' : 'Nothing here yet.');
     $('wDoneSummary').textContent = 'Ended weekly bookings (' + endedAll + ')';
@@ -2165,7 +2166,7 @@
   }
 
   /* --- Week overview --- */
-  function weekDates() { return data.days.map((d, i) => addDays(wkStart, i)); }
+  function weekDates() { return NOTE_DAYS.map((d, i) => addDays(wkStart, i)); }
   function weekCellItems(dates, di, pi) {
     const date = dates[di], p = pLabel(pi);
     const items = [];
@@ -2220,7 +2221,7 @@
     setWFormOpen(open, false);
     $('wToggle').onclick = () => setWFormOpen($('wFormWrap').classList.contains('hidden'), true);
     const dbox = $('wDays');
-    data.days.forEach(d => {
+    NOTE_DAYS.forEach(d => {
       const b = document.createElement('button'); b.type = 'button'; b.className = 'pchip'; b.dataset.p = d; b.textContent = dayShort(d); b.title = d;
       b.setAttribute('aria-pressed', 'false'); b.onclick = () => b.setAttribute('aria-pressed', b.getAttribute('aria-pressed') === 'true' ? 'false' : 'true');
       dbox.append(b);
@@ -2258,9 +2259,9 @@
   }
 
   function gridRows(cellText, dates) {
-    const hdr = [head('Period'), ...data.days.map((d, di) => head(dayShort(d) + (dates ? ' ' + fmtShortDate(dates[di]) : '')))];
+    const hdr = [head('Period'), ...NOTE_DAYS.map((d, di) => head(dayShort(d) + (dates ? ' ' + fmtShortDate(dates[di]) : '')))];
     const rows = [...data.periods, null].map((p, pi) => [{ v: p ? shortP(p) + ((p.split('|')[1] || '').trim() ? ' ' + p.split('|')[1].trim() : '') : AFTER, st: 'bold' },
-      ...data.days.map((d, di) => ({ v: cellText(di, pi), st: 'cell' }))]);
+      ...NOTE_DAYS.map((d, di) => ({ v: cellText(di, pi), st: 'cell' }))]);
     return [hdr, ...rows];
   }
   const itemText = n => n.rooms.join(', ') + ([n.who, n.note].filter(Boolean).length ? ' — ' + [n.who, n.note].filter(Boolean).join(' · ') : '');
@@ -2270,7 +2271,7 @@
     const f = $('wFilter').value.trim();
     ex.lines = ['Personal weekly booking notes, not part of the school timetable',
       list.length + ' active weekly bookings' + (f ? ' · filter: ' + f : '') + (ended.length ? ' · ' + ended.length + ' ended (third sheet)' : '')];
-    const grid = gridRows((di, pi) => list.filter(w => w.days.includes(data.days[di]) && w.periods.includes(pLabel(pi))).sort(wSorter).map(itemText).join('\n'));
+    const grid = gridRows((di, pi) => list.filter(w => w.days.includes(NOTE_DAYS[di]) && w.periods.includes(pLabel(pi))).sort(wSorter).map(itemText).join('\n'));
     const tbl = l => [[head('Days'), head('Periods'), head('Rooms'), head('Booked by / purpose'), head('Note'), head('Dates')].map(x => x),
       ...[...l].sort(wSorter).map(w => [w.days.map(dayShort).join(', '), w.periods.join(', '), w.rooms.join(', '), w.who, w.note,
         rangeText(w) + (w.skip.length ? ' · skips: ' + w.skip.map(fmtShortDate).join(', ') : '')].map(v => (typeof v === 'object' ? v : { v, st: 'cell' })))];
@@ -2320,6 +2321,7 @@
   }
 
   function setupNotes() {
+    NOTE_DAYS = [...data.days, 'Saturday', 'Sunday'];
     loadNotes();
     $('notesWarn').classList.toggle('hidden', notesPersist);
     let open = true;
