@@ -313,7 +313,7 @@
     table.notes tr.finished td { opacity: .7; }
     #nRoomChips { margin: 0; min-height: 34px; align-items: center; }
     #nRoomChips:empty::before { content: 'No rooms added yet'; color: var(--text-sub); font-size: 12px; }
-    input[type=date] { color-scheme: dark; }
+    input[type=date], input[type=month] { color-scheme: dark; }
     .noteform { background: var(--card-bg); border: 1px solid var(--border); border-radius: 10px; padding: 12px; margin-bottom: 14px; display: grid; gap: 10px; }
     .nf-row { display: flex; gap: 10px; flex-wrap: wrap; }
     .noteform label { display: flex; flex-direction: column; gap: 4px; font-size: 12px; color: var(--text-sub); }
@@ -358,7 +358,7 @@
     .weekbar button { background: var(--card-bg); color: var(--text); border: 1px solid var(--border); border-radius: 8px; padding: 7px 12px; font-size: 14px; cursor: pointer; font-family: inherit; }
     .weekbar button:hover { border-color: var(--accent); }
     .weekbar strong { min-width: 190px; text-align: center; font-size: 15px; }
-    .weekbar input[type=date] { background: var(--bg); color: var(--text); border: 1px solid var(--border); border-radius: 8px; padding: 6px 10px; font-family: inherit; }
+    .weekbar input[type=date], .weekbar input[type=month] { background: var(--bg); color: var(--text); border: 1px solid var(--border); border-radius: 8px; padding: 6px 10px; font-family: inherit; }
     .legend2 { display: flex; gap: 10px; margin: 0 0 10px; font-size: 12px; }
     .legend2 .pill { width: auto; display: inline-block; cursor: default; }
     .inl { display: flex; gap: 6px; align-items: center; }
@@ -385,6 +385,17 @@
     .notesbar .seg { margin: 0; }
     .notesbar .ntools { margin: 0; margin-left: auto; gap: 6px; }
     .notesbar .ntools button { padding: 5px 10px; font-size: 12px; color: var(--text-sub); }
+    table.mcal th { text-align: center; }
+    table.mcal td { height: 92px; min-width: 110px; vertical-align: top; text-align: left; padding: 5px; cursor: pointer; }
+    table.mcal td:hover { background: rgba(56, 189, 248, 0.10); }
+    table.mcal td.other { opacity: .38; }
+    table.mcal td.today { box-shadow: inset 0 0 0 2px var(--accent); }
+    table.mcal td.clash { outline: 2px solid #f59e0b; outline-offset: -2px; }
+    table.mcal .dnum { font-weight: 600; font-size: 13px; display: block; margin-bottom: 3px; }
+    table.mcal td.today .dnum { color: var(--accent); }
+    table.mcal .cnt { display: block; border-radius: 6px; padding: 2px 6px; margin: 2px 0; font-size: 12px; border: 1px solid; }
+    table.mcal .cnt.weekly { background: rgba(56, 189, 248, 0.18); border-color: rgba(56, 189, 248, 0.65); }
+    table.mcal .cnt.oneoff { background: rgba(245, 158, 11, 0.18); border-color: rgba(245, 158, 11, 0.65); }
     p.lead { margin: 0 0 8px; font-size: 15px; font-weight: 600; color: var(--text); }
 
     .hidden { display: none; }
@@ -529,7 +540,8 @@
     <div class="warnbox hidden" id="notesWarn">This browser is not allowing notes to be saved (private window or blocked site data), so they will disappear when you close this page. Use “Save backup” before you leave.</div>
     <div class="notesbar">
       <div class="seg" id="nSeg">
-        <button type="button" data-v="week">Week overview</button>
+        <button type="button" data-v="month">Month</button>
+      <button type="button" data-v="week">Week overview</button>
         <button type="button" data-v="weekly">Weekly bookings</button>
         <button type="button" data-v="oneoff">One-off bookings</button>
       </div>
@@ -538,6 +550,21 @@
         <button type="button" id="nRestore">Restore backup…</button>
         <input type="file" id="nFile" accept=".json,application/json" class="hidden">
       </div>
+    </div>
+
+    <!-- Month calendar -->
+    <div id="nvMonth" class="hidden">
+      <p class="hint">The whole month at a glance: how many weekly and one-off bookings each day has. Click a day to open its week. This is only for your own notes: nothing here changes “free” or “busy” on the other tabs.</p>
+      <div class="weekbar">
+        <button type="button" id="moPrev" aria-label="Previous month">◀</button>
+        <strong id="moLabel"></strong>
+        <button type="button" id="moNext" aria-label="Next month">▶</button>
+        <button type="button" id="moToday">This month</button>
+        <input type="month" id="moPick" aria-label="Jump to a month">
+      </div>
+      <div class="legend2"><span class="pill weekly">Weekly bookings</span> <span class="pill oneoff">One-off bookings</span></div>
+      <div class="status" id="moStatus"></div>
+      <div class="tablewrap"><table class="slots mcal" id="mGrid"></table></div>
     </div>
 
     <!-- Week overview: weekly + one-off bookings of one week in a grid -->
@@ -2193,10 +2220,73 @@
     fillGrid($('wGridWeek'), (di, pi) => weekCellItems(dates, di, pi), dates);
   }
 
+
+  /* --- Month calendar --- */
+  let moStart = null;                                              // 'YYYY-MM-01'
+  const monthOf = s => s.slice(0, 7) + '-01';
+  function addMonths(s, n) { const d = new Date(s + 'T00:00:00Z'); d.setUTCMonth(d.getUTCMonth() + n, 1); return d.toISOString().slice(0, 10); }
+  const monthLabel = s => new Date(s + 'T00:00:00Z').toLocaleDateString('en-GB', { month: 'long', year: 'numeric', timeZone: 'UTC' });
+  function monthWeeks() {                                          // массив недель, каждая — 7 дат (Mon–Sun)
+    const first = moStart, last = addDays(addMonths(moStart, 1), -1);
+    const weeks = []; let d = mondayOf(first);
+    while (d <= last) { weeks.push([0, 1, 2, 3, 4, 5, 6].map(i => addDays(d, i))); d = addDays(d, 7); }
+    return weeks;
+  }
+  const itemsOn = date => ({
+    weekly: weekly.filter(w => weeklyAppliesOn(w, date)),
+    oneoff: notes.filter(n => !n.done && n.date === date),
+  });
+  function renderMonth() {
+    if (!moStart) moStart = monthOf(todayStr());
+    $('moLabel').textContent = monthLabel(moStart);
+    $('moPick').value = moStart.slice(0, 7);
+    const weeks = monthWeeks(), today = todayStr(), tbl = $('mGrid');
+    tbl.replaceChildren();
+    const thead = document.createElement('thead'), hr = document.createElement('tr');
+    NOTE_DAYS.forEach(d => { const th = document.createElement('th'); th.textContent = dayShort(d); hr.append(th); });
+    thead.append(hr);
+    const tb = document.createElement('tbody'); let tw = 0, to = 0;
+    weeks.forEach(wk => {
+      const tr = document.createElement('tr');
+      wk.forEach(date => {
+        const td = document.createElement('td'), it = itemsOn(date), inMonth = date.slice(0, 7) === moStart.slice(0, 7);
+        td.className = (inMonth ? '' : 'other ') + (date === today ? 'today' : '');
+        const num = document.createElement('span'); num.className = 'dnum'; num.textContent = new Date(date + 'T00:00:00Z').getUTCDate(); td.append(num);
+        if (inMonth) { tw += it.weekly.length; to += it.oneoff.length; }
+        [['weekly', it.weekly, 'weekly'], ['oneoff', it.oneoff, 'one-off']].forEach(([k, arr, label]) => {
+          if (!arr.length) return;
+          const c = document.createElement('span'); c.className = 'cnt ' + k; c.textContent = arr.length + ' ' + label;
+          td.append(c);
+        });
+        const all = [...it.weekly.map(w => '[Weekly] ' + itemText(w)), ...it.oneoff.map(n => '[One-off] ' + itemText(n))];
+        td.title = all.length ? fmtDay(date) + '\n' + all.join('\n') : fmtDay(date);
+        td.onclick = () => { wkStart = mondayOf(date); setView('week', true); };
+        tr.append(td);
+      });
+      tb.append(tr);
+    });
+    tbl.append(thead, tb);
+    $('moStatus').textContent = (tw + to) ? tw + ' weekly and ' + to + ' one-off bookings in ' + monthLabel(moStart) + ' (counted per day)' : 'No bookings in ' + monthLabel(moStart) + '.';
+  }
+  function exportMonth() {
+    if (!moStart) moStart = monthOf(todayStr());
+    const ex = { title: 'Month calendar', slug: 'month-calendar' };
+    ex.lines = ['Personal booking notes, not part of the school timetable', monthLabel(moStart)];
+    const hdr = NOTE_DAYS.map(d => head(dayShort(d)));
+    const rows = monthWeeks().map(wk => wk.map(date => {
+      const it = itemsOn(date), inMonth = date.slice(0, 7) === moStart.slice(0, 7);
+      const lines = [...it.weekly.map(w => '[Weekly] ' + itemText(w)), ...it.oneoff.map(n => '[One-off] ' + itemText(n))];
+      return { v: (inMonth ? new Date(date + 'T00:00:00Z').getUTCDate() : fmtShortDate(date)) + (lines.length ? '\n' + lines.join('\n') : ''), st: 'cell' };
+    }));
+    ex.sheets = [withInfo(ex, [hdr, ...rows], [26, 26, 26, 26, 26, 26, 26], 'Month')];
+    return ex;
+  }
+
   /* --- переключатель видов --- */
   function setView(v, remember) {
-    if (!['week', 'weekly', 'oneoff'].includes(v)) v = 'oneoff';
+    if (!['month', 'week', 'weekly', 'oneoff'].includes(v)) v = 'oneoff';
     nView = v;
+    $('nvMonth').classList.toggle('hidden', v !== 'month');
     $('nvWeek').classList.toggle('hidden', v !== 'week');
     $('nvWeekly').classList.toggle('hidden', v !== 'weekly');
     $('nvOneoff').classList.toggle('hidden', v !== 'oneoff');
@@ -2205,7 +2295,7 @@
     renderNotes();
   }
   function renderNotes() {
-    if (nView === 'week') renderWeek(); else if (nView === 'weekly') renderWeekly(); else renderOneoff();
+    if (nView === 'month') renderMonth(); else if (nView === 'week') renderWeek(); else if (nView === 'weekly') renderWeekly(); else renderOneoff();
   }
 
   function afterChip() {
@@ -2251,6 +2341,10 @@
     $('wSkipAdd').onclick = () => { const v = $('wSkipDate').value; if (isDate(v) && !wSkip.includes(v)) { wSkip.push(v); wSkip.sort(); renderWSkip(); } $('wSkipDate').value = ''; };
     $('wCancel').onclick = () => { cancelWeeklyEdit(); weeklySay(''); };
     $('wFilter').addEventListener('input', renderNotes);
+    $('moPrev').onclick = () => { moStart = addMonths(moStart || monthOf(todayStr()), -1); renderMonth(); };
+    $('moNext').onclick = () => { moStart = addMonths(moStart || monthOf(todayStr()), 1); renderMonth(); };
+    $('moToday').onclick = () => { moStart = monthOf(todayStr()); renderMonth(); };
+    $('moPick').onchange = () => { if (/^\d{4}-\d{2}$/.test($('moPick').value)) { moStart = $('moPick').value + '-01'; renderMonth(); } };
     $('wkPrev').onclick = () => { wkStart = addDays(wkStart || mondayOf(todayStr()), -7); renderWeek(); };
     $('wkNext').onclick = () => { wkStart = addDays(wkStart || mondayOf(todayStr()), 7); renderWeek(); };
     $('wkToday').onclick = () => { wkStart = mondayOf(todayStr()); renderWeek(); };
@@ -2368,6 +2462,7 @@
   }
 
   function exportNotes() {
+    if (nView === 'month') return exportMonth();
     if (nView === 'week') return exportWeek();
     if (nView === 'weekly') return exportWeekly();
     const list = visibleNotes(), done = doneNotes();
