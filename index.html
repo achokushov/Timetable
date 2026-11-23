@@ -292,7 +292,7 @@
       .grid { grid-template-columns: repeat(auto-fill, minmax(110px, 1fr)); }
       .grid.wide { grid-template-columns: repeat(auto-fill, minmax(170px, 1fr)); }
       table.heat td[style] { color: #000 !important; }
-      .noteform, .ntools, #notesWarn, #nFormWrap, #nDone, th.act, td.act, th.chk, td.chk { display: none !important; }
+      .noteform, .ntools, #notesWarn, #nFormWrap, #wFormWrap, #nDone, #wDone, .seg, .weekbar, .legend2, th.act, td.act, th.chk, td.chk { display: none !important; }
       table.notes tr.past td { opacity: 1; }
     }
 
@@ -349,6 +349,36 @@
     table.notes tr.today td.when { color: var(--accent); }
     .empty { padding: 18px; text-align: center; color: var(--text-sub); font-size: 14px; }
 
+    /* --- Weekly bookings / Week overview --- */
+    .seg { display: flex; width: fit-content; max-width: 100%; margin: 0 0 12px; border: 1px solid var(--border); border-radius: 10px; overflow: hidden; }
+    .seg button { background: var(--card-bg); color: var(--text); border: none; border-right: 1px solid var(--border); padding: 9px 16px; font-size: 14px; cursor: pointer; font-family: inherit; }
+    .seg button:last-child { border-right: none; }
+    .seg button.on { background: var(--accent); color: #0b1220; font-weight: 600; }
+    .weekbar { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin: 0 0 10px; }
+    .weekbar button { background: var(--card-bg); color: var(--text); border: 1px solid var(--border); border-radius: 8px; padding: 7px 12px; font-size: 14px; cursor: pointer; font-family: inherit; }
+    .weekbar button:hover { border-color: var(--accent); }
+    .weekbar strong { min-width: 190px; text-align: center; font-size: 15px; }
+    .weekbar input[type=date] { background: var(--bg); color: var(--text); border: 1px solid var(--border); border-radius: 8px; padding: 6px 10px; font-family: inherit; }
+    .legend2 { display: flex; gap: 10px; margin: 0 0 10px; font-size: 12px; }
+    .legend2 .pill { width: auto; display: inline-block; cursor: default; }
+    .inl { display: flex; gap: 6px; align-items: center; }
+    .inl input { width: auto; }
+    table.bgrid td { vertical-align: top; text-align: left; min-width: 130px; padding: 4px; }
+    table.bgrid th.today { color: var(--accent); }
+    table.bgrid td.todaycol { background: rgba(56, 189, 248, 0.06); }
+    table.bgrid th small { display: block; font-weight: 400; color: var(--text-sub); font-size: 11px; }
+    .pill { display: block; width: 100%; text-align: left; border-radius: 6px; padding: 3px 6px; margin: 2px 0; font-size: 12px; line-height: 1.25; cursor: pointer; font-family: inherit; color: var(--text); border: 1px solid; }
+    .pill.weekly { background: rgba(56, 189, 248, 0.18); border-color: rgba(56, 189, 248, 0.65); }
+    .pill.oneoff { background: rgba(245, 158, 11, 0.18); border-color: rgba(245, 158, 11, 0.65); }
+    .pill b { display: block; font-weight: 600; overflow-wrap: anywhere; }
+    .pill small { display: block; color: var(--text-sub); font-size: 11px; overflow-wrap: anywhere; }
+    @media (max-width: 600px) { .seg { width: 100%; } .seg button { flex: 1; padding: 9px 6px; font-size: 13px; } .weekbar strong { min-width: 0; flex: 1 1 100%; order: -1; text-align: left; } }
+    table.bgrid td.clash { outline: 2px solid #f59e0b; outline-offset: -2px; }
+    h3.sect { font-size: 15px; margin: 18px 0 8px; } h3.sect small { font-weight: 400; color: var(--text-sub); font-size: 12px; margin-left: 8px; }
+
+    .nowbtn { background: var(--accent); color: #0b1220; border: 1px solid var(--accent); border-radius: 8px; padding: 8px 16px; font-size: 14px; font-weight: 600; cursor: pointer; font-family: inherit; }
+    .nownote { font-size: 13px; color: var(--text-sub); min-height: 0; margin: 0 0 6px; }
+    .nownote:empty { display: none; }
     p.lead { margin: 0 0 8px; font-size: 15px; font-weight: 600; color: var(--text); }
 
     .hidden { display: none; }
@@ -372,11 +402,11 @@
   <div class="abody">
     <p>This site shows which rooms and teachers are free at BIS. It copies the school timetable automatically about every 30 minutes, so nothing here is typed in by hand. The time of the last update is in the top right corner.</p>
     <ul>
-      <li><b>Empty rooms</b>: pick a day and a period (or several periods) to see which rooms are free.</li>
+      <li><b>Empty rooms</b>: pick a day and a period (or several periods) to see which rooms are free. The “Now” button jumps to the current period.</li>
       <li><b>Free teachers</b>: the same for teachers.</li>
       <li><b>Find a slot</b>: pick several teachers, classes or rooms to see when all of them are free, or when at least 4 of 5 are free, for example for a meeting.</li>
       <li><b>Room usage</b>: how busy each room is, and which times of the week are busiest.</li>
-      <li><b>Booking notes</b>: your own record of which rooms are taken on which date and period, and by whom. It is kept separately and does not change the other tabs.</li>
+      <li><b>Booking notes</b>: your own record of which rooms are taken, by whom: one-off dates, weekly repeating bookings, and a week overview grid. It is kept separately and does not change the other tabs.</li>
       <li><b>Changes</b>: what changed in the timetable since the previous update.</li>
     </ul>
     <p><b>Print / PDF</b> and <b>Download Excel</b> save what is on the screen so you can send it to colleagues.</p>
@@ -401,12 +431,14 @@
   <section id="viewEmpty">
     <p class="lead">Which rooms are free? Pick a day and a time to see every room with no lesson then.</p>
     <div class="controls">
+      <button type="button" class="nowbtn" id="roomNow" title="Jump to the current day and period (Bishkek time)">Now</button>
       <select id="roomDay"></select>
       <select id="roomFrom"></select>
       <span class="to">–</span>
       <select id="roomTo"></select>
     </div>
     <p class="hint">Pick a single period or a range (“from … to …”). If no room is free for the whole range, the closest options are shown below: rooms where only some of the periods are busy. Busy periods are marked in red, so please check them manually.</p>
+    <div class="nownote" id="roomNowNote"></div>
     <div class="status" id="roomStatus">Loading…</div>
     <div id="roomFullWrap"><div class="grid" id="roomFull"></div></div>
     <div id="roomPartialWrap" class="hidden">
@@ -420,6 +452,7 @@
   <section id="viewTeachers" class="hidden">
     <p class="lead">Which teachers have no lesson? Pick a day and a time to see who is free.</p>
     <div class="controls">
+      <button type="button" class="nowbtn" id="teacherNow" title="Jump to the current day and period (Bishkek time)">Now</button>
       <select id="teacherDay"></select>
       <select id="teacherFrom"></select>
       <span class="to">–</span>
@@ -431,6 +464,7 @@
       </select>
     </div>
     <p class="hint">“Free” means the school timetable shows no lesson for that teacher at that time. Presence in school is not checked. The number on each card is how many lessons the teacher has on the selected day.</p>
+    <div class="nownote" id="teacherNowNote"></div>
     <div class="status" id="teacherStatus"></div>
     <div id="teacherFullWrap"><div class="grid" id="teacherFull"></div></div>
     <div id="teacherPartialWrap" class="hidden">
@@ -487,54 +521,125 @@
 
   <!-- Booking notes -->
   <section id="viewNotes" class="hidden">
-    <p class="lead">Booking notes: which rooms are taken on which date and period, and by whom.</p>
+    <p class="lead">Booking notes: which rooms are taken, when, and by whom.</p>
     <div class="warnbox hidden" id="notesWarn">This browser is not allowing notes to be saved (private window or blocked site data), so they will disappear when you close this page. Use “Save backup” before you leave.</div>
-    <div class="ntools formbar"><button type="button" id="nToggle" aria-expanded="true">▲ Hide the form</button></div>
-    <div id="nFormWrap">
-      <p class="hint">The school timetable repeats all year and has no dates, so this is a separate written record. Booking notes do <b>not</b> change “free” or “busy” on the other tabs. Add several rooms and they stay together as one booking. Tick “Done” when a booking is over: it moves to the Completed list below. Notes are saved in this browser on this device only (they are not put on the website, so nobody else can see them). Use “Save backup” from time to time.</p>
-      <form class="noteform" id="noteForm" autocomplete="off">
-        <div class="nf-row">
-          <label>Date <input type="date" id="nDate" required></label>
-          <label class="grow">Rooms <input type="text" id="nRoom" list="nRoomList" placeholder="Pick or type a room, press Enter to add more…"></label>
-          <datalist id="nRoomList"></datalist>
-        </div>
-        <div class="chips" id="nRoomChips"></div>
-        <div class="nf-periods">
-          <span>Periods:</span>
-          <div class="pchips" id="nPeriods"></div>
-          <button type="button" class="linkbtn" id="nMain"></button>
-          <button type="button" class="linkbtn" id="nClear">Clear</button>
-        </div>
-        <div class="nf-row">
-          <label class="grow">Booked by / purpose <input type="text" id="nWho" maxlength="300" placeholder="e.g. Ms Aigerim, parent meeting"></label>
-          <label class="grow">Note (optional) <input type="text" id="nNote" maxlength="1000" placeholder="anything you want to remember"></label>
-        </div>
-        <div class="nf-actions">
-          <button type="submit" id="nSave">Add booking</button>
-          <button type="button" class="hidden" id="nCancel">Cancel edit</button>
-          <span class="nmsg" id="nMsg" role="status"></span>
-        </div>
-      </form>
+    <div class="seg" id="nSeg">
+      <button type="button" data-v="week">Week overview</button>
+      <button type="button" data-v="weekly">Weekly bookings</button>
+      <button type="button" data-v="oneoff">One-off bookings</button>
     </div>
-    <div class="controls">
-      <select id="nShow">
-        <option value="upcoming">Today and later</option>
-        <option value="past">Past</option>
-        <option value="all">All dates</option>
-      </select>
-      <input type="text" id="nFilter" placeholder="Filter by room, name, note or date…" autocomplete="off" spellcheck="false">
-    </div>
-    <div class="ntools">
+    <div class="ntools" id="nTools">
       <button type="button" id="nBackup">Save backup (.json)</button>
       <button type="button" id="nRestore">Restore backup…</button>
       <input type="file" id="nFile" accept=".json,application/json" class="hidden">
     </div>
-    <div class="status" id="nStatus"></div>
-    <div class="tablewrap"><table class="slots notes" id="nTable"></table></div>
-    <details class="donebox" id="nDone">
-      <summary id="nDoneSummary">Completed bookings (0)</summary>
-      <div class="tablewrap"><table class="slots notes" id="nDoneTable"></table></div>
-    </details>
+
+    <!-- Week overview: weekly + one-off bookings of one week in a grid -->
+    <div id="nvWeek" class="hidden">
+      <p class="hint">One week at a glance: weekly bookings and one-off bookings together. Click a booking to edit it. This is only for your own notes: nothing here changes “free” or “busy” on the other tabs.</p>
+      <div class="weekbar">
+        <button type="button" id="wkPrev" aria-label="Previous week">◀</button>
+        <strong id="wkLabel"></strong>
+        <button type="button" id="wkNext" aria-label="Next week">▶</button>
+        <button type="button" id="wkToday">This week</button>
+        <input type="date" id="wkDate" aria-label="Jump to the week of this date">
+      </div>
+      <div class="legend2"><span class="pill weekly">Weekly booking</span> <span class="pill oneoff">One-off booking</span></div>
+      <div class="status" id="wkStatus"></div>
+      <div class="tablewrap"><table class="slots bgrid" id="wGridWeek"></table></div>
+    </div>
+
+    <!-- Weekly (recurring) bookings -->
+    <div id="nvWeekly" class="hidden">
+      <div class="ntools formbar"><button type="button" id="wToggle" aria-expanded="true">▲ Hide the form</button></div>
+      <div id="wFormWrap">
+        <p class="hint">Bookings that repeat every week, for example a club in the 10th period. Pick the days, rooms and periods. Optionally set the dates when it starts and ends, or skip single dates (holidays, exams). Weekly bookings are only shown here and in the Week overview: they never change “free” or “busy” on the other tabs.</p>
+        <form class="noteform" id="wForm" autocomplete="off">
+          <div class="nf-periods"><span>Days:</span><div class="pchips" id="wDays"></div></div>
+          <div class="nf-row">
+            <label class="grow">Rooms <input type="text" id="wRoom" list="nRoomList" placeholder="Pick or type a room, press Enter to add more…"></label>
+          </div>
+          <div class="chips" id="wRoomChips"></div>
+          <div class="nf-periods">
+            <span>Periods:</span>
+            <div class="pchips" id="wPeriods"></div>
+            <button type="button" class="linkbtn" id="wMain"></button>
+            <button type="button" class="linkbtn" id="wClear">Clear</button>
+          </div>
+          <div class="nf-row">
+            <label class="grow">Booked by / purpose <input type="text" id="wWho" maxlength="300" placeholder="e.g. Chess club, Mr Marat"></label>
+            <label class="grow">Note (optional) <input type="text" id="wNote" maxlength="1000" placeholder="anything you want to remember"></label>
+          </div>
+          <div class="nf-row">
+            <label>From (optional) <input type="date" id="wFrom"></label>
+            <label>Until (optional) <input type="date" id="wUntil"></label>
+            <label>Skip a date (optional) <span class="inl"><input type="date" id="wSkipDate"><button type="button" class="linkbtn" id="wSkipAdd">Add</button></span></label>
+          </div>
+          <div class="chips" id="wSkipChips"></div>
+          <div class="nf-actions">
+            <button type="submit" id="wSave">Add weekly booking</button>
+            <button type="button" class="hidden" id="wCancel">Cancel edit</button>
+            <span class="nmsg" id="wMsg" role="status"></span>
+          </div>
+        </form>
+      </div>
+      <div class="controls">
+        <input type="text" id="wFilter" placeholder="Filter by room, name, note or day…" autocomplete="off" spellcheck="false">
+      </div>
+      <div class="status" id="wStatus"></div>
+      <div class="tablewrap"><table class="slots bgrid" id="wGrid"></table></div>
+      <h3 class="sect">List <small>tick “Ended” when a weekly booking stops</small></h3>
+      <div class="tablewrap"><table class="slots notes" id="wTable"></table></div>
+      <details class="donebox" id="wDone">
+        <summary id="wDoneSummary">Ended weekly bookings (0)</summary>
+        <div class="tablewrap"><table class="slots notes" id="wDoneTable"></table></div>
+      </details>
+    </div>
+
+    <!-- One-off bookings -->
+    <div id="nvOneoff" class="hidden">
+      <div class="ntools formbar"><button type="button" id="nToggle" aria-expanded="true">▲ Hide the form</button></div>
+      <div id="nFormWrap">
+        <p class="hint">The school timetable repeats all year and has no dates, so this is a separate written record. Booking notes do <b>not</b> change “free” or “busy” on the other tabs. Add several rooms and they stay together as one booking. Tick “Done” when a booking is over: it moves to the Completed list below. Notes are saved in this browser on this device only (they are not put on the website, so nobody else can see them). Use “Save backup” from time to time.</p>
+        <form class="noteform" id="noteForm" autocomplete="off">
+          <div class="nf-row">
+            <label>Date <input type="date" id="nDate" required></label>
+            <label class="grow">Rooms <input type="text" id="nRoom" list="nRoomList" placeholder="Pick or type a room, press Enter to add more…"></label>
+            <datalist id="nRoomList"></datalist>
+          </div>
+          <div class="chips" id="nRoomChips"></div>
+          <div class="nf-periods">
+            <span>Periods:</span>
+            <div class="pchips" id="nPeriods"></div>
+            <button type="button" class="linkbtn" id="nMain"></button>
+            <button type="button" class="linkbtn" id="nClear">Clear</button>
+          </div>
+          <div class="nf-row">
+            <label class="grow">Booked by / purpose <input type="text" id="nWho" maxlength="300" placeholder="e.g. Ms Aigerim, parent meeting"></label>
+            <label class="grow">Note (optional) <input type="text" id="nNote" maxlength="1000" placeholder="anything you want to remember"></label>
+          </div>
+          <div class="nf-actions">
+            <button type="submit" id="nSave">Add booking</button>
+            <button type="button" class="hidden" id="nCancel">Cancel edit</button>
+            <span class="nmsg" id="nMsg" role="status"></span>
+          </div>
+        </form>
+      </div>
+      <div class="controls">
+        <select id="nShow">
+          <option value="upcoming">Today and later</option>
+          <option value="past">Past</option>
+          <option value="all">All dates</option>
+        </select>
+        <input type="text" id="nFilter" placeholder="Filter by room, name, note or date…" autocomplete="off" spellcheck="false">
+      </div>
+      <div class="status" id="nStatus"></div>
+      <div class="tablewrap"><table class="slots notes" id="nTable"></table></div>
+      <details class="donebox" id="nDone">
+        <summary id="nDoneSummary">Completed bookings (0)</summary>
+        <div class="tablewrap"><table class="slots notes" id="nDoneTable"></table></div>
+      </details>
+    </div>
   </section>
 
   <!-- Changes -->
@@ -597,12 +702,44 @@
     });
   }
 
+
+  // Кнопка «Now»: день и период по времени Бишкека. В перерыве — следующий урок, после уроков и в выходные — первый период следующего учебного дня.
+  function goNow(pref) {
+    const now = new Date();
+    const wd = new Intl.DateTimeFormat('en-US', { weekday: 'short', timeZone: 'Asia/Bishkek' }).format(now).toLowerCase();
+    const hm = new Intl.DateTimeFormat('en-GB', { hour: '2-digit', minute: '2-digit', hour12: false, timeZone: 'Asia/Bishkek' }).format(now);
+    const mins = t => { const [h, m] = t.split(':').map(Number); return h * 60 + m; };
+    const nowM = mins(hm);
+    const times = data.periods.map(p => { const m = p.match(/(\d{1,2}:\d{2})\s*-\s*(\d{1,2}:\d{2})/); return m ? [mins(m[1]), mins(m[2])] : null; });
+    const todayI = data.days.findIndex(d => d.toLowerCase().startsWith(wd));
+    const stamp = wd.charAt(0).toUpperCase() + wd.slice(1) + ' ' + hm;
+    let di = todayI, pi = -1, note;
+    if (todayI >= 0) {
+      pi = times.findIndex(t => t && nowM >= t[0] && nowM < t[1]);
+      if (pi >= 0) note = 'Now: ' + stamp + ', ' + shortP(data.periods[pi]) + ' period.';
+      else {
+        pi = times.findIndex(t => t && nowM < t[0]);
+        if (pi >= 0) note = 'Now: ' + stamp + ' (break). Showing the next period: ' + shortP(data.periods[pi]) + '.';
+      }
+    }
+    if (pi < 0) {                                              // выходной или уроки закончились
+      di = todayI >= 0 && todayI < data.days.length - 1 ? todayI + 1 : 0;
+      pi = times.findIndex(t => t);
+      note = 'Now: ' + stamp + (todayI < 0 ? ' (weekend)' : ' (after school)') + '. Showing the first period of ' + data.days[di] + '.';
+    }
+    $(pref + 'Day').value = di; $(pref + 'From').value = pi; $(pref + 'To').value = pi;
+    expanded[pref] = false;
+    renderAvail(pref);
+    $(pref + 'NowNote').textContent = note;
+  }
+
   function setupAvail(pref) {
     fill($(pref + 'Day'), data.days.map((d, i) => [i, d]));
     const pers = data.periods.map((p, i) => [i, p]);
     fill($(pref + 'From'), pers);
     fill($(pref + 'To'), pers);
-    const rerender = () => { expanded[pref] = false; renderAvail(pref); };
+    const rerender = () => { expanded[pref] = false; $(pref + 'NowNote').textContent = ''; renderAvail(pref); };
+    $(pref + 'Now').onclick = () => goNow(pref);
     $(pref + 'Day').onchange = rerender;
     $(pref + 'From').onchange = () => { if (+$(pref + 'To').value < +$(pref + 'From').value) $(pref + 'To').value = $(pref + 'From').value; rerender(); };
     $(pref + 'To').onchange = () => { if (+$(pref + 'From').value > +$(pref + 'To').value) $(pref + 'From').value = $(pref + 'To').value; rerender(); };
@@ -1706,10 +1843,13 @@
     // предупреждение: у этих комнат на эти дату и периоды уже есть активная бронь
     const clashes = notes.filter(n => n.id !== rec.id && !n.done && n.date === date
       && n.rooms.some(r => rooms.includes(r)) && n.periods.some(p => periods.includes(p)));
+    const wclash = weekly.filter(w => weeklyAppliesOn(w, date) && w.rooms.some(r => rooms.includes(r)) && w.periods.some(p => periods.includes(p)));
     notes = old ? notes.map(n => n.id === rec.id ? rec : n) : [...notes, rec];
     saveNotes();
     cancelEdit();
-    if (clashes.length) {
+    if (wclash.length && !clashes.length) {
+      noteSay('Saved. Heads up: ' + wclash.map(w => w.rooms.filter(r => rooms.includes(r)).join(', ') + ' is also in a weekly booking on ' + fmtDay(date) + ' (' + (w.who || 'no name') + ')').join('; ') + '.', 'warn');
+    } else if (clashes.length) {
       noteSay('Saved. Heads up: ' + clashes.map(n => {
         const rs = n.rooms.filter(r => rooms.includes(r)).join(', ');
         const ps = n.periods.filter(p => periods.includes(p)).join(', ');
@@ -1767,7 +1907,7 @@
     tbl.append(thead, tb);
   }
 
-  function renderNotes() {
+  function renderOneoff() {
     const list = visibleNotes(), done = doneNotes();
     const active = notes.filter(n => !n.done).length, doneAll = notes.length - active;
     $('nStatus').textContent = active
@@ -1776,6 +1916,362 @@
     fillNotesTable($('nTable'), list, false, active ? 'No bookings match this filter.' : 'Nothing here yet.');
     $('nDoneSummary').textContent = 'Completed bookings (' + doneAll + ')';
     fillNotesTable($('nDoneTable'), done, true, doneAll ? 'No completed bookings match this filter.' : 'No completed bookings yet. Tick “Done” on a booking to move it here.');
+  }
+
+
+  /* ---------- Weekly bookings и Week overview (тоже только в браузере, нигде больше не показываются) ---------- */
+
+  const WEEKLY_KEY = 'bis-weekly-notes-v1', VIEW_KEY = 'bis-notes-view', WFORM_KEY = 'bis-weekly-form-open';
+  let weekly = [];            // {id, days[], rooms[], periods[], who, note, from, until, skip[], ended, updated}
+  let wEditing = null, wRooms = [], wSkip = [], nView = 'oneoff', wkStart = null;
+
+  const addDays = (s, n) => { const d = new Date(s + 'T00:00:00Z'); d.setUTCDate(d.getUTCDate() + n); return d.toISOString().slice(0, 10); };
+  const dowIdx = s => (new Date(s + 'T00:00:00Z').getUTCDay() + 6) % 7;           // 0 = Monday
+  const mondayOf = s => addDays(s, -dowIdx(s));
+  const dayShort = d => d.slice(0, 3);
+  const fmtShortDate = s => new Date(s + 'T00:00:00Z').toLocaleDateString('en-GB', { day: 'numeric', month: 'short', timeZone: 'UTC' });
+  const isDate = s => /^\d{4}-\d{2}-\d{2}$/.test(String(s));
+  const dayOrder = d => { const i = data.days.indexOf(d); return i < 0 ? 99 : i; };
+
+  function migrateWeekly(arr) {
+    const out = [];
+    (Array.isArray(arr) ? arr : []).forEach(w => {
+      if (!w || !w.id || !Array.isArray(w.days) || !Array.isArray(w.rooms) || !Array.isArray(w.periods)) return;
+      const days = w.days.map(String).filter(d => data.days.includes(d));
+      if (!days.length || !w.rooms.length || !w.periods.length) return;
+      out.push({
+        id: String(w.id).slice(0, 40), days: [...new Set(days)].sort((a, b) => dayOrder(a) - dayOrder(b)),
+        rooms: sortRooms(w.rooms.map(r => String(r).slice(0, 60)).slice(0, 200)),
+        periods: [...new Set(w.periods.map(p => String(p).slice(0, 60)))].sort((a, b) => periodOrder(a) - periodOrder(b)),
+        who: String(w.who || '').slice(0, 300), note: String(w.note || '').slice(0, 1000),
+        from: isDate(w.from) ? w.from : '', until: isDate(w.until) ? w.until : '',
+        skip: [...new Set((Array.isArray(w.skip) ? w.skip : []).filter(isDate))].sort(),
+        ended: !!w.ended, updated: w.updated || '',
+      });
+    });
+    return out;
+  }
+  function loadWeekly() {
+    let raw = null, arr = [];
+    try { raw = localStorage.getItem(WEEKLY_KEY); } catch (e) { notesPersist = false; }
+    try { arr = raw ? JSON.parse(raw) : []; } catch (e) { arr = []; }
+    weekly = migrateWeekly(arr);
+  }
+  function saveWeekly() {
+    try { localStorage.setItem(WEEKLY_KEY, JSON.stringify(weekly)); notesPersist = true; }
+    catch (e) { notesPersist = false; }
+    $('notesWarn').classList.toggle('hidden', notesPersist);
+  }
+  function weeklySay(text, cls) { const m = $('wMsg'); m.textContent = text; m.className = 'nmsg ' + (cls || ''); }
+
+  function weeklyAppliesOn(w, date) {
+    const dow = dowIdx(date);
+    return !w.ended && dow < data.days.length && w.days.includes(data.days[dow])
+      && (!w.from || date >= w.from) && (!w.until || date <= w.until) && !w.skip.includes(date);
+  }
+  const rangesOverlap = (a, b) => (!a.until || !b.from || b.from <= a.until) && (!b.until || !a.from || a.from <= b.until);
+  function weeklyClashes(w) {
+    return weekly.filter(o => o.id !== w.id && !o.ended && rangesOverlap(o, w)
+      && o.days.some(d => w.days.includes(d)) && o.rooms.some(r => w.rooms.includes(r)) && o.periods.some(p => w.periods.includes(p)));
+  }
+  const weeklyMatches = (w, q) => !q || [w.days.join(' '), w.rooms.join(' '), w.who, w.note, w.periods.join(' ')].join(' ').toLowerCase().includes(q);
+  const activeWeekly = () => { const q = $('wFilter').value.trim().toLowerCase(); return weekly.filter(w => !w.ended && weeklyMatches(w, q)); };
+  const endedWeekly = () => { const q = $('wFilter').value.trim().toLowerCase(); return weekly.filter(w => w.ended && weeklyMatches(w, q)); };
+  const wSorter = (a, b) => dayOrder(a.days[0]) - dayOrder(b.days[0]) || Math.min(...a.periods.map(periodOrder)) - Math.min(...b.periods.map(periodOrder)) || a.rooms[0].localeCompare(b.rooms[0], undefined, { numeric: true });
+
+  /* --- общие кусочки интерфейса --- */
+  function makeChipBox(box, items, onRemove) {
+    box.replaceChildren();
+    items.forEach(t => {
+      const c = document.createElement('span'); c.className = 'chip room';
+      const s = document.createElement('span'); s.textContent = t.label;
+      const x = document.createElement('button'); x.type = 'button'; x.textContent = '×'; x.title = 'Remove ' + t.label;
+      x.onclick = () => onRemove(t.value);
+      c.append(s, x); box.append(c);
+    });
+  }
+  const wPressed = id => [...document.querySelectorAll('#' + id + ' .pchip[aria-pressed="true"]')].map(b => b.dataset.p);
+  const wSetPressed = (id, vals) => document.querySelectorAll('#' + id + ' .pchip').forEach(b => b.setAttribute('aria-pressed', vals.includes(b.dataset.p) ? 'true' : 'false'));
+  function renderWRooms() { makeChipBox($('wRoomChips'), wRooms.map(r => ({ label: r, value: r })), r => { wRooms = wRooms.filter(v => v !== r); renderWRooms(); }); }
+  function renderWSkip() { makeChipBox($('wSkipChips'), wSkip.map(d => ({ label: 'Skip ' + fmtDay(d), value: d })), d => { wSkip = wSkip.filter(v => v !== d); renderWSkip(); }); }
+  function addWRoomsFromText(text) {
+    const bad = [];
+    text.split(/[,;\n]+/).map(x => x.trim()).filter(Boolean).forEach(w => {
+      const room = data.rooms.find(r => r.toLowerCase() === w.toLowerCase());
+      if (!room) bad.push(w); else if (!wRooms.includes(room)) wRooms.push(room);
+    });
+    renderWRooms(); return bad;
+  }
+  function flushWRoom(silent) {
+    const inp = $('wRoom'), v = inp.value.trim();
+    if (!v) return true;
+    const bad = addWRoomsFromText(v);
+    if (bad.length) { if (!silent) weeklySay('Not a room from the school timetable: ' + bad.join(', ') + '. Pick rooms from the list.', 'err'); inp.value = bad.join(', '); return false; }
+    inp.value = ''; weeklySay(''); return true;
+  }
+
+  function pill(kind, n, onClick) {
+    const b = document.createElement('button'); b.type = 'button'; b.className = 'pill ' + kind;
+    const t = document.createElement('b'); t.textContent = n.rooms.join(', ');
+    b.append(t);
+    const sub = [n.who, n.note].filter(Boolean).join(' · ');
+    if (sub) { const s = document.createElement('small'); s.textContent = sub; b.append(s); }
+    b.title = (kind === 'weekly' ? 'Weekly booking' : 'One-off booking') + ': ' + n.rooms.join(', ') + (sub ? ' · ' + sub : '') + ' (click to edit)';
+    b.onclick = onClick;
+    return b;
+  }
+
+  // Сетка: строки = периоды 1–11, столбцы = Mon–Fri. cellItems(di, pi) -> [{kind, n, click}]
+  function fillGrid(tbl, cellItems, dates) {
+    tbl.replaceChildren();
+    const today = todayStr();
+    const thead = document.createElement('thead'), hr = document.createElement('tr');
+    const th0 = document.createElement('th'); th0.textContent = 'Period'; hr.append(th0);
+    data.days.forEach((d, di) => {
+      const th = document.createElement('th'); th.textContent = dayShort(d);
+      if (dates) { const s = document.createElement('small'); s.textContent = fmtShortDate(dates[di]); th.append(s); if (dates[di] === today) th.className = 'today'; }
+      hr.append(th);
+    });
+    thead.append(hr);
+    const tb = document.createElement('tbody');
+    data.periods.forEach((p, pi) => {
+      const tr = document.createElement('tr');
+      const th = document.createElement('td'); th.className = 'nm';
+      th.textContent = shortP(p);
+      const tm = (p.split('|')[1] || '').trim();
+      if (tm) { const s = document.createElement('small'); s.textContent = tm; s.style.display = 'block'; s.style.fontWeight = '400'; s.style.color = 'var(--text-sub)'; th.append(s); }
+      tr.append(th);
+      data.days.forEach((d, di) => {
+        const td = document.createElement('td');
+        if (dates && dates[di] === today) td.className = 'todaycol';
+        const items = cellItems(di, pi);
+        const seen = new Set(); let clash = false;
+        items.forEach(it => { it.n.rooms.forEach(r => { if (seen.has(r)) clash = true; seen.add(r); }); td.append(pill(it.kind, it.n, it.click)); });
+        if (clash) { td.classList.add('clash'); td.title = 'Two bookings use the same room here'; }
+        tr.append(td);
+      });
+      tb.append(tr);
+    });
+    tbl.append(thead, tb);
+  }
+
+  /* --- Weekly bookings: форма, список, сетка --- */
+  function setWFormOpen(open, remember) {
+    $('wFormWrap').classList.toggle('hidden', !open);
+    $('wToggle').textContent = open ? '▲ Hide the form' : '▼ Add or edit a weekly booking';
+    $('wToggle').setAttribute('aria-expanded', open ? 'true' : 'false');
+    if (remember) { try { localStorage.setItem(WFORM_KEY, open ? '1' : '0'); } catch (e) { /* не страшно */ } }
+  }
+  function cancelWeeklyEdit() {
+    wEditing = null; wRooms = []; wSkip = []; renderWRooms(); renderWSkip();
+    $('wSave').textContent = 'Add weekly booking'; $('wCancel').classList.add('hidden');
+    ['wRoom', 'wWho', 'wNote', 'wFrom', 'wUntil', 'wSkipDate'].forEach(i => { $(i).value = ''; });
+    wSetPressed('wPeriods', []); wSetPressed('wDays', []);
+  }
+  function startWeeklyEdit(w) {
+    setView('weekly', true);
+    setWFormOpen(true, true);
+    wEditing = w.id; wRooms = w.rooms.slice(); wSkip = w.skip.slice(); renderWRooms(); renderWSkip();
+    $('wRoom').value = ''; $('wWho').value = w.who; $('wNote').value = w.note; $('wFrom').value = w.from; $('wUntil').value = w.until;
+    wSetPressed('wPeriods', w.periods); wSetPressed('wDays', w.days);
+    $('wSave').textContent = 'Save changes'; $('wCancel').classList.remove('hidden'); weeklySay('');
+    $('wForm').scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }
+  function submitWeekly(ev) {
+    ev.preventDefault();
+    if (!flushWRoom()) return;
+    const days = wPressed('wDays').sort((a, b) => dayOrder(a) - dayOrder(b));
+    const periods = wPressed('wPeriods').sort((a, b) => periodOrder(a) - periodOrder(b));
+    const from = $('wFrom').value, until = $('wUntil').value;
+    if (!days.length) return weeklySay('Select at least one day.', 'err');
+    if (!wRooms.length) return weeklySay('Add at least one room from the list: room names come from the school timetable.', 'err');
+    if (!periods.length) return weeklySay('Select at least one period.', 'err');
+    if (from && until && until < from) return weeklySay('“Until” is before “From”. Please check the dates.', 'err');
+    const old = wEditing ? weekly.find(w => w.id === wEditing) : null;
+    const rec = {
+      id: wEditing || 'w' + Date.now().toString(36) + Math.random().toString(36).slice(2, 6),
+      days, rooms: sortRooms(wRooms), periods, who: $('wWho').value.trim(), note: $('wNote').value.trim(),
+      from, until, skip: [...wSkip].sort(), ended: old ? !!old.ended : false, updated: new Date().toISOString(),
+    };
+    const clashes = weeklyClashes(rec);
+    weekly = old ? weekly.map(w => w.id === rec.id ? rec : w) : [...weekly, rec];
+    saveWeekly(); cancelWeeklyEdit();
+    if (clashes.length) {
+      weeklySay('Saved. Heads up: ' + clashes.map(o => {
+        const rs = o.rooms.filter(r => rec.rooms.includes(r)).join(', '), ds = o.days.filter(d => rec.days.includes(d)).map(dayShort).join(', ');
+        const ps = o.periods.filter(p => rec.periods.includes(p)).join(', ');
+        return rs + ' (' + ds + ', ' + ps + ') is already in another weekly booking (' + (o.who || 'no name') + ')';
+      }).join('; ') + '.', 'warn');
+    } else weeklySay('Saved.', 'ok');
+    renderNotes();
+  }
+  function toggleEnded(w, ended) {
+    w.ended = ended; w.updated = new Date().toISOString(); saveWeekly();
+    if (ended && wEditing === w.id) cancelWeeklyEdit();
+    renderNotes();
+  }
+  function deleteWeekly(w) {
+    if (!confirm('Delete this weekly booking?\n' + w.days.map(dayShort).join(', ') + ', ' + w.rooms.join(', ') + ', ' + w.periods.join(', '))) return;
+    weekly = weekly.filter(x => x.id !== w.id); saveWeekly();
+    if (wEditing === w.id) cancelWeeklyEdit();
+    renderNotes();
+  }
+  const rangeText = w => (w.from || w.until) ? (w.from ? 'from ' + fmtShortDate(w.from) + ' ' + w.from.slice(0, 4) : '') + (w.from && w.until ? ' ' : '') + (w.until ? 'until ' + fmtShortDate(w.until) + ' ' + w.until.slice(0, 4) : '') : 'every week';
+
+  function fillWeeklyTable(tbl, list, ended, emptyText) {
+    tbl.replaceChildren();
+    if (!list.length) { const d = document.createElement('div'); d.className = 'empty'; d.textContent = emptyText; tbl.append(d); return; }
+    const thead = document.createElement('thead'), hr = document.createElement('tr');
+    ['Ended', 'Days', 'Periods', 'Rooms', 'Booked by / purpose', 'Note', 'Dates', ''].forEach((t, i) => {
+      const th = document.createElement('th'); th.textContent = t; if (i === 0) th.className = 'chk'; if (i === 7) th.className = 'act'; hr.append(th);
+    });
+    thead.append(hr);
+    const tb = document.createElement('tbody');
+    [...list].sort(wSorter).forEach(w => {
+      const tr = document.createElement('tr'); if (ended) tr.className = 'finished';
+      const add = (txt, cls) => { const td = document.createElement('td'); td.textContent = txt; if (cls) td.className = cls; tr.append(td); return td; };
+      const cb = add('', 'chk');
+      const box = document.createElement('input'); box.type = 'checkbox'; box.checked = !!w.ended;
+      box.title = ended ? 'Make active again' : 'Mark as ended (moves to Ended weekly bookings)'; box.setAttribute('aria-label', box.title);
+      box.onchange = () => toggleEnded(w, box.checked); cb.append(box);
+      add(w.days.map(dayShort).join(', '), 'when'); add(w.periods.join(', ')); add(w.rooms.join(', '), 'rooms'); add(w.who); add(w.note);
+      add(rangeText(w) + (w.skip.length ? ' · skips: ' + w.skip.map(fmtShortDate).join(', ') : ''));
+      const act = add('', 'act');
+      const ed = document.createElement('button'); ed.type = 'button'; ed.textContent = 'Edit'; ed.onclick = () => startWeeklyEdit(w);
+      const del = document.createElement('button'); del.type = 'button'; del.textContent = 'Delete'; del.onclick = () => deleteWeekly(w);
+      act.append(ed, del); tb.append(tr);
+    });
+    tbl.append(thead, tb);
+  }
+  function renderWeekly() {
+    const list = activeWeekly(), ended = endedWeekly();
+    const active = weekly.filter(w => !w.ended).length, endedAll = weekly.length - active;
+    $('wStatus').textContent = active
+      ? list.length + ' of ' + active + ' weekly bookings shown' + (endedAll ? ' · ' + endedAll + ' ended' : '')
+      : (endedAll ? 'No active weekly bookings · ' + endedAll + ' ended' : 'No weekly bookings yet. Add the first one above.');
+    fillGrid($('wGrid'), (di, pi) => list.filter(w => w.days.includes(data.days[di]) && w.periods.includes(shortP(data.periods[pi])))
+      .sort(wSorter).map(w => ({ kind: 'weekly', n: w, click: () => startWeeklyEdit(w) })));
+    fillWeeklyTable($('wTable'), list, false, active ? 'No weekly bookings match this filter.' : 'Nothing here yet.');
+    $('wDoneSummary').textContent = 'Ended weekly bookings (' + endedAll + ')';
+    fillWeeklyTable($('wDoneTable'), ended, true, endedAll ? 'No ended weekly bookings match this filter.' : 'No ended weekly bookings yet. Tick “Ended” on a booking to move it here.');
+  }
+
+  /* --- Week overview --- */
+  function weekDates() { return data.days.map((d, i) => addDays(wkStart, i)); }
+  function weekCellItems(dates, di, pi) {
+    const date = dates[di], p = shortP(data.periods[pi]);
+    const items = [];
+    weekly.filter(w => weeklyAppliesOn(w, date) && w.periods.includes(p)).sort(wSorter)
+      .forEach(w => items.push({ kind: 'weekly', n: w, click: () => startWeeklyEdit(w) }));
+    notes.filter(n => !n.done && n.date === date && n.periods.includes(p)).sort(byRooms)
+      .forEach(n => items.push({ kind: 'oneoff', n, click: () => { setView('oneoff', true); startEdit(n); } }));
+    return items;
+  }
+  function weekCount(dates) {
+    let w = 0, o = 0;
+    dates.forEach(d => { w += weekly.filter(x => weeklyAppliesOn(x, d)).length; o += notes.filter(n => !n.done && n.date === d).length; });
+    return { w, o };
+  }
+  const weekLabel = dates => { const f = d => new Date(d + 'T00:00:00Z').toLocaleDateString('en-GB', { weekday: 'short', day: 'numeric', month: 'short', timeZone: 'UTC' });
+    return f(dates[0]) + ' – ' + f(dates[dates.length - 1]) + ' ' + dates[dates.length - 1].slice(0, 4); };
+  function renderWeek() {
+    if (!wkStart) wkStart = mondayOf(todayStr());
+    const dates = weekDates();
+    $('wkLabel').textContent = weekLabel(dates);
+    $('wkDate').value = dates[0];
+    const c = weekCount(dates);
+    $('wkStatus').textContent = (c.w + c.o) ? c.w + ' weekly and ' + c.o + ' one-off bookings this week' : 'No bookings this week.';
+    fillGrid($('wGridWeek'), (di, pi) => weekCellItems(dates, di, pi), dates);
+  }
+
+  /* --- переключатель видов --- */
+  function setView(v, remember) {
+    if (!['week', 'weekly', 'oneoff'].includes(v)) v = 'oneoff';
+    nView = v;
+    $('nvWeek').classList.toggle('hidden', v !== 'week');
+    $('nvWeekly').classList.toggle('hidden', v !== 'weekly');
+    $('nvOneoff').classList.toggle('hidden', v !== 'oneoff');
+    document.querySelectorAll('#nSeg button').forEach(b => { const on = b.dataset.v === v; b.classList.toggle('on', on); b.setAttribute('aria-pressed', on ? 'true' : 'false'); });
+    if (remember) { try { localStorage.setItem(VIEW_KEY, v); } catch (e) { /* не страшно */ } }
+    renderNotes();
+  }
+  function renderNotes() {
+    if (nView === 'week') renderWeek(); else if (nView === 'weekly') renderWeekly(); else renderOneoff();
+  }
+
+  function setupWeekly() {
+    loadWeekly();
+    let view = 'oneoff', open = true;
+    try { view = localStorage.getItem(VIEW_KEY) || 'oneoff'; open = localStorage.getItem(WFORM_KEY) !== '0'; } catch (e) { /* по умолчанию */ }
+    document.querySelectorAll('#nSeg button').forEach(b => { b.onclick = () => setView(b.dataset.v, true); });
+    setWFormOpen(open, false);
+    $('wToggle').onclick = () => setWFormOpen($('wFormWrap').classList.contains('hidden'), true);
+    const dbox = $('wDays');
+    data.days.forEach(d => {
+      const b = document.createElement('button'); b.type = 'button'; b.className = 'pchip'; b.dataset.p = d; b.textContent = dayShort(d); b.title = d;
+      b.setAttribute('aria-pressed', 'false'); b.onclick = () => b.setAttribute('aria-pressed', b.getAttribute('aria-pressed') === 'true' ? 'false' : 'true');
+      dbox.append(b);
+    });
+    const pbox = $('wPeriods');
+    data.periods.forEach(p => {
+      const b = document.createElement('button'); b.type = 'button'; b.className = 'pchip'; b.dataset.p = shortP(p); b.title = p; b.textContent = shortP(p);
+      b.setAttribute('aria-pressed', 'false'); b.onclick = () => b.setAttribute('aria-pressed', b.getAttribute('aria-pressed') === 'true' ? 'false' : 'true');
+      pbox.append(b);
+    });
+    const main = data.periods.slice(0, MAIN_PERIODS).map(shortP);
+    $('wMain').textContent = 'Select ' + main[0] + ' – ' + main[main.length - 1];
+    $('wMain').onclick = () => wSetPressed('wPeriods', main);
+    $('wClear').onclick = () => wSetPressed('wPeriods', []);
+    $('wForm').addEventListener('submit', submitWeekly);
+    const ri = $('wRoom');
+    ri.addEventListener('input', e => {
+      const typed = e.inputType === 'insertText' || e.inputType === 'deleteContentBackward' || e.inputType === 'deleteContentForward';
+      const v = ri.value, exact = data.rooms.some(r => r.toLowerCase() === v.trim().toLowerCase());
+      if (/[,;]/.test(v) || (!typed && exact)) flushWRoom(true);
+    });
+    ri.addEventListener('keydown', e => {
+      if (e.key === 'Enter' && ri.value.trim()) { e.preventDefault(); flushWRoom(); }
+      else if (e.key === 'Backspace' && !ri.value && wRooms.length) { wRooms.pop(); renderWRooms(); }
+    });
+    $('wSkipAdd').onclick = () => { const v = $('wSkipDate').value; if (isDate(v) && !wSkip.includes(v)) { wSkip.push(v); wSkip.sort(); renderWSkip(); } $('wSkipDate').value = ''; };
+    $('wCancel').onclick = () => { cancelWeeklyEdit(); weeklySay(''); };
+    $('wFilter').addEventListener('input', renderNotes);
+    $('wkPrev').onclick = () => { wkStart = addDays(wkStart || mondayOf(todayStr()), -7); renderWeek(); };
+    $('wkNext').onclick = () => { wkStart = addDays(wkStart || mondayOf(todayStr()), 7); renderWeek(); };
+    $('wkToday').onclick = () => { wkStart = mondayOf(todayStr()); renderWeek(); };
+    $('wkDate').onchange = () => { if (isDate($('wkDate').value)) { wkStart = mondayOf($('wkDate').value); renderWeek(); } };
+    setView(view, false);
+  }
+
+  function gridRows(cellText, dates) {
+    const hdr = [head('Period'), ...data.days.map((d, di) => head(dayShort(d) + (dates ? ' ' + fmtShortDate(dates[di]) : '')))];
+    const rows = data.periods.map((p, pi) => [{ v: shortP(p) + ((p.split('|')[1] || '').trim() ? ' ' + p.split('|')[1].trim() : ''), st: 'bold' },
+      ...data.days.map((d, di) => ({ v: cellText(di, pi), st: 'cell' }))]);
+    return [hdr, ...rows];
+  }
+  const itemText = n => n.rooms.join(', ') + ([n.who, n.note].filter(Boolean).length ? ' — ' + [n.who, n.note].filter(Boolean).join(' · ') : '');
+  function exportWeekly() {
+    const list = activeWeekly(), ended = endedWeekly();
+    const ex = { title: 'Weekly bookings', slug: 'weekly-bookings' };
+    const f = $('wFilter').value.trim();
+    ex.lines = ['Personal weekly booking notes, not part of the school timetable',
+      list.length + ' active weekly bookings' + (f ? ' · filter: ' + f : '') + (ended.length ? ' · ' + ended.length + ' ended (third sheet)' : '')];
+    const grid = gridRows((di, pi) => list.filter(w => w.days.includes(data.days[di]) && w.periods.includes(shortP(data.periods[pi]))).sort(wSorter).map(itemText).join('\n'));
+    const tbl = l => [[head('Days'), head('Periods'), head('Rooms'), head('Booked by / purpose'), head('Note'), head('Dates')].map(x => x),
+      ...[...l].sort(wSorter).map(w => [w.days.map(dayShort).join(', '), w.periods.join(', '), w.rooms.join(', '), w.who, w.note,
+        rangeText(w) + (w.skip.length ? ' · skips: ' + w.skip.map(fmtShortDate).join(', ') : '')].map(v => (typeof v === 'object' ? v : { v, st: 'cell' })))];
+    ex.sheets = [withInfo(ex, grid, [16, 28, 28, 28, 28, 28], 'Weekly grid'), withInfo(ex, tbl(list), [16, 24, 36, 34, 40, 36], 'List')];
+    if (ended.length) ex.sheets.push(withInfo(ex, tbl(ended), [16, 24, 36, 34, 40, 36], 'Ended'));
+    return ex;
+  }
+  function exportWeek() {
+    if (!wkStart) wkStart = mondayOf(todayStr());
+    const dates = weekDates(), c = weekCount(dates);
+    const ex = { title: 'Week overview', slug: 'week-overview' };
+    ex.lines = ['Personal booking notes, not part of the school timetable', weekLabel(dates) + ' · ' + c.w + ' weekly and ' + c.o + ' one-off bookings'];
+    const grid = gridRows((di, pi) => weekCellItems(dates, di, pi).map(it => (it.kind === 'weekly' ? '[Weekly] ' : '[One-off] ') + itemText(it.n)).join('\n'), dates);
+    ex.sheets = [withInfo(ex, grid, [16, 28, 28, 28, 28, 28], 'Week')];
+    return ex;
   }
 
   function downloadText(name, text, type) {
@@ -1796,12 +2292,14 @@
         periods: n.periods.map(p => p.slice(0, 60)), who: String(n.who).slice(0, 300),
         note: String(n.note).slice(0, 1000), done: !!n.done, updated: n.updated || '',
       }));
-      if (!clean.length) throw new Error('empty');
+      const wclean = migrateWeekly(obj.weekly);
+      if (!clean.length && !wclean.length) throw new Error('empty');
+      const wById = new Map(weekly.map(w => [w.id, w])); wclean.forEach(w => wById.set(w.id, w)); weekly = [...wById.values()]; saveWeekly();
       const byId = new Map(notes.map(n => [n.id, n]));
       clean.forEach(n => byId.set(n.id, n));
       notes = [...byId.values()];
       saveNotes(); renderNotes();
-      noteSay('Restored ' + clean.length + ' bookings from the backup.', 'ok');
+      noteSay('Restored ' + clean.length + ' one-off and ' + wclean.length + ' weekly bookings from the backup.', 'ok');
     } catch (e) {
       alert('This file is not a notes backup made by this site.');
     }
@@ -1846,12 +2344,15 @@
     $('nShow').onchange = renderNotes;
     $('nFilter').addEventListener('input', renderNotes);
     $('nBackup').onclick = () => downloadText('BIS-notes-backup-' + todayStr() + '.json',
-      JSON.stringify({ app: 'bis-timetable-notes', version: 2, saved: new Date().toISOString(), notes }, null, 2), 'application/json');
+      JSON.stringify({ app: 'bis-timetable-notes', version: 3, saved: new Date().toISOString(), notes, weekly }, null, 2), 'application/json');
     $('nRestore').onclick = () => $('nFile').click();
     $('nFile').onchange = () => { const f = $('nFile').files[0]; if (f) restoreNotes(f); $('nFile').value = ''; };
+    setupWeekly();
   }
 
   function exportNotes() {
+    if (nView === 'week') return exportWeek();
+    if (nView === 'weekly') return exportWeekly();
     const list = visibleNotes(), done = doneNotes();
     const ex = { title: 'Booking notes', slug: 'booking-notes' };
     const f = $('nFilter').value.trim();
