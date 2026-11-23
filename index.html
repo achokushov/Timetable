@@ -292,7 +292,7 @@
       .grid { grid-template-columns: repeat(auto-fill, minmax(110px, 1fr)); }
       .grid.wide { grid-template-columns: repeat(auto-fill, minmax(170px, 1fr)); }
       table.heat td[style] { color: #000 !important; }
-      .noteform, .ntools, #notesWarn, #nFormWrap, #wFormWrap, #nDone, #wDone, .seg, .weekbar, .legend2, th.act, td.act, th.chk, td.chk { display: none !important; }
+      .noteform, .ntools, #notesWarn, #nFormWrap, #wFormWrap, #nDone, #wDone, .notesbar, .seg, .weekbar, .legend2, th.act, td.act, th.chk, td.chk { display: none !important; }
       table.notes tr.past td { opacity: 1; }
     }
 
@@ -376,9 +376,15 @@
     table.bgrid td.clash { outline: 2px solid #f59e0b; outline-offset: -2px; }
     h3.sect { font-size: 15px; margin: 18px 0 8px; } h3.sect small { font-weight: 400; color: var(--text-sub); font-size: 12px; margin-left: 8px; }
 
-    .nowbtn { background: var(--accent); color: #0b1220; border: 1px solid var(--accent); border-radius: 8px; padding: 8px 16px; font-size: 14px; font-weight: 600; cursor: pointer; font-family: inherit; }
-    .nownote { font-size: 13px; color: var(--text-sub); min-height: 0; margin: 0 0 6px; }
+    .nowrow { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; margin: 0 0 18px; }
+    .nowbtn { background: var(--accent); color: #0b1220; border: 1px solid var(--accent); border-radius: 10px; padding: 14px 40px; font-size: 18px; font-weight: 700; cursor: pointer; font-family: inherit; }
+    .nowbtn:hover { filter: brightness(1.1); }
+    .nownote { font-size: 13px; color: var(--text-sub); }
     .nownote:empty { display: none; }
+    .notesbar { display: flex; flex-wrap: wrap; align-items: flex-start; justify-content: space-between; gap: 10px; margin: 0 0 12px; }
+    .notesbar .seg { margin: 0; }
+    .notesbar .ntools { margin: 0; margin-left: auto; gap: 6px; }
+    .notesbar .ntools button { padding: 5px 10px; font-size: 12px; color: var(--text-sub); }
     p.lead { margin: 0 0 8px; font-size: 15px; font-weight: 600; color: var(--text); }
 
     .hidden { display: none; }
@@ -430,15 +436,14 @@
   <!-- Empty rooms -->
   <section id="viewEmpty">
     <p class="lead">Which rooms are free? Pick a day and a time to see every room with no lesson then.</p>
+    <div class="nowrow"><button type="button" class="nowbtn" id="roomNow" title="Jump to the current day and period (Bishkek time)">Now</button><span class="nownote" id="roomNowNote"></span></div>
     <div class="controls">
-      <button type="button" class="nowbtn" id="roomNow" title="Jump to the current day and period (Bishkek time)">Now</button>
       <select id="roomDay"></select>
       <select id="roomFrom"></select>
       <span class="to">–</span>
       <select id="roomTo"></select>
     </div>
     <p class="hint">Pick a single period or a range (“from … to …”). If no room is free for the whole range, the closest options are shown below: rooms where only some of the periods are busy. Busy periods are marked in red, so please check them manually.</p>
-    <div class="nownote" id="roomNowNote"></div>
     <div class="status" id="roomStatus">Loading…</div>
     <div id="roomFullWrap"><div class="grid" id="roomFull"></div></div>
     <div id="roomPartialWrap" class="hidden">
@@ -451,8 +456,8 @@
   <!-- Free teachers -->
   <section id="viewTeachers" class="hidden">
     <p class="lead">Which teachers have no lesson? Pick a day and a time to see who is free.</p>
+    <div class="nowrow"><button type="button" class="nowbtn" id="teacherNow" title="Jump to the current day and period (Bishkek time)">Now</button><span class="nownote" id="teacherNowNote"></span></div>
     <div class="controls">
-      <button type="button" class="nowbtn" id="teacherNow" title="Jump to the current day and period (Bishkek time)">Now</button>
       <select id="teacherDay"></select>
       <select id="teacherFrom"></select>
       <span class="to">–</span>
@@ -464,7 +469,6 @@
       </select>
     </div>
     <p class="hint">“Free” means the school timetable shows no lesson for that teacher at that time. Presence in school is not checked. The number on each card is how many lessons the teacher has on the selected day.</p>
-    <div class="nownote" id="teacherNowNote"></div>
     <div class="status" id="teacherStatus"></div>
     <div id="teacherFullWrap"><div class="grid" id="teacherFull"></div></div>
     <div id="teacherPartialWrap" class="hidden">
@@ -523,15 +527,17 @@
   <section id="viewNotes" class="hidden">
     <p class="lead">Booking notes: which rooms are taken, when, and by whom.</p>
     <div class="warnbox hidden" id="notesWarn">This browser is not allowing notes to be saved (private window or blocked site data), so they will disappear when you close this page. Use “Save backup” before you leave.</div>
-    <div class="seg" id="nSeg">
-      <button type="button" data-v="week">Week overview</button>
-      <button type="button" data-v="weekly">Weekly bookings</button>
-      <button type="button" data-v="oneoff">One-off bookings</button>
-    </div>
-    <div class="ntools" id="nTools">
-      <button type="button" id="nBackup">Save backup (.json)</button>
-      <button type="button" id="nRestore">Restore backup…</button>
-      <input type="file" id="nFile" accept=".json,application/json" class="hidden">
+    <div class="notesbar">
+      <div class="seg" id="nSeg">
+        <button type="button" data-v="week">Week overview</button>
+        <button type="button" data-v="weekly">Weekly bookings</button>
+        <button type="button" data-v="oneoff">One-off bookings</button>
+      </div>
+      <div class="ntools" id="nTools">
+        <button type="button" id="nBackup">Save backup (.json)</button>
+        <button type="button" id="nRestore">Restore backup…</button>
+        <input type="file" id="nFile" accept=".json,application/json" class="hidden">
+      </div>
     </div>
 
     <!-- Week overview: weekly + one-off bookings of one week in a grid -->
