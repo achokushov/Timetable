@@ -292,7 +292,7 @@
       .grid { grid-template-columns: repeat(auto-fill, minmax(110px, 1fr)); }
       .grid.wide { grid-template-columns: repeat(auto-fill, minmax(170px, 1fr)); }
       table.heat td[style] { color: #000 !important; }
-      .noteform, .ntools, #notesWarn, #nFormWrap, #wFormWrap, #nDone, #wDone, .notesbar, .seg, .weekbar, .legend2, th.act, td.act, th.chk, td.chk { display: none !important; }
+      #rcText, #rcBtns, .noteform, .ntools, #notesWarn, #nFormWrap, #wFormWrap, #nDone, #wDone, .notesbar, .seg, .weekbar, .legend2, th.act, td.act, th.chk, td.chk { display: none !important; }
       table.notes tr.past td { opacity: 1; }
     }
 
@@ -396,6 +396,17 @@
     table.mcal .cnt { display: block; border-radius: 6px; padding: 2px 6px; margin: 2px 0; font-size: 12px; border: 1px solid; }
     table.mcal .cnt.weekly { background: rgba(56, 189, 248, 0.18); border-color: rgba(56, 189, 248, 0.65); }
     table.mcal .cnt.oneoff { background: rgba(245, 158, 11, 0.18); border-color: rgba(245, 158, 11, 0.65); }
+    #rcText { width: 100%; box-sizing: border-box; background: var(--bg); color: var(--text); border: 1px solid var(--border); border-radius: 8px; padding: 10px; font: 13px/1.4 ui-monospace, Menlo, Consolas, monospace; resize: vertical; margin: 0 0 8px; }
+    .rcbox { border: 1px solid; border-radius: 8px; padding: 10px 14px; margin: 8px 0; font-size: 14px; }
+    .rcbox.err { background: rgba(239, 68, 68, 0.14); border-color: rgba(239, 68, 68, 0.7); }
+    .rcbox.warn { background: rgba(245, 158, 11, 0.14); border-color: rgba(245, 158, 11, 0.7); }
+    .rcbox.good { background: rgba(34, 197, 94, 0.14); border-color: rgba(34, 197, 94, 0.7); }
+    .rcbox ul { margin: 4px 0 0; padding-left: 20px; }
+    .rcbox li { margin: 3px 0; overflow-wrap: anywhere; }
+    h3.rctitle { font-size: 15px; margin: 18px 0 6px; }
+    table.rctab td { white-space: pre-line; vertical-align: top; text-align: left; }
+    table.rctab tr.rc-err td { background: rgba(239, 68, 68, 0.18); }
+    table.rctab tr.rc-warn td { background: rgba(245, 158, 11, 0.16); }
     p.lead { margin: 0 0 8px; font-size: 15px; font-weight: 600; color: var(--text); }
 
     .hidden { display: none; }
@@ -411,6 +422,7 @@
   <a href="#/free" id="tabFree">Find a slot</a>
   <a href="#/usage" id="tabUsage">Room usage</a>
   <a href="#/notes" id="tabNotes">Booking notes</a>
+  <a href="#/rcheck" id="tabRcheck">Room change check</a>
   <a href="#/changes" id="tabChanges">Changes</a>
 </nav>
 
@@ -424,6 +436,7 @@
       <li><b>Find a slot</b>: pick several teachers, classes or rooms to see when all of them are free, or when at least 4 of 5 are free, for example for a meeting.</li>
       <li><b>Room usage</b>: how busy each room is, and which times of the week are busiest.</li>
       <li><b>Booking notes</b>: your own record of which rooms are taken, by whom: one-off dates, weekly repeating bookings, and a week overview grid. It is kept separately and does not change the other tabs.</li>
+      <li><b>Room change check</b>: paste your room change tables from Google Sheets to find rooms that are used twice in the same period.</li>
       <li><b>Changes</b>: what changed in the timetable since the previous update.</li>
     </ul>
     <p><b>Print / PDF</b> and <b>Download Excel</b> save what is on the screen so you can send it to colleagues.</p>
@@ -673,6 +686,22 @@
         <div class="tablewrap"><table class="slots notes" id="nDoneTable"></table></div>
       </details>
     </div>
+  </section>
+
+  <!-- Room change check -->
+  <section id="viewRcheck" class="hidden">
+    <p class="lead">Room change check: paste your room change tables and find any room that is used twice in the same period.</p>
+    <p class="hint">In Google Sheets select the whole table (with the “Room changes - … - Monday” title, if you have it), press Ctrl+C, click the box below and press Ctrl+V. You can paste several tables one after another (for example T3, T5 and Terrace 1 for the same day). Room names are matched to the school list: “ICT” becomes “ICT Room”. Nothing you paste is saved or sent anywhere.</p>
+    <textarea id="rcText" rows="8" spellcheck="false" placeholder="Paste your room change tables here…"></textarea>
+    <div class="nf-actions" id="rcBtns">
+      <button type="button" id="rcCheck">Check</button>
+      <button type="button" id="rcClear">Clear</button>
+      <button type="button" id="rcCopy">Copy the problems</button>
+      <span class="nmsg" id="rcMsg" role="status"></span>
+    </div>
+    <div class="status" id="rcSummary"></div>
+    <div id="rcProblems"></div>
+    <div id="rcTables"></div>
   </section>
 
   <!-- Changes -->
@@ -2479,12 +2508,205 @@
     return ex;
   }
 
+
+  /* ---------- Room change check: проверка таблиц room change на повторы комнат (всё в браузере, ничего не сохраняется) ---------- */
+
+  const RC_DAY_RE = /(mon|tues|wednes|thurs|fri|satur|sun)day/i;
+  const rcSq = t => String(t).toLowerCase().replace(/[^a-z0-9а-яё]+/g, '');
+  const rcSqNoRoom = t => String(t).toLowerCase().replace(/\broom\b/g, '').replace(/[^a-z0-9а-яё]+/g, '');
+  let rcResult = null;
+
+  function parseTSV(text) {
+    const rows = []; let row = [], cell = '', q = false;
+    for (let i = 0; i < text.length; i++) {
+      const ch = text[i];
+      if (q) {
+        if (ch === '"') { if (text[i + 1] === '"') { cell += '"'; i++; } else q = false; }
+        else cell += ch;
+      } else if (ch === '"' && cell === '') q = true;
+      else if (ch === '\t') { row.push(cell); cell = ''; }
+      else if (ch === '\n') { row.push(cell); rows.push(row); row = []; cell = ''; }
+      else if (ch !== '\r') cell += ch;
+    }
+    if (cell !== '' || row.length) { row.push(cell); rows.push(row); }
+    return rows;
+  }
+
+  function rcMatchRoom(tok, loose) {
+    const t = tok.trim().replace(/\s+/g, ' ');
+    if (!t) return { room: null, how: 'empty' };
+    const exact = data.rooms.find(r => r.toLowerCase() === t.toLowerCase());
+    if (exact) return { room: exact, how: exact === t ? 'exact' : 'std' };
+    let c = data.rooms.filter(r => rcSq(r) === rcSq(t));
+    if (c.length === 1) return { room: c[0], how: 'std' };
+    c = rcSqNoRoom(t) ? data.rooms.filter(r => rcSqNoRoom(r) === rcSqNoRoom(t)) : [];
+    if (c.length === 1) return { room: c[0], how: 'std' };
+    if (loose && rcSq(t).length >= 4) { c = data.rooms.filter(r => rcSq(r).endsWith(rcSq(t))); if (c.length === 1) return { room: c[0], how: 'std' }; }
+    const a = rcSq(t), near = data.rooms.map(r => [r, levDist(rcSq(r), a)]).filter(x => x[1] <= 2).sort((x, y) => x[1] - y[1]);
+    return { room: null, how: 'unknown', suggest: near.length ? near[0][0] : '' };
+  }
+  function levDist(a, b) {
+    const m = a.length, n = b.length; if (Math.abs(m - n) > 2) return 9;
+    let prev = Array.from({ length: n + 1 }, (_, j) => j);
+    for (let i = 1; i <= m; i++) {
+      const cur = [i];
+      for (let j = 1; j <= n; j++) cur[j] = Math.min(prev[j] + 1, cur[j - 1] + 1, prev[j - 1] + (a[i - 1] === b[j - 1] ? 0 : 1));
+      prev = cur;
+    }
+    return prev[n];
+  }
+  const rcShort = (t, n) => { const x = String(t).replace(/\s+/g, ' ').trim(); return x.length > (n || 46) ? x.slice(0, (n || 46) - 1) + '…' : x; };
+
+  function rcParse(text) {
+    const grid = parseTSV(text).map(r => r.map(c => c.trim()));
+    const tables = []; let cur = null, cols = null;
+    const start = title => {
+      const parts = title.split(/\s[-–—]\s/).map(x => x.trim());
+      const dm = title.match(RC_DAY_RE);
+      cur = { title, name: parts.length > 1 ? parts[1] : title, day: dm ? dm[0][0].toUpperCase() + dm[0].slice(1).toLowerCase() : '',
+        vacated: parts.length > 1 ? (rcMatchRoom(parts[1], true).room || null) : null, rows: [] };
+      tables.push(cur); cols = null;
+    };
+    grid.forEach(r => {
+      const first = r.find(Boolean); if (!first) return;
+      if (/^room\s*changes?\b/i.test(first)) { if (/\s[-–—]\s/.test(first) || RC_DAY_RE.test(first)) start(first); return; }
+      const hp = r.findIndex(c => /^period$/i.test(c));
+      if (hp >= 0) { cols = { p: hp, c: hp + 1, r: hp + 2 }; r.forEach((c, j) => { if (/^class/i.test(c)) cols.c = j; else if (/^room/i.test(c)) cols.r = j; }); return; }
+      const pj = r.findIndex(c => /^\d{1,2}\s*(st|nd|rd|th)\b/i.test(c)); if (pj < 0) return;
+      if (!cur) start('Pasted table');
+      const dc = cols ? cols.c - cols.p : 1, dr = cols ? cols.r - cols.p : 2;
+      const pn = parseInt(r[pj], 10), cls = r[pj + dc] || '', roomCell = r[pj + dr] || '';
+      cur.rows.push({ pn, period: pn >= 1 && pn <= data.periods.length ? pLabel(pn - 1) : pn + '?', cls, roomCell,
+        tokens: roomCell.split(/[\n;,]+/).map(x => x.trim()).filter(Boolean).map(tok => ({ tok, m: rcMatchRoom(tok, false) })), flags: [], level: '' });
+    });
+    return tables.filter(t => t.rows.length);
+  }
+
+  function rcAnalyse(tables) {
+    const problems = [];
+    const flag = (row, level, text) => { row.flags.push(text); if (level === 'err' || !row.level) row.level = level; };
+    const groups = {};
+    tables.forEach(t => (groups[t.day || ''] ??= []).push(t));
+    Object.entries(groups).forEach(([day, ts]) => {
+      const where = e => e.t.name + (e.row.cls ? ' (' + rcShort(e.row.cls, 34) + ')' : '');
+      const uses = {};
+      ts.forEach(t => t.rows.forEach(row => {
+        if (row.cls && !row.tokens.length) { flag(row, 'warn', 'No room to go'); problems.push({ level: 'warn', text: (day ? day + ' · ' : '') + row.period + ' period, ' + where({ t, row }) + ': no “Room to go”.' }); }
+        if (!row.cls && row.tokens.length) flag(row, 'warn', 'Room to go without a class');
+        if (!(row.pn >= 1 && row.pn <= data.periods.length)) { flag(row, 'warn', 'Unknown period'); problems.push({ level: 'warn', text: (day ? day + ' · ' : '') + t.name + ': the period “' + row.period + '” is not a school period.' }); }
+        row.tokens.forEach(tk => {
+          if (tk.m.how === 'unknown') {
+            flag(row, 'warn', 'Not a school room' + (tk.m.suggest ? ' (did you mean ' + tk.m.suggest + '?)' : ''));
+            problems.push({ level: 'warn', text: (day ? day + ' · ' : '') + row.period + ' period, ' + where({ t, row }) + ': “' + tk.tok + '” is not a room from the school list' + (tk.m.suggest ? '. Did you mean “' + tk.m.suggest + '”?' : '.') });
+          } else if (tk.m.how === 'std') flag(row, 'info', '“' + tk.tok + '” → ' + tk.m.room);
+          const key = row.period + '|' + (tk.m.room || 'unknown:' + rcSq(tk.tok));
+          (uses[key] ??= []).push({ t, row, room: tk.m.room || tk.tok, period: row.period });
+        });
+      }));
+      Object.values(uses).forEach(list => {
+        if (list.length < 2) return;
+        const e0 = list[0];
+        list.forEach(e => flag(e.row, 'err', 'Duplicate: ' + e.room + ' is used ' + list.length + ' times in ' + e.period + ' period'));
+        problems.push({ level: 'err', text: (day ? day + ' · ' : '') + e0.period + ' period: “' + e0.room + '” is used ' + list.length + ' times: ' + list.map(where).join('; ') + '.' });
+      });
+      // комната, которую сейчас освобождают (в этом периоде у её таблицы есть класс), не должна быть чьим-то «Room to go»
+      ts.forEach(vt => {
+        if (!vt.vacated) return;
+        vt.rows.filter(r => r.cls).forEach(vr => {
+          ts.forEach(t => t.rows.forEach(row => {
+            if (row.period !== vr.period) return;
+            if (row.tokens.some(tk => tk.m.room === vt.vacated)) {
+              flag(row, 'warn', vt.vacated + ' is being vacated in this period');
+              problems.push({ level: 'warn', text: (day ? day + ' · ' : '') + row.period + ' period: ' + where({ t, row }) + ' goes to “' + vt.vacated + '”, but that room is being vacated in this period (table “' + vt.name + '”).' });
+            }
+          }));
+        });
+      });
+    });
+    const order = { err: 0, warn: 1 };
+    problems.sort((a, b) => order[a.level] - order[b.level]);
+    return problems;
+  }
+
+  function renderRcheck() {
+    const text = $('rcText').value;
+    $('rcMsg').textContent = '';
+    if (!text.trim()) { rcResult = null; $('rcSummary').textContent = 'Nothing pasted yet.'; $('rcProblems').replaceChildren(); $('rcTables').replaceChildren(); return; }
+    const tables = rcParse(text), problems = rcAnalyse(tables);
+    rcResult = { tables, problems };
+    const rowsN = tables.reduce((a, t) => a + t.rows.filter(r => r.cls || r.tokens.length).length, 0);
+    const errs = problems.filter(p => p.level === 'err').length, warns = problems.length - errs;
+    $('rcSummary').textContent = tables.length ? tables.length + ' table' + (tables.length > 1 ? 's' : '') + ' read · ' + rowsN + ' periods with a room change'
+      : 'I could not find any periods in this text. Copy the table with the “Period” column (1st, 2nd, 3rd …) and paste it again.';
+    const box = (cls, head2, items) => {
+      const d = document.createElement('div'); d.className = 'rcbox ' + cls;
+      const b = document.createElement('b'); b.textContent = head2; d.append(b);
+      if (items && items.length) { const ul = document.createElement('ul'); items.forEach(i => { const li = document.createElement('li'); li.textContent = i; ul.append(li); }); d.append(ul); }
+      return d;
+    };
+    const out = [];
+    if (tables.length) {
+      if (!errs) out.push(box('good', '✔ No room is used twice in the same period.'));
+      else out.push(box('err', '✖ ' + errs + ' duplicate' + (errs > 1 ? 's' : '') + ' found. Change one of the rooms:', problems.filter(p => p.level === 'err').map(p => p.text)));
+      if (warns) out.push(box('warn', '⚠ ' + warns + ' thing' + (warns > 1 ? 's' : '') + ' to check:', problems.filter(p => p.level === 'warn').map(p => p.text)));
+    }
+    $('rcProblems').replaceChildren(...out);
+    const blocks = [];
+    tables.forEach(t => {
+      const h = document.createElement('h3'); h.className = 'rctitle'; h.textContent = t.title + (t.vacated ? ' (vacating ' + t.vacated + ')' : ''); blocks.push(h);
+      const wrap = document.createElement('div'); wrap.className = 'tablewrap';
+      const tb = document.createElement('table'); tb.className = 'slots rctab';
+      const th = document.createElement('thead'), hr = document.createElement('tr');
+      ['Period', 'Class', 'Room to go', 'Check'].forEach(x => { const c = document.createElement('th'); c.textContent = x; hr.append(c); }); th.append(hr);
+      const body = document.createElement('tbody');
+      t.rows.filter(r => r.cls || r.tokens.length).forEach(r => {
+        const tr = document.createElement('tr'); if (r.level === 'err' || r.level === 'warn') tr.className = 'rc-' + r.level;
+        [r.period, r.cls, r.tokens.map(k => k.m.room || k.tok).join('\n') || '', r.flags.length ? r.flags.join('\n') : '✔'].forEach(x => { const td = document.createElement('td'); td.textContent = x; tr.append(td); });
+        body.append(tr);
+      });
+      tb.append(th, body); wrap.append(tb); blocks.push(wrap);
+    });
+    $('rcTables').replaceChildren(...blocks);
+  }
+
+  function setupRcheck() {
+    let timer = null;
+    const later = () => { clearTimeout(timer); timer = setTimeout(renderRcheck, 250); };
+    $('rcText').addEventListener('input', later);
+    $('rcText').addEventListener('paste', later);
+    $('rcCheck').onclick = renderRcheck;
+    $('rcClear').onclick = () => { $('rcText').value = ''; renderRcheck(); $('rcText').focus(); };
+    $('rcCopy').onclick = async () => {
+      if (!rcResult || !rcResult.problems.length) { $('rcMsg').textContent = 'No problems to copy.'; return; }
+      const txt = rcResult.problems.map(p => (p.level === 'err' ? 'DUPLICATE: ' : 'CHECK: ') + p.text).join('\n');
+      try { await navigator.clipboard.writeText(txt); $('rcMsg').textContent = 'Copied.'; } catch (e) { $('rcMsg').textContent = 'Could not copy. Select the text and copy it by hand.'; }
+    };
+  }
+
+  function exportRcheck() {
+    const ex = { title: 'Room change check', slug: 'room-change-check' };
+    const t = rcResult ? rcResult.tables : [], pr = rcResult ? rcResult.problems : [];
+    const dups = pr.filter(p => p.level === 'err').length;
+    ex.lines = ['Check of pasted room change tables, not part of the school timetable',
+      t.length ? t.length + ' tables · ' + dups + ' duplicate' + (dups === 1 ? '' : 's') + ' · ' + (pr.length - dups) + ' to check' : 'Nothing was pasted'];
+    const probRows = pr.length ? pr.map(p => [{ v: p.level === 'err' ? 'Duplicate' : 'Check', st: p.level === 'err' ? 'busy' : 'cell' }, { v: p.text, st: 'cell' }]) : [[{ v: 'OK', st: 'free' }, { v: 'No room is used twice in the same period.', st: 'cell' }]];
+    const rowRows = [];
+    t.forEach(tb => tb.rows.filter(r => r.cls || r.tokens.length).forEach(r => rowRows.push([tb.title, r.period, r.cls, r.tokens.map(k => k.m.room || k.tok).join(', '), r.flags.join('; ') || 'OK']
+      .map((v, i) => ({ v, st: i === 4 && r.level === 'err' ? 'busy' : 'cell' })))));
+    ex.sheets = [
+      withInfo(ex, [[head('Result'), head('Details')], ...probRows], [14, 110], 'Problems'),
+      withInfo(ex, [[head('Table'), head('Period'), head('Class'), head('Room to go'), head('Check')], ...rowRows], [34, 12, 50, 28, 50], 'Rows'),
+    ];
+    return ex;
+  }
+
   const EXPORT = {
     empty: () => exportAvail('room'),
     teachers: () => exportAvail('teacher'),
     free: exportBest,
     usage: exportUsage,
     notes: exportNotes,
+    rcheck: exportRcheck,
     changes: exportChanges,
   };
 
@@ -2518,6 +2740,7 @@
     free: ['viewBest', 'tabFree', 'Find a slot'],
     usage: ['viewUsage', 'tabUsage', 'Room usage'],
     notes: ['viewNotes', 'tabNotes', 'Booking notes'],
+    rcheck: ['viewRcheck', 'tabRcheck', 'Room change check'],
     changes: ['viewChanges', 'tabChanges', 'Changes'],
   };
 
@@ -2530,6 +2753,7 @@
     else if (currentPage === 'teachers') renderAvail('teacher');
     else if (currentPage === 'usage') renderUsage();
     else if (currentPage === 'notes') renderNotes();
+    else if (currentPage === 'rcheck') renderRcheck();
     else renderChanges();
   }
 
@@ -2589,6 +2813,7 @@
       setupBest();
       setupUsage();
       setupNotes();
+      setupRcheck();
 
       $('btnPrint').onclick = () => window.print();
       $('btnXlsx').onclick = () => {
