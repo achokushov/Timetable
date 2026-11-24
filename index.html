@@ -2591,14 +2591,17 @@
       const where = e => e.t.name + (e.row.cls ? ' (' + rcShort(e.row.cls, 34) + ')' : '');
       const uses = {};
       ts.forEach(t => t.rows.forEach(row => {
-        if (row.cls && !row.tokens.length) { flag(row, 'warn', 'No room to go'); problems.push({ level: 'warn', text: (day ? day + ' · ' : '') + row.period + ' period, ' + where({ t, row }) + ': no “Room to go”.' }); }
+        if (row.cls && !row.tokens.length) { flag(row, 'err', 'No room to go'); problems.push({ level: 'err', type: 'noroom', text: (day ? day + ' · ' : '') + row.period + ' period, ' + where({ t, row }) + ': no “Room to go”.' }); }
         if (!row.cls && row.tokens.length) flag(row, 'warn', 'Room to go without a class');
         if (!(row.pn >= 1 && row.pn <= data.periods.length)) { flag(row, 'warn', 'Unknown period'); problems.push({ level: 'warn', text: (day ? day + ' · ' : '') + t.name + ': the period “' + row.period + '” is not a school period.' }); }
         row.tokens.forEach(tk => {
           if (tk.m.how === 'unknown') {
             flag(row, 'warn', 'Not a school room' + (tk.m.suggest ? ' (did you mean ' + tk.m.suggest + '?)' : ''));
-            problems.push({ level: 'warn', text: (day ? day + ' · ' : '') + row.period + ' period, ' + where({ t, row }) + ': “' + tk.tok + '” is not a room from the school list' + (tk.m.suggest ? '. Did you mean “' + tk.m.suggest + '”?' : '.') });
-          } else if (tk.m.how === 'std') flag(row, 'info', '“' + tk.tok + '” → ' + tk.m.room);
+            problems.push({ level: 'warn', type: 'name', text: (day ? day + ' · ' : '') + row.period + ' period, ' + where({ t, row }) + ': “' + tk.tok + '” is not a room from the school list' + (tk.m.suggest ? '. Did you mean “' + tk.m.suggest + '”?' : '.') });
+          } else if (tk.m.how === 'std') {
+            flag(row, 'warn', '“' + tk.tok + '” is not the exact school name. Use “' + tk.m.room + '”');
+            problems.push({ level: 'warn', type: 'name', text: (day ? day + ' · ' : '') + row.period + ' period, ' + where({ t, row }) + ': “' + tk.tok + '” is not the exact school name. Write “' + tk.m.room + '”.' });
+          }
           const key = row.period + '|' + (tk.m.room || 'unknown:' + rcSq(tk.tok));
           (uses[key] ??= []).push({ t, row, room: tk.m.room || tk.tok, period: row.period });
         });
@@ -2607,7 +2610,7 @@
         if (list.length < 2) return;
         const e0 = list[0];
         list.forEach(e => flag(e.row, 'err', 'Duplicate: ' + e.room + ' is used ' + list.length + ' times in ' + e.period + ' period'));
-        problems.push({ level: 'err', text: (day ? day + ' · ' : '') + e0.period + ' period: “' + e0.room + '” is used ' + list.length + ' times: ' + list.map(where).join('; ') + '.' });
+        problems.push({ level: 'err', type: 'dup', text: (day ? day + ' · ' : '') + e0.period + ' period: “' + e0.room + '” is used ' + list.length + ' times: ' + list.map(where).join('; ') + '.' });
       });
       // комната, которую сейчас освобождают (в этом периоде у её таблицы есть класс), не должна быть чьим-то «Room to go»
       ts.forEach(vt => {
@@ -2646,9 +2649,14 @@
     };
     const out = [];
     if (tables.length) {
-      if (!errs) out.push(box('good', '✔ No room is used twice in the same period.'));
-      else out.push(box('err', '✖ ' + errs + ' duplicate' + (errs > 1 ? 's' : '') + ' found. Change one of the rooms:', problems.filter(p => p.level === 'err').map(p => p.text)));
-      if (warns) out.push(box('warn', '⚠ ' + warns + ' thing' + (warns > 1 ? 's' : '') + ' to check:', problems.filter(p => p.level === 'warn').map(p => p.text)));
+      if (!errs && !warns) out.push(box('good', '✔ No room is used twice in the same period and every name is correct.'));
+      if (errs) {
+        const nd = problems.filter(p => p.type === 'dup').length, nn = problems.filter(p => p.type === 'noroom').length, parts = [];
+        if (nd) parts.push(nd + ' double booking' + (nd > 1 ? 's' : ''));
+        if (nn) parts.push(nn + ' class' + (nn > 1 ? 'es' : '') + ' without a room');
+        out.push(box('err', '✖ ' + parts.join(' and ') + '. Please fix:', problems.filter(p => p.level === 'err').map(p => p.text)));
+      }
+      if (warns) out.push(box('warn', '⚠ ' + warns + ' room name' + (warns > 1 ? 's' : '') + ' to correct or check:', problems.filter(p => p.level === 'warn').map(p => p.text)));
     }
     $('rcProblems').replaceChildren(...out);
     const blocks = [];
@@ -2678,7 +2686,7 @@
     $('rcClear').onclick = () => { $('rcText').value = ''; renderRcheck(); $('rcText').focus(); };
     $('rcCopy').onclick = async () => {
       if (!rcResult || !rcResult.problems.length) { $('rcMsg').textContent = 'No problems to copy.'; return; }
-      const txt = rcResult.problems.map(p => (p.level === 'err' ? 'DUPLICATE: ' : 'CHECK: ') + p.text).join('\n');
+      const txt = rcResult.problems.map(p => (p.type === 'dup' ? 'DOUBLE BOOKING: ' : p.type === 'noroom' ? 'NO ROOM: ' : 'CHECK: ') + p.text).join('\n');
       try { await navigator.clipboard.writeText(txt); $('rcMsg').textContent = 'Copied.'; } catch (e) { $('rcMsg').textContent = 'Could not copy. Select the text and copy it by hand.'; }
     };
   }
@@ -2686,10 +2694,10 @@
   function exportRcheck() {
     const ex = { title: 'Room change check', slug: 'room-change-check' };
     const t = rcResult ? rcResult.tables : [], pr = rcResult ? rcResult.problems : [];
-    const dups = pr.filter(p => p.level === 'err').length;
+    const dups = pr.filter(p => p.type === 'dup').length;
     ex.lines = ['Check of pasted room change tables, not part of the school timetable',
       t.length ? t.length + ' tables · ' + dups + ' duplicate' + (dups === 1 ? '' : 's') + ' · ' + (pr.length - dups) + ' to check' : 'Nothing was pasted'];
-    const probRows = pr.length ? pr.map(p => [{ v: p.level === 'err' ? 'Duplicate' : 'Check', st: p.level === 'err' ? 'busy' : 'cell' }, { v: p.text, st: 'cell' }]) : [[{ v: 'OK', st: 'free' }, { v: 'No room is used twice in the same period.', st: 'cell' }]];
+    const probRows = pr.length ? pr.map(p => [{ v: p.type === 'dup' ? 'Double booking' : p.type === 'noroom' ? 'No room' : 'Check', st: p.level === 'err' ? 'busy' : 'cell' }, { v: p.text, st: 'cell' }]) : [[{ v: 'OK', st: 'free' }, { v: 'No room is used twice in the same period and every name is correct.', st: 'cell' }]];
     const rowRows = [];
     t.forEach(tb => tb.rows.filter(r => r.cls || r.tokens.length).forEach(r => rowRows.push([tb.title, r.period, r.cls, r.tokens.map(k => k.m.room || k.tok).join(', '), r.flags.join('; ') || 'OK']
       .map((v, i) => ({ v, st: i === 4 && r.level === 'err' ? 'busy' : 'cell' })))));
