@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-25T06:30:07+00:00",
+ "updated": "2026-11-25T11:36:23+00:00",
  "warnings": [],
  "days": [
   "Monday",
@@ -1167,6 +1167,27 @@
      "Friday",
      "3rd | 09:45-10:30",
      "free"
+    ]
+   ]
+  },
+  {
+   "at": "2026-11-25T11:36:23+00:00",
+   "total": 2,
+   "structure": false,
+   "items": [
+    [
+     "room",
+     "E-Centre 2",
+     "Thursday",
+     "6th (Lunch Break) | 12:05-12:50",
+     "free"
+    ],
+    [
+     "room",
+     "T6",
+     "Thursday",
+     "6th (Lunch Break) | 12:05-12:50",
+     "busy"
     ]
    ]
   }
@@ -5335,11 +5356,6 @@
   [
    "Thursday",
    "6th (Lunch Break) | 12:05-12:50",
-   "E-Centre 2"
-  ],
-  [
-   "Thursday",
-   "6th (Lunch Break) | 12:05-12:50",
    "Grade 3Y Room"
   ],
   [
@@ -5371,6 +5387,11 @@
    "Thursday",
    "6th (Lunch Break) | 12:05-12:50",
    "T1"
+  ],
+  [
+   "Thursday",
+   "6th (Lunch Break) | 12:05-12:50",
+   "T6"
   ],
   [
    "Thursday",
