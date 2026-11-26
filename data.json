@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-26T06:30:43+00:00",
+ "updated": "2026-11-26T14:23:46+00:00",
  "warnings": [],
  "days": [
   "Monday",
@@ -1190,6 +1190,27 @@
      "busy"
     ]
    ]
+  },
+  {
+   "at": "2026-11-26T14:23:46+00:00",
+   "total": 2,
+   "structure": false,
+   "items": [
+    [
+     "room",
+     "ICT Room",
+     "Friday",
+     "7th (Lunch Break) | 12:50-13:35",
+     "free"
+    ],
+    [
+     "room",
+     "Makerspace",
+     "Friday",
+     "7th (Lunch Break) | 12:50-13:35",
+     "busy"
+    ]
+   ]
   }
  ],
  "busy": [
@@ -2336,17 +2357,17 @@
   [
    "Friday",
    "7th (Lunch Break) | 12:50-13:35",
-   "ICT Room"
-  ],
-  [
-   "Friday",
-   "7th (Lunch Break) | 12:50-13:35",
    "Lab 2"
   ],
   [
    "Friday",
    "7th (Lunch Break) | 12:50-13:35",
    "Lab 3"
+  ],
+  [
+   "Friday",
+   "7th (Lunch Break) | 12:50-13:35",
+   "Makerspace"
   ],
   [
    "Friday",
